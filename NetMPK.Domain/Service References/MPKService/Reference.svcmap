@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ac5c7164-bff5-4d62-8b02-0cb18e1fad07" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="1aa1fdb6-24bc-452b-9c60-5d3175f43f20" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="58643d49-580d-4f5e-ae7d-9bf019c03ce9" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="35420d88-f17f-4c97-bcac-429e798233fd" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="8892b36f-80bd-45d4-917d-0b01af9c7c7f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
+    <MetadataFile FileName="NetMPK.Service.xsd" MetadataType="Schema" ID="42225044-c79e-437c-b323-c6f700f74161" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
