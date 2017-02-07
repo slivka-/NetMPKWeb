@@ -4,7 +4,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/NetMPK.Service" />
     </xsd:schema>
   </wsdl:types>
@@ -14,11 +14,11 @@
   <wsdl:message name="IMPKService_GetData_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDataResponse" />
   </wsdl:message>
-  <wsdl:message name="IMPKService_GetStops_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetStops" />
+  <wsdl:message name="IMPKService_GetStopsNames_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStopsNames" />
   </wsdl:message>
-  <wsdl:message name="IMPKService_GetStops_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetStopsResponse" />
+  <wsdl:message name="IMPKService_GetStopsNames_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStopsNamesResponse" />
   </wsdl:message>
   <wsdl:message name="IMPKService_GetDataUsingDataContract_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
@@ -31,9 +31,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetData" message="tns:IMPKService_GetData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetDataResponse" message="tns:IMPKService_GetData_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetStops">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetStops" message="tns:IMPKService_GetStops_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetStopsResponse" message="tns:IMPKService_GetStops_OutputMessage" />
+    <wsdl:operation name="GetStopsNames">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetStopsNames" message="tns:IMPKService_GetStopsNames_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetStopsNamesResponse" message="tns:IMPKService_GetStopsNames_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDataUsingDataContract">
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetDataUsingDataContract" message="tns:IMPKService_GetDataUsingDataContract_InputMessage" />
@@ -51,8 +51,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetStops">
-      <soap:operation soapAction="http://tempuri.org/IMPKService/GetStops" style="document" />
+    <wsdl:operation name="GetStopsNames">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetStopsNames" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -1,5 +1,5 @@
 ﻿@using NetMPK.Domain.Entities
-@model IEnumerable<Stop>
+@model IEnumerable<string>
 
 @{
     ViewBag.Title = "Przystanki";
@@ -8,8 +8,7 @@
 @foreach(var s in Model)
 {
     <div>
-        <h3>@s.id</h3>
-        @s.name
+        <h3>@s</h3>
     </div>
 }
 

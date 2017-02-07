@@ -84,11 +84,11 @@ namespace NetMPK.Domain.MPKService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetData", ReplyAction="http://tempuri.org/IMPKService/GetDataResponse")]
         System.Threading.Tasks.Task<string> GetDataAsync(string value);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStops", ReplyAction="http://tempuri.org/IMPKService/GetStopsResponse")]
-        System.Collections.Generic.List<System.Tuple<int, string, string>> GetStops();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopsNames", ReplyAction="http://tempuri.org/IMPKService/GetStopsNamesResponse")]
+        System.Collections.Generic.List<string> GetStopsNames();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStops", ReplyAction="http://tempuri.org/IMPKService/GetStopsResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<int, string, string>>> GetStopsAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopsNames", ReplyAction="http://tempuri.org/IMPKService/GetStopsNamesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStopsNamesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IMPKService/GetDataUsingDataContractResponse")]
         NetMPK.Domain.MPKService.CompositeType GetDataUsingDataContract(NetMPK.Domain.MPKService.CompositeType composite);
@@ -132,12 +132,12 @@ namespace NetMPK.Domain.MPKService {
             return base.Channel.GetDataAsync(value);
         }
         
-        public System.Collections.Generic.List<System.Tuple<int, string, string>> GetStops() {
-            return base.Channel.GetStops();
+        public System.Collections.Generic.List<string> GetStopsNames() {
+            return base.Channel.GetStopsNames();
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<int, string, string>>> GetStopsAsync() {
-            return base.Channel.GetStopsAsync();
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStopsNamesAsync() {
+            return base.Channel.GetStopsNamesAsync();
         }
         
         public NetMPK.Domain.MPKService.CompositeType GetDataUsingDataContract(NetMPK.Domain.MPKService.CompositeType composite) {

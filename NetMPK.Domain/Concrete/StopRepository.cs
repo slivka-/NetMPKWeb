@@ -12,13 +12,11 @@ namespace NetMPK.Domain.Concrete
     {
         MPKService.MPKServiceClient client = new MPKService.MPKServiceClient("BasicHttpBinding_IMPKService");
 
-        public IEnumerable<Stop> Stops
+        public IEnumerable<string> StopNames
         {
             get
             {
-                return client.GetStops().Select(s => new Stop { id = s.Item1,
-                                                                name = s.Item2,
-                                                                street = s.Item3 }).AsEnumerable();
+                return client.GetStopsNames().AsEnumerable();
             }
         }
     }

@@ -5,6 +5,6 @@ namespace NetMPK.Domain.Abstract
 {
     public interface IStopRepository
     {
-        IEnumerable<Stop> Stops { get; }
+        IEnumerable<string> StopNames { get; }
     }
 }

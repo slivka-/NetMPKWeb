@@ -11,7 +11,7 @@ namespace NetMPK.WebUI.Controllers
     public class StopsController : Controller
     {
         private IStopRepository repository;
-        private int pageSize = 25;
+        public int pageSize = 25;
         
         public StopsController(IStopRepository stopRepository)
         {
@@ -20,7 +20,7 @@ namespace NetMPK.WebUI.Controllers
 
         public ViewResult StopsList(int page = 1)
         {
-            return View(repository.Stops.OrderBy(s => s.name).Skip((page-1) * pageSize).Take(pageSize));
+            return View(repository.StopNames.Skip((page-1) * pageSize).Take(pageSize));
         }
     }
 }

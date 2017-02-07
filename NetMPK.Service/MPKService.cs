@@ -9,23 +9,18 @@ namespace NetMPK.Service
 {
     public class MPKService : IMPKService
     {
-        
-        private MPKDSTableAdapters.StreetTableAdapter streetAdapter;
-        private MPKDSTableAdapters.StopTableAdapter stopAdapter;
+
+        private MPKDSTableAdapters.StreetTableAdapter streetAdapter = new MPKDSTableAdapters.StreetTableAdapter();
+        private MPKDSTableAdapters.StopTableAdapter stopAdapter = new MPKDSTableAdapters.StopTableAdapter();
         public string GetData(string value)
         {
             return string.Format("You entered: {0}", value);
         }
 
-        public List<Tuple<int, string, string>> GetStops()
+        public List<string> GetStopsNames()
         {
-            streetAdapter = new MPKDSTableAdapters.StreetTableAdapter();
-            streetAdapter.Connection.ConnectionString = System.Configuration.ConfigurationManager.AppSettings["connString"];
-            stopAdapter = new MPKDSTableAdapters.StopTableAdapter();
-            stopAdapter.Connection.ConnectionString = System.Configuration.ConfigurationManager.AppSettings["connString"];
-            MPKDS.StreetDataTable streetData = streetAdapter.GetData();
             MPKDS.StopDataTable stopData = stopAdapter.GetData();
-            return stopData.Select(s => Tuple.Create(s.ID, s.Name, streetData.Where(st => st.ID.Equals(s.Street_ID)).Select(st => st.Name).First())).Take(50).ToList();
+            return stopData.OrderBy(s => s.Name).Select(s => s.Name).ToList();
         }
 
         public CompositeType GetDataUsingDataContract(CompositeType composite)

@@ -14,7 +14,7 @@ namespace NetMPK.Service
         string GetData(string value);
 
         [OperationContract]
-        List<Tuple<int,string,string>> GetStops();
+        List<string> GetStopsNames();
 
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);

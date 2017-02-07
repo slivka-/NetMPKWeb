@@ -27,7 +27,7 @@
     <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="1aa1fdb6-24bc-452b-9c60-5d3175f43f20" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="58643d49-580d-4f5e-ae7d-9bf019c03ce9" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="35420d88-f17f-4c97-bcac-429e798233fd" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
-    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="8892b36f-80bd-45d4-917d-0b01af9c7c7f" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="bff80690-b9fa-454b-8b58-25a10f44fb14" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
     <MetadataFile FileName="NetMPK.Service.xsd" MetadataType="Schema" ID="42225044-c79e-437c-b323-c6f700f74161" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
   </Metadata>
   <Extensions>
