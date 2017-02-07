@@ -8,17 +8,17 @@ using NetMPK.Domain.Entities;
 
 namespace NetMPK.WebUI.Controllers
 {
-    public class StopController : Controller
+    public class StopsController : Controller
     {
         private IStopRepository repository;
         private int pageSize = 25;
         
-        public StopController(IStopRepository stopRepository)
+        public StopsController(IStopRepository stopRepository)
         {
             repository = stopRepository;
         }
 
-        public ViewResult List(int page = 1)
+        public ViewResult StopsList(int page = 1)
         {
             return View(repository.Stops.OrderBy(s => s.name).Skip((page-1) * pageSize).Take(pageSize));
         }
