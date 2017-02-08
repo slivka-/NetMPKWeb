@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace NetMPK.WebUI.Controllers
 {
@@ -11,7 +7,7 @@ namespace NetMPK.WebUI.Controllers
 
         public ViewResult MainMap()
         {
-            return View();
+            return View(new Models.MapModel { isLoggedIn = Models.SessionModel.isLoggedIn});
         }
     }
 }

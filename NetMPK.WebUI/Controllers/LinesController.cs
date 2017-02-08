@@ -10,7 +10,7 @@ namespace NetMPK.WebUI.Controllers
     {
         public ViewResult LinesList()
         {
-            return View();
+            return View(new Models.LinesModel { isLoggedIn = Models.SessionModel.isLoggedIn });
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace NetMPK.Domain.Entities
 {
-    public class Stop
+    public class SingleStop
     {
         public int id { get; set; }
         public string name { get; set; }

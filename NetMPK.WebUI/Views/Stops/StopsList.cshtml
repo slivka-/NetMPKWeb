@@ -1,11 +1,10 @@
-﻿@using NetMPK.Domain.Entities
-@model IEnumerable<string>
+﻿@model NetMPK.WebUI.Models.StopsModel
 
 @{
     ViewBag.Title = "Przystanki";
 }
 
-@foreach(var s in Model)
+@foreach(var s in Model.stopNames)
 {
     <div>
         <h3>@s</h3>

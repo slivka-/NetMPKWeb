@@ -1,0 +1,16 @@
+﻿@model NetMPK.WebUI.Models.MainViewModel
+@if (Model.isLoggedIn)
+{
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                ZALOGOWANO    
+            </li>
+        </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Zarejestruj się", "Register", "Account")</li>
+        <li>@Html.ActionLink("Zaloguj się", "Login", "Account")</li>
+    </ul>
+}

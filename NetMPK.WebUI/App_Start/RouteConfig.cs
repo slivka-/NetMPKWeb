@@ -18,24 +18,6 @@ namespace NetMPK.WebUI
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
-            routes.MapRoute(
-                name: "StopsListRoute",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Stops", action = "StopsList", id = UrlParameter.Optional }
-            );
-            
-            routes.MapRoute(
-                name: "LinesListRoute",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Lines", action = "LinesList", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "MainMapRoute",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Map", action = "MainMap", id = UrlParameter.Optional }
-            );
         }
     }
 }

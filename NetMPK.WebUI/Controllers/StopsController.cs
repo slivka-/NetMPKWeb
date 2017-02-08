@@ -20,7 +20,7 @@ namespace NetMPK.WebUI.Controllers
 
         public ViewResult StopsList(int page = 1)
         {
-            return View(repository.StopNames.Skip((page-1) * pageSize).Take(pageSize));
+            return View(new Models.StopsModel { isLoggedIn = Models.SessionModel.isLoggedIn, stopNames = repository.StopNames.Skip((page - 1) * pageSize).Take(pageSize) } );
         }
     }
 }

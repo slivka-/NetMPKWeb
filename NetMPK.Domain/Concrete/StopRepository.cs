@@ -19,5 +19,6 @@ namespace NetMPK.Domain.Concrete
                 return client.GetStopsNames().AsEnumerable();
             }
         }
+
     }
 }
