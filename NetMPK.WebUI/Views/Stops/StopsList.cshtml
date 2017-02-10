@@ -3,11 +3,14 @@
 @{
     ViewBag.Title = "Przystanki";
 }
-
-@foreach(var s in Model.stopNames)
-{
-    <div>
-        <h3>@s</h3>
-    </div>
-}
-
+<div>
+    @foreach (var s in Model.stopNames)
+    {
+        <div>
+            @Html.ActionLink(s, "StopDetails", "Stops",new {stopName = s.ToString() },null)
+        </div>
+    }
+</div>
+<div class="position: fixed; left: 0;">
+    @Html.PageLinks(Model.pagingInfo, x => Url.Action("StopsList", new { page = x }))
+</div>

@@ -5,6 +5,7 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/NetMPK.Service" />
     </xsd:schema>
   </wsdl:types>
@@ -20,6 +21,12 @@
   <wsdl:message name="IMPKService_GetStopsNames_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetStopsNamesResponse" />
   </wsdl:message>
+  <wsdl:message name="IMPKService_GetStopByName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStopByName" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetStopByName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStopByNameResponse" />
+  </wsdl:message>
   <wsdl:message name="IMPKService_GetDataUsingDataContract_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
   </wsdl:message>
@@ -34,6 +41,10 @@
     <wsdl:operation name="GetStopsNames">
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetStopsNames" message="tns:IMPKService_GetStopsNames_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetStopsNamesResponse" message="tns:IMPKService_GetStopsNames_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStopByName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetStopByName" message="tns:IMPKService_GetStopByName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetStopByNameResponse" message="tns:IMPKService_GetStopByName_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetDataUsingDataContract">
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetDataUsingDataContract" message="tns:IMPKService_GetDataUsingDataContract_InputMessage" />
@@ -53,6 +64,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetStopsNames">
       <soap:operation soapAction="http://tempuri.org/IMPKService/GetStopsNames" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStopByName">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetStopByName" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

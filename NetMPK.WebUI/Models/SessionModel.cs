@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
+using System.Web.Mvc;
 
 namespace NetMPK.WebUI.Models
 {
@@ -11,7 +13,7 @@ namespace NetMPK.WebUI.Models
             }
             set
             {
-                HttpContext.Current.Session["isLoggedIn"] = value;
+                    HttpContext.Current.Session["isLoggedIn"] = value;
             }
         }
     }

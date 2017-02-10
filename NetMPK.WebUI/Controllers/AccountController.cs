@@ -8,11 +8,17 @@ namespace NetMPK.WebUI.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: Account
+        public PartialViewResult GetPopover()
+        {
+            return PartialView("_LoginPopover");
+        }
+
+
         public ActionResult Login(string login, string password)
         {
             //cala logika odnosnie logowanie, pewnie if true = true? true:false;
-            SetUserInfo();
+            if(login.Equals("user") && password.Equals("pass"))
+                SetUserInfo();
             return RedirectToAction("Index", "Home");
         }
 

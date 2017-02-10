@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using Ninject;
-using Moq;
-using NetMPK.Domain.Abstract;
-using NetMPK.Domain.Entities;
-using NetMPK.Domain.Concrete;
 
 namespace NetMPK.WebUI.Infrastructure
 {
@@ -20,15 +15,15 @@ namespace NetMPK.WebUI.Infrastructure
         }
         public object GetService(Type serviceType)
         {
-            throw new NotImplementedException();
+            return kernel.TryGet(serviceType);
         }
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            throw new NotImplementedException();
+            return kernel.GetAll(serviceType);
         }
         private void AddBindings()
         {
-            kernel.Bind<IStopRepository>().To<StopRepository>();
+            
         }
     }
 }

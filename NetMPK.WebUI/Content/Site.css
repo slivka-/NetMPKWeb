@@ -16,3 +16,13 @@ textarea {
     max-width: 280px;
 }
 
+.loginPopover 
+{
+    width: 250px;
+}
+
+.loginPopoverContent 
+{
+    width: 100%;
+    margin-bottom: 5px;
+}

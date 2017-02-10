@@ -1,0 +1,8 @@
+﻿@model NetMPK.WebUI.Models.StopDetailModel
+<h1>Przystanek: @Model.stopName</h1>
+<h3>Ulica: @Model.streetName</h3>
+<h4>Dostępne linie:</h4>
+@foreach (var s in Model.stopLines)
+{
+    <span>@s</span>
+}

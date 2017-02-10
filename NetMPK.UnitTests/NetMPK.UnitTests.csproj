@@ -109,10 +109,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetMPK.Domain\NetMPK.Domain.csproj">
-      <Project>{fc2150f3-6901-4dbe-9fdc-03d274318088}</Project>
-      <Name>NetMPK.Domain</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NetMPK.WebUI\NetMPK.WebUI.csproj">
       <Project>{63a02c48-97b5-4215-985c-23049b97f6bd}</Project>
       <Name>NetMPK.WebUI</Name>

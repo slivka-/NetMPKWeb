@@ -17,6 +17,9 @@ namespace NetMPK.Service
         List<string> GetStopsNames();
 
         [OperationContract]
+        Tuple<int, string, string, double, double, IEnumerable<int>> GetStopByName(string stopName);
+
+        [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
         // TODO: Add your service operations here

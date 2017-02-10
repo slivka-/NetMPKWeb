@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NetMPK.Domain.MPKService {
+namespace NetMPK.WebUI.NetMPKService {
     using System.Runtime.Serialization;
     using System;
     
@@ -75,7 +75,7 @@ namespace NetMPK.Domain.MPKService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MPKService.IMPKService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="NetMPKService.IMPKService")]
     public interface IMPKService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetData", ReplyAction="http://tempuri.org/IMPKService/GetDataResponse")]
@@ -90,20 +90,26 @@ namespace NetMPK.Domain.MPKService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopsNames", ReplyAction="http://tempuri.org/IMPKService/GetStopsNamesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStopsNamesAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IMPKService/GetDataUsingDataContractResponse")]
-        NetMPK.Domain.MPKService.CompositeType GetDataUsingDataContract(NetMPK.Domain.MPKService.CompositeType composite);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopByName", ReplyAction="http://tempuri.org/IMPKService/GetStopByNameResponse")]
+        System.Tuple<int, string, string, double, double, System.Collections.Generic.List<int>> GetStopByName(string stopName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopByName", ReplyAction="http://tempuri.org/IMPKService/GetStopByNameResponse")]
+        System.Threading.Tasks.Task<System.Tuple<int, string, string, double, double, System.Collections.Generic.List<int>>> GetStopByNameAsync(string stopName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IMPKService/GetDataUsingDataContractResponse")]
-        System.Threading.Tasks.Task<NetMPK.Domain.MPKService.CompositeType> GetDataUsingDataContractAsync(NetMPK.Domain.MPKService.CompositeType composite);
+        NetMPK.WebUI.NetMPKService.CompositeType GetDataUsingDataContract(NetMPK.WebUI.NetMPKService.CompositeType composite);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IMPKService/GetDataUsingDataContractResponse")]
+        System.Threading.Tasks.Task<NetMPK.WebUI.NetMPKService.CompositeType> GetDataUsingDataContractAsync(NetMPK.WebUI.NetMPKService.CompositeType composite);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IMPKServiceChannel : NetMPK.Domain.MPKService.IMPKService, System.ServiceModel.IClientChannel {
+    public interface IMPKServiceChannel : NetMPK.WebUI.NetMPKService.IMPKService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MPKServiceClient : System.ServiceModel.ClientBase<NetMPK.Domain.MPKService.IMPKService>, NetMPK.Domain.MPKService.IMPKService {
+    public partial class MPKServiceClient : System.ServiceModel.ClientBase<NetMPK.WebUI.NetMPKService.IMPKService>, NetMPK.WebUI.NetMPKService.IMPKService {
         
         public MPKServiceClient() {
         }
@@ -140,11 +146,19 @@ namespace NetMPK.Domain.MPKService {
             return base.Channel.GetStopsNamesAsync();
         }
         
-        public NetMPK.Domain.MPKService.CompositeType GetDataUsingDataContract(NetMPK.Domain.MPKService.CompositeType composite) {
+        public System.Tuple<int, string, string, double, double, System.Collections.Generic.List<int>> GetStopByName(string stopName) {
+            return base.Channel.GetStopByName(stopName);
+        }
+        
+        public System.Threading.Tasks.Task<System.Tuple<int, string, string, double, double, System.Collections.Generic.List<int>>> GetStopByNameAsync(string stopName) {
+            return base.Channel.GetStopByNameAsync(stopName);
+        }
+        
+        public NetMPK.WebUI.NetMPKService.CompositeType GetDataUsingDataContract(NetMPK.WebUI.NetMPKService.CompositeType composite) {
             return base.Channel.GetDataUsingDataContract(composite);
         }
         
-        public System.Threading.Tasks.Task<NetMPK.Domain.MPKService.CompositeType> GetDataUsingDataContractAsync(NetMPK.Domain.MPKService.CompositeType composite) {
+        public System.Threading.Tasks.Task<NetMPK.WebUI.NetMPKService.CompositeType> GetDataUsingDataContractAsync(NetMPK.WebUI.NetMPKService.CompositeType composite) {
             return base.Channel.GetDataUsingDataContractAsync(composite);
         }
     }
