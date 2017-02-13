@@ -6,15 +6,8 @@
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/NetMPK.Service" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IMPKService_GetData_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetData" />
-  </wsdl:message>
-  <wsdl:message name="IMPKService_GetData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataResponse" />
-  </wsdl:message>
   <wsdl:message name="IMPKService_GetStopsNames_InputMessage">
     <wsdl:part name="parameters" element="tns:GetStopsNames" />
   </wsdl:message>
@@ -27,17 +20,37 @@
   <wsdl:message name="IMPKService_GetStopByName_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetStopByNameResponse" />
   </wsdl:message>
-  <wsdl:message name="IMPKService_GetDataUsingDataContract_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
+  <wsdl:message name="IMPKService_GetAllLines_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllLines" />
   </wsdl:message>
-  <wsdl:message name="IMPKService_GetDataUsingDataContract_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
+  <wsdl:message name="IMPKService_GetAllLines_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllLinesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetLineRoutes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLineRoutes" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetLineRoutes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLineRoutesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetDirectionsForLine_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDirectionsForLine" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetDirectionsForLine_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDirectionsForLineResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetStreetNameByStop_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStreetNameByStop" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetStreetNameByStop_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStreetNameByStopResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetTimeTable_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeTable" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetTimeTable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeTableResponse" />
   </wsdl:message>
   <wsdl:portType name="IMPKService">
-    <wsdl:operation name="GetData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetData" message="tns:IMPKService_GetData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetDataResponse" message="tns:IMPKService_GetData_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetStopsNames">
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetStopsNames" message="tns:IMPKService_GetStopsNames_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetStopsNamesResponse" message="tns:IMPKService_GetStopsNames_OutputMessage" />
@@ -46,22 +59,29 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetStopByName" message="tns:IMPKService_GetStopByName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetStopByNameResponse" message="tns:IMPKService_GetStopByName_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetDataUsingDataContract">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetDataUsingDataContract" message="tns:IMPKService_GetDataUsingDataContract_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetDataUsingDataContractResponse" message="tns:IMPKService_GetDataUsingDataContract_OutputMessage" />
+    <wsdl:operation name="GetAllLines">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetAllLines" message="tns:IMPKService_GetAllLines_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetAllLinesResponse" message="tns:IMPKService_GetAllLines_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLineRoutes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetLineRoutes" message="tns:IMPKService_GetLineRoutes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetLineRoutesResponse" message="tns:IMPKService_GetLineRoutes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDirectionsForLine">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetDirectionsForLine" message="tns:IMPKService_GetDirectionsForLine_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetDirectionsForLineResponse" message="tns:IMPKService_GetDirectionsForLine_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStreetNameByStop">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetStreetNameByStop" message="tns:IMPKService_GetStreetNameByStop_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetStreetNameByStopResponse" message="tns:IMPKService_GetStreetNameByStop_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeTable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetTimeTable" message="tns:IMPKService_GetTimeTable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetTimeTableResponse" message="tns:IMPKService_GetTimeTable_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMPKService" type="tns:IMPKService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetData">
-      <soap:operation soapAction="http://tempuri.org/IMPKService/GetData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetStopsNames">
       <soap:operation soapAction="http://tempuri.org/IMPKService/GetStopsNames" style="document" />
       <wsdl:input>
@@ -80,8 +100,44 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetDataUsingDataContract">
-      <soap:operation soapAction="http://tempuri.org/IMPKService/GetDataUsingDataContract" style="document" />
+    <wsdl:operation name="GetAllLines">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetAllLines" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLineRoutes">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetLineRoutes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDirectionsForLine">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetDirectionsForLine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStreetNameByStop">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetStreetNameByStop" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeTable">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetTimeTable" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

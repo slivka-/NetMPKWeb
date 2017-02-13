@@ -7,7 +7,7 @@ namespace NetMPK.WebUI.Controllers
 
         public ViewResult MainMap()
         {
-            return View(new Models.MapModel { isLoggedIn = Models.SessionModel.isLoggedIn});
+            return View(new Models.MapModel());
         }
     }
 }

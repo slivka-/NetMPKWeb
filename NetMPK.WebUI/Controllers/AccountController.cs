@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using NetMPK.WebUI.Infrastructure;
 
 namespace NetMPK.WebUI.Controllers
 {
@@ -12,7 +9,6 @@ namespace NetMPK.WebUI.Controllers
         {
             return PartialView("_LoginPopover");
         }
-
 
         public ActionResult Login(string login, string password)
         {
@@ -24,13 +20,13 @@ namespace NetMPK.WebUI.Controllers
 
         private void SetUserInfo()
         {
-            Models.SessionModel.isLoggedIn = true;
+            SessionAccess.isLoggedIn = true;
             //Polecam uzyc sesji i ustawic wszystkie "zmienne" odnosnie usera
         }
 
         private void ClearSession()
         {
-            Models.SessionModel.isLoggedIn = false;
+            SessionAccess.isLoggedIn = false;
         }
     }
 }

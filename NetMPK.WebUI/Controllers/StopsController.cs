@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using NetMPK.WebUI.Infrastructure;
 
 namespace NetMPK.WebUI.Controllers
 {
     public class StopsController : Controller
     {
         NetMPKService.MPKServiceClient client;
-        public int pageSize = 35;
+        private readonly int pageSize = 120;
         
         public StopsController()
         {
-            client = new NetMPKService.MPKServiceClient("BasicHttpBinding_IMPKService");
+            client = SessionAccess.serviceClinet;
         }
 
         public ViewResult StopsList(int page = 1)
@@ -22,7 +23,6 @@ namespace NetMPK.WebUI.Controllers
 
             Models.StopsModel model = new Models.StopsModel
             {
-                isLoggedIn = Models.SessionModel.isLoggedIn,
                 stopNames = fullStopsList.Skip((page - 1) * pageSize).Take(pageSize),
                 pagingInfo = new Models.PagingInfo
                 {
@@ -39,7 +39,6 @@ namespace NetMPK.WebUI.Controllers
             var stopInfo = client.GetStopByName(stopName);
             Models.StopDetailModel model = new Models.StopDetailModel
             {
-                isLoggedIn = Models.SessionModel.isLoggedIn,
                 id = stopInfo.Item1,
                 stopName = stopInfo.Item2,
                 streetName = stopInfo.Item3,

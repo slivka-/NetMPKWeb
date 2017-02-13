@@ -4,12 +4,12 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="NetMPKDBConnection" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="NetMPKDBConnection (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.NetMPK.Service.Properties.Settings.GlobalReference.Default.NetMPKDBConnection" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="NetMPKDBConn" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="NetMPKDBConn (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.NetMPK.Service.Properties.Settings.GlobalReference.Default.NetMPKDBConn" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="LineTableAdapter" GeneratorDataComponentClassName="LineTableAdapter" Name="Line" UserDataComponentName="LineTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.Line" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.Line" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[Line] WHERE (([ID] = @Original_ID) AND ([Line_No] = @Original_Line_No) AND ([Vehicle] = @Original_Vehicle) AND ([Area] = @Original_Area) AND ([Daytime] = @Original_Daytime) AND ([Type] = @Original_Type))</CommandText>
@@ -76,7 +76,7 @@ SELECT ID, Line_No, Vehicle, Area, Daytime, Type FROM Line WHERE (ID = @ID)</Com
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="MPK_UserTableAdapter" GeneratorDataComponentClassName="MPK_UserTableAdapter" Name="MPK_User" UserDataComponentName="MPK_UserTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.MPK_User" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.MPK_User" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[MPK_User] WHERE (([ID] = @Original_ID) AND ([Login] = @Original_Login) AND ([Nick] = @Original_Nick) AND ([Password] = @Original_Password) AND ([Email] = @Original_Email) AND ([Privlidge_level] = @Original_Privlidge_level))</CommandText>
@@ -146,7 +146,7 @@ SELECT ID, Login, Nick, Password, Email, Avatar, Privlidge_level FROM MPK_User W
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="MPK_User_InfoTableAdapter" GeneratorDataComponentClassName="MPK_User_InfoTableAdapter" Name="MPK_User_Info" UserDataComponentName="MPK_User_InfoTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.MPK_User_Info" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.MPK_User_Info" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[MPK_User_Info] WHERE (([UserID] = @Original_UserID) AND ((@IsNull_Name = 1 AND [Name] IS NULL) OR ([Name] = @Original_Name)) AND ((@IsNull_Surname = 1 AND [Surname] IS NULL) OR ([Surname] = @Original_Surname)) AND ((@IsNull_Date_Of_Birth = 1 AND [Date_Of_Birth] IS NULL) OR ([Date_Of_Birth] = @Original_Date_Of_Birth)) AND ([Tracking_Enabled] = @Original_Tracking_Enabled) AND ([Visibility_Lvl] = @Original_Visibility_Lvl) AND ([Trust_lvl] = @Original_Trust_lvl))</CommandText>
@@ -225,7 +225,7 @@ SELECT UserID, Name, Surname, Date_Of_Birth, Tracking_Enabled, Visibility_Lvl, T
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="MPK_User_Tracking_InfoTableAdapter" GeneratorDataComponentClassName="MPK_User_Tracking_InfoTableAdapter" Name="MPK_User_Tracking_Info" UserDataComponentName="MPK_User_Tracking_InfoTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.MPK_User_Tracking_Info" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.MPK_User_Tracking_Info" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[MPK_User_Tracking_Info] WHERE (([UserID] = @Original_UserID) AND ((@IsNull_X_Coord = 1 AND [X_Coord] IS NULL) OR ([X_Coord] = @Original_X_Coord)) AND ((@IsNull_Y_Coord = 1 AND [Y_Coord] IS NULL) OR ([Y_Coord] = @Original_Y_Coord)) AND ([Is_Online] = @Original_Is_Online))</CommandText>
@@ -287,7 +287,7 @@ SELECT UserID, X_Coord, Y_Coord, Is_Online FROM MPK_User_Tracking_Info WHERE (Us
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Point_ScheduleTableAdapter" GeneratorDataComponentClassName="Point_ScheduleTableAdapter" Name="Point_Schedule" UserDataComponentName="Point_ScheduleTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.Point_Schedule" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.Point_Schedule" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[Point_Schedule] WHERE (([Route_Point_ID] = @Original_Route_Point_ID) AND ([Day_Type] = @Original_Day_Type) AND ((@IsNull_H0 = 1 AND [H0] IS NULL) OR ([H0] = @Original_H0)) AND ((@IsNull_H1 = 1 AND [H1] IS NULL) OR ([H1] = @Original_H1)) AND ((@IsNull_H2 = 1 AND [H2] IS NULL) OR ([H2] = @Original_H2)) AND ((@IsNull_H3 = 1 AND [H3] IS NULL) OR ([H3] = @Original_H3)) AND ((@IsNull_H4 = 1 AND [H4] IS NULL) OR ([H4] = @Original_H4)) AND ((@IsNull_H5 = 1 AND [H5] IS NULL) OR ([H5] = @Original_H5)) AND ((@IsNull_H6 = 1 AND [H6] IS NULL) OR ([H6] = @Original_H6)) AND ((@IsNull_H7 = 1 AND [H7] IS NULL) OR ([H7] = @Original_H7)) AND ((@IsNull_H8 = 1 AND [H8] IS NULL) OR ([H8] = @Original_H8)) AND ((@IsNull_H9 = 1 AND [H9] IS NULL) OR ([H9] = @Original_H9)) AND ((@IsNull_H10 = 1 AND [H10] IS NULL) OR ([H10] = @Original_H10)) AND ((@IsNull_H11 = 1 AND [H11] IS NULL) OR ([H11] = @Original_H11)) AND ((@IsNull_H12 = 1 AND [H12] IS NULL) OR ([H12] = @Original_H12)) AND ((@IsNull_H13 = 1 AND [H13] IS NULL) OR ([H13] = @Original_H13)) AND ((@IsNull_H14 = 1 AND [H14] IS NULL) OR ([H14] = @Original_H14)) AND ((@IsNull_H15 = 1 AND [H15] IS NULL) OR ([H15] = @Original_H15)) AND ((@IsNull_H16 = 1 AND [H16] IS NULL) OR ([H16] = @Original_H16)) AND ((@IsNull_H17 = 1 AND [H17] IS NULL) OR ([H17] = @Original_H17)) AND ((@IsNull_H18 = 1 AND [H18] IS NULL) OR ([H18] = @Original_H18)) AND ((@IsNull_H19 = 1 AND [H19] IS NULL) OR ([H19] = @Original_H19)) AND ((@IsNull_H20 = 1 AND [H20] IS NULL) OR ([H20] = @Original_H20)) AND ((@IsNull_H21 = 1 AND [H21] IS NULL) OR ([H21] = @Original_H21)) AND ((@IsNull_H22 = 1 AND [H22] IS NULL) OR ([H22] = @Original_H22)) AND ((@IsNull_H23 = 1 AND [H23] IS NULL) OR ([H23] = @Original_H23)))</CommandText>
@@ -503,7 +503,7 @@ SELECT Route_Point_ID, Day_Type, H0, H1, H2, H3, H4, H5, H6, H7, H8, H9, H10, H1
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Route_PointTableAdapter" GeneratorDataComponentClassName="Route_PointTableAdapter" Name="Route_Point" UserDataComponentName="Route_PointTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.Route_Point" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.Route_Point" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[Route_Point] WHERE (([ID] = @Original_ID) AND ([Stop_No] = @Original_Stop_No) AND ([Stop_ID] = @Original_Stop_ID) AND ([Direction] = @Original_Direction) AND ([Line_ID] = @Original_Line_ID) AND ([On_Demand] = @Original_On_Demand))</CommandText>
@@ -570,7 +570,7 @@ SELECT ID, Stop_No, Stop_ID, Direction, Line_ID, On_Demand FROM Route_Point WHER
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="StopTableAdapter" GeneratorDataComponentClassName="StopTableAdapter" Name="Stop" UserDataComponentName="StopTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.Stop" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.Stop" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[Stop] WHERE (([ID] = @Original_ID) AND ([Name] = @Original_Name) AND ((@IsNull_X_Coord = 1 AND [X_Coord] IS NULL) OR ([X_Coord] = @Original_X_Coord)) AND ((@IsNull_Y_Coord = 1 AND [Y_Coord] IS NULL) OR ([Y_Coord] = @Original_Y_Coord)) AND ((@IsNull_Street_ID = 1 AND [Street_ID] IS NULL) OR ([Street_ID] = @Original_Street_ID)))</CommandText>
@@ -638,7 +638,7 @@ SELECT ID, Name, X_Coord, Y_Coord, Street_ID FROM Stop WHERE (ID = @ID)</Command
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="StreetTableAdapter" GeneratorDataComponentClassName="StreetTableAdapter" Name="Street" UserDataComponentName="StreetTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.Street" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.Street" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[Street] WHERE (([ID] = @Original_ID) AND ([Name] = @Original_Name))</CommandText>
@@ -685,7 +685,7 @@ SELECT ID, Name FROM Street WHERE (ID = @ID)</CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Traffic_EventTableAdapter" GeneratorDataComponentClassName="Traffic_EventTableAdapter" Name="Traffic_Event" UserDataComponentName="Traffic_EventTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="NetMPKDBConnection (Settings)" DbObjectName="NetMPKDB.dbo.Traffic_Event" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.Traffic_Event" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[Traffic_Event] WHERE (([ID] = @Original_ID) AND ([Type] = @Original_Type) AND ([Date_Added] = @Original_Date_Added) AND ([Confirmations] = @Original_Confirmations) AND ([User_ID] = @Original_User_ID) AND ((@IsNull_X_Coord = 1 AND [X_Coord] IS NULL) OR ([X_Coord] = @Original_X_Coord)) AND ((@IsNull_Y_Coord = 1 AND [Y_Coord] IS NULL) OR ([Y_Coord] = @Original_Y_Coord)) AND ((@IsNull_Stop_ID = 1 AND [Stop_ID] IS NULL) OR ([Stop_ID] = @Original_Stop_ID)) AND ((@IsNull_Direction = 1 AND [Direction] IS NULL) OR ([Direction] = @Original_Direction)) AND ((@IsNull_Line_ID = 1 AND [Line_ID] IS NULL) OR ([Line_ID] = @Original_Line_ID)))</CommandText>
@@ -777,6 +777,27 @@ SELECT ID, Type, Date_Added, Confirmations, User_ID, X_Coord, Y_Coord, Stop_ID, 
               <Mapping SourceColumn="Stop_ID" DataSetColumn="Stop_ID" />
               <Mapping SourceColumn="Direction" DataSetColumn="Direction" />
               <Mapping SourceColumn="Line_ID" DataSetColumn="Line_ID" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Exp_Route_PointTableAdapter" GeneratorDataComponentClassName="Exp_Route_PointTableAdapter" Name="Exp_Route_Point" UserDataComponentName="Exp_Route_PointTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="NetMPKDBConn (Settings)" DbObjectName="NetMPKDB.dbo.Exp_Route_Point" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT ID, Line_No, Stop_No, Name, Direction, On_Demand FROM dbo.Exp_Route_Point</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID" DataSetColumn="ID" />
+              <Mapping SourceColumn="Line_No" DataSetColumn="Line_No" />
+              <Mapping SourceColumn="Stop_No" DataSetColumn="Stop_No" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="Direction" DataSetColumn="Direction" />
+              <Mapping SourceColumn="On_Demand" DataSetColumn="On_Demand" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -1143,6 +1164,30 @@ SELECT ID, Type, Date_Added, Confirmations, User_ID, X_Coord, Y_Coord, Stop_ID, 
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Exp_Route_Point" msprop:Generator_TableClassName="Exp_Route_PointDataTable" msprop:Generator_TableVarName="tableExp_Route_Point" msprop:Generator_TablePropName="Exp_Route_Point" msprop:Generator_RowDeletingName="Exp_Route_PointRowDeleting" msprop:Generator_RowChangingName="Exp_Route_PointRowChanging" msprop:Generator_RowEvHandlerName="Exp_Route_PointRowChangeEventHandler" msprop:Generator_RowDeletedName="Exp_Route_PointRowDeleted" msprop:Generator_UserTableName="Exp_Route_Point" msprop:Generator_RowChangedName="Exp_Route_PointRowChanged" msprop:Generator_RowEvArgName="Exp_Route_PointRowChangeEvent" msprop:Generator_RowClassName="Exp_Route_PointRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Line_No" msprop:Generator_ColumnVarNameInTable="columnLine_No" msprop:Generator_ColumnPropNameInRow="Line_No" msprop:Generator_ColumnPropNameInTable="Line_NoColumn" msprop:Generator_UserColumnName="Line_No" type="xs:int" minOccurs="0" />
+              <xs:element name="Stop_No" msprop:Generator_ColumnVarNameInTable="columnStop_No" msprop:Generator_ColumnPropNameInRow="Stop_No" msprop:Generator_ColumnPropNameInTable="Stop_NoColumn" msprop:Generator_UserColumnName="Stop_No" type="xs:int" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Direction" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDirection" msprop:Generator_ColumnPropNameInRow="Direction" msprop:Generator_ColumnPropNameInTable="DirectionColumn" msprop:Generator_UserColumnName="Direction" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="On_Demand" msprop:Generator_ColumnVarNameInTable="columnOn_Demand" msprop:Generator_ColumnPropNameInRow="On_Demand" msprop:Generator_ColumnPropNameInTable="On_DemandColumn" msprop:Generator_UserColumnName="On_Demand" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
@@ -1180,6 +1225,10 @@ SELECT ID, Type, Date_Added, Confirmations, User_ID, X_Coord, Y_Coord, Stop_ID, 
     </xs:unique>
     <xs:unique name="Traffic_Event_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Traffic_Event" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="Exp_Route_Point_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Exp_Route_Point" />
       <xs:field xpath="mstns:ID" />
     </xs:unique>
   </xs:element>

@@ -7,7 +7,7 @@ namespace NetMPK.WebUI.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View("Index", new Models.MainViewModel { isLoggedIn = Models.SessionModel.isLoggedIn });
+            return View("Index", new Models.MainViewModel());
         }
         
     }

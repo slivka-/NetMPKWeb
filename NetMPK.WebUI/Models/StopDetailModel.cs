@@ -13,5 +13,10 @@ namespace NetMPK.WebUI.Models
         public double xCoord { get; set; }
         public double yCoord { get; set; }
         public IEnumerable<int> stopLines { get; set; }
+
+        public StopDetailModel() : base()
+        {
+
+        }
     }
 }

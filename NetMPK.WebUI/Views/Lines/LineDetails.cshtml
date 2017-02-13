@@ -1,0 +1,25 @@
+﻿@using NetMPK.WebUI.HtmlHelpers;
+@model NetMPK.WebUI.Models.LineModel
+@{
+    ViewBag.Title = "Linia "+Model.lineNo;
+}
+<h2>Linia @Model.lineNo</h2>
+<h4>Pojazd: @DbInfoDecoder.DecodeDbExpr(Model.vechicle)</h4>
+<h4>Typ: @DbInfoDecoder.DecodeDbExpr(Model.daytime), @DbInfoDecoder.DecodeDbExpr(Model.area), @DbInfoDecoder.DecodeDbExpr(Model.type)</h4>
+<div>
+    <div class="margin: auto"><h3>Trasy</h3></div>
+    <div class="col-xs-6">
+        <h4>Kierunek: @Model.lineRoutes.First().Key</h4>
+        @foreach (var s in @Model.lineRoutes.First().Value)
+        {
+            <div>@Html.ActionLink(s, "Timetable","Timetable",new {lineNo = Model.lineNo, stopName = s, direction = Model.lineRoutes.First().Key },null)</div>
+        }
+    </div>
+    <div class="col-xs-6">
+        <h4>Kierunek: @Model.lineRoutes.Last().Key</h4>
+        @foreach (var s in @Model.lineRoutes.Last().Value)
+        {
+            <div>@Html.ActionLink(s, "Timetable", "Timetable", new { lineNo = Model.lineNo, stopName = s, direction = Model.lineRoutes.Last().Key }, null)</div>
+        }
+    </div>
+</div>

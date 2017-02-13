@@ -9,80 +9,11 @@
 //------------------------------------------------------------------------------
 
 namespace NetMPK.WebUI.NetMPKService {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/NetMPK.Service")]
-    [System.SerializableAttribute()]
-    public partial class CompositeType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool BoolValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StringValueField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BoolValue {
-            get {
-                return this.BoolValueField;
-            }
-            set {
-                if ((this.BoolValueField.Equals(value) != true)) {
-                    this.BoolValueField = value;
-                    this.RaisePropertyChanged("BoolValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StringValue {
-            get {
-                return this.StringValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StringValueField, value) != true)) {
-                    this.StringValueField = value;
-                    this.RaisePropertyChanged("StringValue");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="NetMPKService.IMPKService")]
     public interface IMPKService {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetData", ReplyAction="http://tempuri.org/IMPKService/GetDataResponse")]
-        string GetData(string value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetData", ReplyAction="http://tempuri.org/IMPKService/GetDataResponse")]
-        System.Threading.Tasks.Task<string> GetDataAsync(string value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopsNames", ReplyAction="http://tempuri.org/IMPKService/GetStopsNamesResponse")]
         System.Collections.Generic.List<string> GetStopsNames();
@@ -96,11 +27,35 @@ namespace NetMPK.WebUI.NetMPKService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopByName", ReplyAction="http://tempuri.org/IMPKService/GetStopByNameResponse")]
         System.Threading.Tasks.Task<System.Tuple<int, string, string, double, double, System.Collections.Generic.List<int>>> GetStopByNameAsync(string stopName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IMPKService/GetDataUsingDataContractResponse")]
-        NetMPK.WebUI.NetMPKService.CompositeType GetDataUsingDataContract(NetMPK.WebUI.NetMPKService.CompositeType composite);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetAllLines", ReplyAction="http://tempuri.org/IMPKService/GetAllLinesResponse")]
+        System.Collections.Generic.List<System.Tuple<int, string, string, string, string>> GetAllLines();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IMPKService/GetDataUsingDataContractResponse")]
-        System.Threading.Tasks.Task<NetMPK.WebUI.NetMPKService.CompositeType> GetDataUsingDataContractAsync(NetMPK.WebUI.NetMPKService.CompositeType composite);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetAllLines", ReplyAction="http://tempuri.org/IMPKService/GetAllLinesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<int, string, string, string, string>>> GetAllLinesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetLineRoutes", ReplyAction="http://tempuri.org/IMPKService/GetLineRoutesResponse")]
+        System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> GetLineRoutes(int lineNo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetLineRoutes", ReplyAction="http://tempuri.org/IMPKService/GetLineRoutesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>> GetLineRoutesAsync(int lineNo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDirectionsForLine", ReplyAction="http://tempuri.org/IMPKService/GetDirectionsForLineResponse")]
+        System.Collections.Generic.List<string> GetDirectionsForLine(int lineNo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDirectionsForLine", ReplyAction="http://tempuri.org/IMPKService/GetDirectionsForLineResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetDirectionsForLineAsync(int lineNo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStreetNameByStop", ReplyAction="http://tempuri.org/IMPKService/GetStreetNameByStopResponse")]
+        string GetStreetNameByStop(string stopName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStreetNameByStop", ReplyAction="http://tempuri.org/IMPKService/GetStreetNameByStopResponse")]
+        System.Threading.Tasks.Task<string> GetStreetNameByStopAsync(string stopName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetTimeTable", ReplyAction="http://tempuri.org/IMPKService/GetTimeTableResponse")]
+        System.Collections.Generic.List<System.Collections.Generic.List<string>> GetTimeTable(int lineNo, string stopName, string direction);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetTimeTable", ReplyAction="http://tempuri.org/IMPKService/GetTimeTableResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<string>>> GetTimeTableAsync(int lineNo, string stopName, string direction);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -130,14 +85,6 @@ namespace NetMPK.WebUI.NetMPKService {
                 base(binding, remoteAddress) {
         }
         
-        public string GetData(string value) {
-            return base.Channel.GetData(value);
-        }
-        
-        public System.Threading.Tasks.Task<string> GetDataAsync(string value) {
-            return base.Channel.GetDataAsync(value);
-        }
-        
         public System.Collections.Generic.List<string> GetStopsNames() {
             return base.Channel.GetStopsNames();
         }
@@ -154,12 +101,44 @@ namespace NetMPK.WebUI.NetMPKService {
             return base.Channel.GetStopByNameAsync(stopName);
         }
         
-        public NetMPK.WebUI.NetMPKService.CompositeType GetDataUsingDataContract(NetMPK.WebUI.NetMPKService.CompositeType composite) {
-            return base.Channel.GetDataUsingDataContract(composite);
+        public System.Collections.Generic.List<System.Tuple<int, string, string, string, string>> GetAllLines() {
+            return base.Channel.GetAllLines();
         }
         
-        public System.Threading.Tasks.Task<NetMPK.WebUI.NetMPKService.CompositeType> GetDataUsingDataContractAsync(NetMPK.WebUI.NetMPKService.CompositeType composite) {
-            return base.Channel.GetDataUsingDataContractAsync(composite);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<int, string, string, string, string>>> GetAllLinesAsync() {
+            return base.Channel.GetAllLinesAsync();
+        }
+        
+        public System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> GetLineRoutes(int lineNo) {
+            return base.Channel.GetLineRoutes(lineNo);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>> GetLineRoutesAsync(int lineNo) {
+            return base.Channel.GetLineRoutesAsync(lineNo);
+        }
+        
+        public System.Collections.Generic.List<string> GetDirectionsForLine(int lineNo) {
+            return base.Channel.GetDirectionsForLine(lineNo);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetDirectionsForLineAsync(int lineNo) {
+            return base.Channel.GetDirectionsForLineAsync(lineNo);
+        }
+        
+        public string GetStreetNameByStop(string stopName) {
+            return base.Channel.GetStreetNameByStop(stopName);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetStreetNameByStopAsync(string stopName) {
+            return base.Channel.GetStreetNameByStopAsync(stopName);
+        }
+        
+        public System.Collections.Generic.List<System.Collections.Generic.List<string>> GetTimeTable(int lineNo, string stopName, string direction) {
+            return base.Channel.GetTimeTable(lineNo, stopName, direction);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<string>>> GetTimeTableAsync(int lineNo, string stopName, string direction) {
+            return base.Channel.GetTimeTableAsync(lineNo, stopName, direction);
         }
     }
 }

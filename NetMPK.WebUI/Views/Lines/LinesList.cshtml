@@ -1,6 +1,78 @@
-﻿@{
-    ViewBag.Title = "LinesList";
+﻿@using NetMPK.WebUI.Models;
+@model NetMPK.WebUI.Models.LineModel
+@{
+    ViewBag.Title = "Linie";
 }
-
-<h2>LinesList</h2>
-
+@{IEnumerable<LineModel> linesTab; }
+<div>
+    <h3>Linie tramwajowe</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("TRAM") && x.daytime.Equals("DAY")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink((t.lineNo>9)?t.lineNo.ToString():(" "+t.lineNo.ToString()).ToString(), "LineDetails",t, new { @class = "lineNo" })</span>
+    }
+</div>
+<div>
+    <h3>Linie autobusowe miejskie</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("BUS") && x.daytime.Equals("DAY") && x.area.Equals("CITY") && x.type.Equals("NORMAL")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink(t.lineNo.ToString(), "LineDetails", t, new { @class = "lineNo" })</span>
+    }
+</div>
+<div>
+    <h3>Linie tramwajowe nocne</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("TRAM") && x.daytime.Equals("NIGHT")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink(t.lineNo.ToString(), "LineDetails", t,new {@class = "lineNo night" })</span>
+    }
+</div>
+<div>
+    <h3>Linie autobusowe miejskie nocne</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("BUS") && x.daytime.Equals("NIGHT") && x.area.Equals("CITY")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink(t.lineNo.ToString(), "LineDetails", t, new { @class = "lineNo night" })</span>
+    }
+</div>
+<div>
+    <h3>Linie autobusowe miejskie pośpieszne</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("BUS") && x.daytime.Equals("DAY") && x.area.Equals("CITY") && x.type.Equals("ACCEL")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink(t.lineNo.ToString(), "LineDetails", t, new { @class = "lineNo additional" })</span>
+    }
+</div>
+<div>
+    <h3>Linie autobusowe miejskie zastępcze</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("BUS") && x.daytime.Equals("DAY") && x.area.Equals("CITY") && x.type.Equals("REPLACE")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink(t.lineNo.ToString(), "LineDetails", t, new { @class = "lineNo additional" })</span>
+    }
+</div>
+<div>
+    <h3>Linie autobusowe miejskie dodatkowe</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("BUS") && x.daytime.Equals("DAY") && x.area.Equals("CITY") && x.type.Equals("AUX")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink(t.lineNo.ToString(), "LineDetails", t, new { @class = "lineNo additional" })</span>
+    }
+</div>
+<div>
+    <h3>Linie autobusowe aglomeracyjne</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("BUS") && x.daytime.Equals("DAY") && x.area.Equals("AGGL") && x.type.Equals("NORMAL")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink(t.lineNo.ToString(), "LineDetails", t, new { @class = "lineNo" })</span>
+    }
+</div>
+<div>
+    <h3>Linie autobusowe aglomeracyjne nocne</h3>
+    @{ linesTab = Model.linesList.Where(x => x.vechicle.Equals("BUS") && x.daytime.Equals("NIGHT") && x.area.Equals("AGGL") && x.type.Equals("NORMAL")).OrderBy(x => x.lineNo);}
+    @foreach (var t in linesTab)
+    {
+        <span class="lineNo-span">@Html.ActionLink(t.lineNo.ToString(), "LineDetails", t, new { @class = "lineNo night" })</span>
+    }
+</div>

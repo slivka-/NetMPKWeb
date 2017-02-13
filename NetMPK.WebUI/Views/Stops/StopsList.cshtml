@@ -3,14 +3,31 @@
 @{
     ViewBag.Title = "Przystanki";
 }
-<div>
-    @foreach (var s in Model.stopNames)
-    {
-        <div>
-            @Html.ActionLink(s, "StopDetails", "Stops",new {stopName = s.ToString() },null)
-        </div>
-    }
-</div>
-<div class="position: fixed; left: 0;">
-    @Html.PageLinks(Model.pagingInfo, x => Url.Action("StopsList", new { page = x }))
+@{char lastChar = ' ';}
+<div class="wrapper">
+    <div class="list-main">
+        @for (int i = 0; i < 4; i++)
+        {
+            <div class="col-xs-3 list-col">
+                @foreach (var s in Model.stopNames.Skip(i * 30).Take(30))
+                {
+                    if(!s.First().ToString().Equals(lastChar.ToString(),StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        lastChar = s.First();
+                        <div>
+                            <h3>
+                                @char.ToUpper(lastChar).ToString().First();
+                            </h3>
+                        </div>
+                    }
+                    <div>
+                        @Html.ActionLink(s, "StopDetails", "Stops", new { stopName = s.ToString() }, null)
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    <div class="pagePicker">
+        @Html.PageLinks(Model.pagingInfo, x => Url.Action("StopsList", new { page = x }))
+    </div>
 </div>

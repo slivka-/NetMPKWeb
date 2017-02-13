@@ -1,8 +1,11 @@
 ﻿@model NetMPK.WebUI.Models.StopDetailModel
+@{
+    ViewBag.Title = "Przystanek "+Model.stopName;
+}
 <h1>Przystanek: @Model.stopName</h1>
 <h3>Ulica: @Model.streetName</h3>
 <h4>Dostępne linie:</h4>
 @foreach (var s in Model.stopLines)
 {
-    <span>@s</span>
+    <span  class="lineNo-span">@Html.ActionLink(s.ToString(), "Timetable","Timetable", new { lineNo = s, stopName = Model.stopName }, new { @class = "lineNo" })</span>
 }

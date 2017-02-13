@@ -1,26 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 
 namespace NetMPK.Service
 {
     [ServiceContract]
     public interface IMPKService
     {
+        #region Default
+        /*
         [OperationContract]
         string GetData(string value);
 
+        [OperationContract]
+        CompositeType GetDataUsingDataContract(CompositeType composite);
+        */
+        #endregion
+
+        #region Stops
         [OperationContract]
         List<string> GetStopsNames();
 
         [OperationContract]
         Tuple<int, string, string, double, double, IEnumerable<int>> GetStopByName(string stopName);
+        #endregion
+
+        #region Lines
+        [OperationContract]
+        List<Tuple<int, string, string, string, string>> GetAllLines();
 
         [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        Dictionary<string, List<string>> GetLineRoutes(int lineNo);
+
+        [OperationContract]
+        List<string> GetDirectionsForLine(int lineNo);
+        #endregion
+
+        #region Streets
+        [OperationContract]
+        string GetStreetNameByStop(string stopName);
+        #endregion
+
+        #region Timetables
+        [OperationContract]
+        List<List<string>> GetTimeTable(int lineNo, string stopName, string direction);
+        #endregion
 
         // TODO: Add your service operations here
     }

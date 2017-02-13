@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetMPK.Domain.Abstract;
 using NetMPK.WebUI.Controllers;
 using System.Linq;
 using Moq;
 using NetMPK.WebUI.Models;
-using TypeMock;
 using System.Web;
-using TypeMock.ArrangeActAssert;
 
 namespace NetMPK.UnitTests
 {

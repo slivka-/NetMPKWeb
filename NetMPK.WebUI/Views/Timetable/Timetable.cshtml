@@ -1,0 +1,52 @@
+﻿@model NetMPK.WebUI.Models.TimetableModel
+@{
+    ViewBag.Title = "Rozkład jazdy dla linii " + Model.lineNo;
+}
+<h2>Rozkład jazdy dla linii <span class="bold">@Model.lineNo</span> na przystanku <span class="bold">@Model.stopName - @Model.streetName</span></h2>
+<h3>Kierunek @Model.currentDirection</h3>
+<div class="timeTable-wrapper">
+    <div class="timeTable-route">
+        <h4>Przystanki</h4>
+        @foreach (var s in Model.routePoints)
+        {
+            if (!s.Equals(Model.stopName))
+            {
+                <div>@s</div>
+            }
+            else
+            {
+                <div class="bold">@s</div>
+            }
+        }
+    </div>
+    <div class="timeTable-main">
+        <h4>Rozkład jazdy</h4>
+        <table>
+            <tr>
+                <td>Godzina</td>
+                <td>Dni powszednie</td>
+                <td>Soboty</td>
+                <td>Niedziele i święta</td>
+            </tr>
+            @{ int i = 0; }
+            @foreach (var row in Model.timeTable)
+            {
+                <tr>
+                    <td>@i</td>
+                    @{i++;}
+                    @foreach (var s in row)
+                    {
+                        if (!s.Equals("EMPTY"))
+                        {
+                            <td>@s</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+</div>

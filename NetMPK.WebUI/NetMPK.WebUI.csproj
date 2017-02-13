@@ -180,9 +180,6 @@
     <Content Include="Scripts\_mainScript.js" />
     <None Include="Service References\NetMPKService\configuration91.svcinfo" />
     <None Include="Service References\NetMPKService\configuration.svcinfo" />
-    <Content Include="Service References\NetMPKService\NetMPK.WebUI.NetMPKService.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <None Include="Service References\NetMPKService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -198,18 +195,21 @@
     <Compile Include="Controllers\LinesController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\StopsController.cs" />
+    <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlHelpers\DbInfoDecoder.cs" />
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
-    <Compile Include="Models\LinesModel.cs" />
+    <Compile Include="Models\LineModel.cs" />
     <Compile Include="Models\MainViewModel.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
-    <Compile Include="Models\SessionModel.cs" />
+    <Compile Include="Infrastructure\SessionAccess.cs" />
     <Compile Include="Models\StopDetailModel.cs" />
     <Compile Include="Models\StopsModel.cs" />
+    <Compile Include="Models\TimetableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\NetMPKService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -239,9 +239,6 @@
     <None Include="Service References\NetMPKService\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\NetMPKService\NetMPK.Service.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\NetMPKService\service.wsdl" />
     <None Include="Service References\NetMPKService\service.xsd">
       <SubType>Designer</SubType>
@@ -252,6 +249,8 @@
     <None Include="Service References\NetMPKService\System.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Lines\LineDetails.cshtml" />
+    <Content Include="Views\Timetable\Timetable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
