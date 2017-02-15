@@ -42,8 +42,25 @@ namespace NetMPK.Service
         #region Stops
         public List<string> GetStopsNames()
         {
-            MPKDS.StopDataTable stopData = stopAdapter.GetData();
-            return stopData.OrderBy(s => s.Name).Select(s => s.Name).ToList();
+            return stopAdapter.GetData().OrderBy(s => s.Name).Select(s => s.Name).ToList();
+        }
+
+        public Dictionary<string, string> GetStopsWithStreets()
+        {
+            Dictionary<string, string> output = new Dictionary<string, string>();
+            var stops = stopAdapter.GetData().ToList();
+            var streets = streetAdapter.GetData().ToList();
+            foreach (var s in stops)
+            {
+                output.Add(
+                            s.Name, 
+                            streets.Where(x => x.ID.Equals(s.Street_ID))
+                                   .Select(x => x.Name)
+                                   .Single()
+                          );
+            }
+            
+            return output.OrderBy(x => x.Key).ToDictionary(x => x.Key, x=> x.Value);
         }
 
         public Tuple<int, string, string, double, double, IEnumerable<int>> GetStopByName(string stopName)

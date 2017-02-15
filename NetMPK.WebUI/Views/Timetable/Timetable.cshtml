@@ -2,8 +2,38 @@
 @{
     ViewBag.Title = "Rozkład jazdy dla linii " + Model.lineNo;
 }
-<h2>Rozkład jazdy dla linii <span class="bold">@Model.lineNo</span> na przystanku <span class="bold">@Model.stopName - @Model.streetName</span></h2>
-<h3>Kierunek @Model.currentDirection</h3>
+<h2>
+    Rozkład jazdy dla linii <span class="bold">@Model.lineNo</span> na przystanku 
+    <span class="bold">
+        @Model.stopName
+        @if (Model.streetName != "")
+        {
+            <span>-</span> @Model.streetName
+
+        }
+    </span>
+</h2>
+<h3>
+@{var arr = Model.directions.ToArray();}
+Kierunki:
+@for (int d = 0; d < 2; d++)
+{
+    if (arr[d].Equals(Model.currentDirection))
+    {
+        <span class="bold">@arr[d]</span>
+    }
+    else
+    {
+    <span>
+        @Html.ActionLink(arr[d], "Timetable", "Timetable", new { lineNo = Model.lineNo, stopName = Model.stopName, direction = arr[d] }, null)
+    </span>
+    }
+    if (d == 0)
+    {
+        <span>-</span>
+    }
+}
+</h3>
 <div class="timeTable-wrapper">
     <div class="timeTable-route">
         <h4>Przystanki</h4>
@@ -11,40 +41,130 @@
         {
             if (!s.Equals(Model.stopName))
             {
-                <div>@s</div>
+                <div>
+                    @Html.ActionLink(s.ToString(), "Timetable", "Timetable", new { lineNo = Model.lineNo, stopName = s, direction = Model.currentDirection }, null)
+                </div>
             }
             else
             {
                 <div class="bold">@s</div>
             }
         }
-    </div>
+            </div>
     <div class="timeTable-main">
         <h4>Rozkład jazdy</h4>
         <table>
             <tr>
-                <td>Godzina</td>
-                <td>Dni powszednie</td>
-                <td>Soboty</td>
-                <td>Niedziele i święta</td>
+                <td class="thic-border">Godzina</td>
+                <td class="thic-border">Dni powszednie</td>
+                <td class="thic-border">Soboty</td>
+                <td class="thic-border">Niedziele i święta</td>
             </tr>
             @{ int i = 0; }
+            @{ 
+                int hourToHighlight = -1;
+                string minuteToHighlight = "";
+                int dayToHighlight = -1;
+                int nowHour = DateTime.Now.Hour;
+                var rowList = Model.timeTable.ToList()[nowHour].ToList();
+                if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    dayToHighlight = 2;
+                }
+                else if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    dayToHighlight = 1;
+                }
+                else
+                {
+                    dayToHighlight = 0;
+                }
+                var minutes = rowList[dayToHighlight].Split(',');
+                foreach (var m in minutes)
+                {
+                    int tempMinute = -1;
+                    bool isParsed = int.TryParse(m, out tempMinute);
+                    if (isParsed && tempMinute >= DateTime.Now.Minute)
+                    {
+                        minuteToHighlight = m;
+                        hourToHighlight = nowHour;
+                        break;
+                    }
+                }
+                if (hourToHighlight == -1)
+                {
+                    hourToHighlight = nowHour;
+                    while (true)
+                    {
+                        if (hourToHighlight >= 23)
+                        {
+                            hourToHighlight = 0;
+                        }
+                        else
+                        {
+                            hourToHighlight++;
+                        }
+                        string temp = Model.timeTable.ToList()[hourToHighlight].ToList()[dayToHighlight].Split(',')[0];
+                        int a = -1;
+                        bool isMinute = int.TryParse(temp, out a);
+                        if(isMinute)
+                        {
+                            minuteToHighlight = temp;
+                            break;
+                        }
+                    }
+
+                }
+            }
             @foreach (var row in Model.timeTable)
             {
                 <tr>
-                    <td>@i</td>
-                    @{i++;}
+                    @if (i == hourToHighlight)
+                    {
+                        <td class="bold thic-border">@i</td>
+                    }
+                    else
+                    {
+                        <td class="thic-border">@i</td>
+                    }
+                    @{int colNo = 0;}
                     @foreach (var s in row)
                     {
                         if (!s.Equals("EMPTY"))
                         {
-                            <td>@s</td>
+                            if (colNo == dayToHighlight && i == hourToHighlight)
+                            {
+                                <td class="additional align-left">
+                                @{var min = s.Split(',');}
+                                @for(int q = 0;q<min.Length;q++)
+                                {
+                                    if (min[q].Equals(minuteToHighlight))
+                                    {
+                                        <span class="bold">@min[q]</span>
+                                    }
+                                    else
+                                    {
+                                        @min[q]
+                                    }
+                                    if (q < min.Length - 1)
+                                    {
+                                        <span>,</span>
+                                    }
+                                }
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="align-left">@s</td>
+                            }
                         }
                         else
                         {
                             <td></td>
                         }
+                        {colNo++;}
                     }
+                    @{i++;}
                 </tr>
             }
         </table>

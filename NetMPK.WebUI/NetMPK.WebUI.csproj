@@ -177,6 +177,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\StopSearch.js" />
     <Content Include="Scripts\_mainScript.js" />
     <None Include="Service References\NetMPKService\configuration91.svcinfo" />
     <None Include="Service References\NetMPKService\configuration.svcinfo" />
@@ -194,6 +195,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LinesController.cs" />
     <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\StopsController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Global.asax.cs">
@@ -207,6 +209,7 @@
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Infrastructure\SessionAccess.cs" />
+    <Compile Include="Models\RoutesModel.cs" />
     <Compile Include="Models\StopDetailModel.cs" />
     <Compile Include="Models\StopsModel.cs" />
     <Compile Include="Models\TimetableModel.cs" />
@@ -251,6 +254,7 @@
     </None>
     <Content Include="Views\Lines\LineDetails.cshtml" />
     <Content Include="Views\Timetable\Timetable.cshtml" />
+    <Content Include="Views\Routes\Routes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

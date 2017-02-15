@@ -27,6 +27,8 @@ namespace NetMPK.WebUI
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/_mainScripts").Include("~/Scripts/_mainScript.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/_stopSearch").Include("~/Scripts/StopSearch.js"));
         }
     }
 }

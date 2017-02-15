@@ -1,0 +1,40 @@
+﻿@using System.Web.Optimization
+@model NetMPK.WebUI.Models.RoutesModel
+@Scripts.Render("~/bundles/_stopSearch")
+<div class="routes-wrapper">
+    <!------------------------------------------------------------------------------------------------------------------------->
+    <div class="routes-left-wrapper">
+        <h3>Punkt początkowy</h3>
+        <div class="btn-group startSelectWrapper">
+            <input type="text" class="form-control noClear" id="startName" />
+            <span id="startClearIcon" class="glyphicon glyphicon-remove"></span>
+        </div>
+        <div class="routes-left">
+            <div class="stopSelectBox">
+                @foreach (var s in Model.allStops)
+                {
+                    var title = (s.Value != "") ? "Ulica " + s.Value : null;
+                    <div id="@s.Key.ToUpper()" class="stopSelectStart" name="@s.Value.ToUpper()" data-toggle="tooltip" data-placement="right"  title="@title">@s.Key</div>
+                }
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------------------->
+    <div class="routes-right-wrapper">
+        <h3>Punkt docelowy</h3>
+        <div class="btn-group stopSelectWrapper">
+            <input type="text" class="form-control noClear" id="stopName" />
+            <span id="stopClearIcon" class="glyphicon glyphicon-remove"></span>
+        </div>
+        <div class="routes-right">
+            <div class="stopSelectBox">
+                @foreach (var s in Model.allStops)
+                {
+                    var title = (s.Value != "") ? "Ulica " + s.Value : null;
+                    <div id="@s.Key.ToUpper()" class="stopSelectStop" name="@s.Value.ToUpper()" data-toggle="tooltip" data-placement="right"  title="@title">@s.Key</div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="routes-main">Trasa</div>
+</div>

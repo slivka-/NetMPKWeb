@@ -21,6 +21,12 @@ namespace NetMPK.WebUI.NetMPKService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopsNames", ReplyAction="http://tempuri.org/IMPKService/GetStopsNamesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStopsNamesAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopsWithStreets", ReplyAction="http://tempuri.org/IMPKService/GetStopsWithStreetsResponse")]
+        System.Collections.Generic.Dictionary<string, string> GetStopsWithStreets();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopsWithStreets", ReplyAction="http://tempuri.org/IMPKService/GetStopsWithStreetsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetStopsWithStreetsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopByName", ReplyAction="http://tempuri.org/IMPKService/GetStopByNameResponse")]
         System.Tuple<int, string, string, double, double, System.Collections.Generic.List<int>> GetStopByName(string stopName);
         
@@ -91,6 +97,14 @@ namespace NetMPK.WebUI.NetMPKService {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetStopsNamesAsync() {
             return base.Channel.GetStopsNamesAsync();
+        }
+        
+        public System.Collections.Generic.Dictionary<string, string> GetStopsWithStreets() {
+            return base.Channel.GetStopsWithStreets();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, string>> GetStopsWithStreetsAsync() {
+            return base.Channel.GetStopsWithStreetsAsync();
         }
         
         public System.Tuple<int, string, string, double, double, System.Collections.Generic.List<int>> GetStopByName(string stopName) {

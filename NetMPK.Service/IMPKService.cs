@@ -23,6 +23,9 @@ namespace NetMPK.Service
         List<string> GetStopsNames();
 
         [OperationContract]
+        Dictionary<string, string> GetStopsWithStreets();
+
+        [OperationContract]
         Tuple<int, string, string, double, double, IEnumerable<int>> GetStopByName(string stopName);
         #endregion
 

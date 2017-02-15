@@ -68,16 +68,17 @@ textarea {
 }
 
 .appFooter {
-    position: fixed;
+    position: absolute;
     bottom: 0;
+    left: 0;
     background-color:rgba(255,255,255,0.9);
-    height: 70px;
+    height: 40px;
     width: 100%;
+    padding-left:20%;
 }
 
 .appBody {
-    padding-bottom: 100px;
-    margin-bottom: 100px;
+
 }
 
 .timeTable-wrapper {
@@ -100,9 +101,109 @@ textarea {
 
 table {
     border-collapse: collapse;
+    width: 500px;
 }
 
-table, tr, td
+table
+{
+    border: 2px solid black;
+    text-align: center;
+}
+tr, td
 {
     border: 1px solid black;
+    text-align: center;
 }
+
+.thic-border{
+    border: 2px solid black;
+}
+
+.align-left{
+    text-align: left;
+}
+/*===================================================*/
+.routes-wrapper {
+    width: 100%;
+    height: 800px;
+    overflow: hidden;
+}
+/*===================================================*/
+.routes-left {
+    margin-top: 2px;
+    width: 250px;
+    height: 90%;
+    overflow:auto;
+    border: 2px solid rgba(0,0,0,0.2);
+}
+.routes-left-wrapper{
+    height:750px;
+    width:250px;
+    float: left;
+}
+.stopSelectBox {}
+.startSelectWrapper {
+    width: 100%;
+}
+.noClear::-ms-clear {
+    display: none;
+}
+#startClearIcon {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    bottom: 2px;
+    height: 14px;
+    margin: auto;
+    font-size: 14px;
+    cursor: pointer;
+    color: #ccc;
+}
+.stopSelectStart {
+    color : black;
+    cursor: pointer; 
+    cursor: hand;
+}
+/*===================================================*/
+.routes-right{
+    margin-top: 2px;
+    width: 250px;
+    height: 90%;
+    overflow:auto;
+    border: 2px solid rgba(0,0,0,0.2);
+}
+.routes-right-wrapper{
+    height:750px;
+    width:250px;
+    float: left;
+    margin-left: 4px;
+}
+.stopSelectBox {}
+.stopSelectWrapper {
+    width: 100%;
+}
+.noClear::-ms-clear {
+    display: none;
+}
+#stopClearIcon {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    bottom: 2px;
+    height: 14px;
+    margin: auto;
+    font-size: 14px;
+    cursor: pointer;
+    color: #ccc;
+}
+.stopSelectStop {
+    color : black;
+    cursor: pointer; 
+    cursor: hand;
+}
+
+.routes-main {
+    margin-left: 50px;
+}
+
+
