@@ -110,4 +110,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetRoute">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="startName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="stopName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRouteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetRouteResult" nillable="true" type="q8:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

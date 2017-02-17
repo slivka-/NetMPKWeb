@@ -22,5 +22,17 @@ namespace NetMPK.Service.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NetMPKDBConn {
+            get {
+                return ((string)(this["NetMPKDBConn"]));
+            }
+            set {
+                this["NetMPKDBConn"] = value;
+            }
+        }
     }
 }

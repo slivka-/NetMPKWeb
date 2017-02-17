@@ -36,9 +36,19 @@
         $('.stopSelectStart').css("display", "none");
         var startVal = $("#startName").val().toUpperCase();
         if (startVal.length != 0)
-            $("div[id^='" + startVal + "'][class='stopSelectStart']").css("display", "block")
+        {
+            if ($("#searchSelectRadioFormStart :radio:checked").attr("id") == "startPointStop")
+            {
+                $("div[id^='" + startVal + "'][class='stopSelectStart']").css("display", "block");
+            }
+            else if ($("#searchSelectRadioFormStart :radio:checked").attr("id") == "startPointStreet") {
+                $("div[name^='" + startVal + "'][class='stopSelectStart']").css("display", "block");
+            }
+        }
         else
+        {
             $('.stopSelectStart').css("display", "block");
+        }
     }
 //destinationStop================================================================================================================
     //search
@@ -74,9 +84,18 @@
         $('.stopSelectStop').css("display", "none");
         var startVal = $("#stopName").val().toUpperCase();
         if (startVal.length != 0)
-            $("div[id^='" + startVal + "'][class='stopSelectStop']").css("display", "block")
+        {
+            if ($("#searchSelectRadioFormEnd :radio:checked").attr("id") == "stopPointStop") {
+                $("div[id^='" + startVal + "'][class='stopSelectStop']").css("display", "block");
+            }
+            else if ($("#searchSelectRadioFormEnd :radio:checked").attr("id") == "stopPointStreet") {
+                $("div[name^='" + startVal + "'][class='stopSelectStop']").css("display", "block");
+            }
+        }
         else
+        {
             $('.stopSelectStop').css("display", "block");
+        }
     }
 
 });

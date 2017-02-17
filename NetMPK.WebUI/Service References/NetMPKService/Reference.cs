@@ -62,6 +62,12 @@ namespace NetMPK.WebUI.NetMPKService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetTimeTable", ReplyAction="http://tempuri.org/IMPKService/GetTimeTableResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<string>>> GetTimeTableAsync(int lineNo, string stopName, string direction);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetRoute", ReplyAction="http://tempuri.org/IMPKService/GetRouteResponse")]
+        System.Collections.Generic.List<string> GetRoute(string startName, string stopName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetRoute", ReplyAction="http://tempuri.org/IMPKService/GetRouteResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetRouteAsync(string startName, string stopName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -153,6 +159,14 @@ namespace NetMPK.WebUI.NetMPKService {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<string>>> GetTimeTableAsync(int lineNo, string stopName, string direction) {
             return base.Channel.GetTimeTableAsync(lineNo, stopName, direction);
+        }
+        
+        public System.Collections.Generic.List<string> GetRoute(string startName, string stopName) {
+            return base.Channel.GetRoute(startName, stopName);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetRouteAsync(string startName, string stopName) {
+            return base.Channel.GetRouteAsync(startName, stopName);
         }
     }
 }

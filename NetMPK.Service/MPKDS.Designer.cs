@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.Configuration;
+
 #pragma warning disable 1591
 
 namespace NetMPK.Service {
@@ -6839,7 +6839,7 @@ SELECT ID, Line_No, Vehicle, Area, Daytime, Type FROM Line WHERE (ID = @ID)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7257,7 +7257,7 @@ SELECT ID, Login, Nick, Password, Email, Avatar, Privlidge_level FROM MPK_User W
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7694,7 +7694,7 @@ SELECT UserID, Name, Surname, Date_Of_Birth, Tracking_Enabled, Visibility_Lvl, T
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8100,7 +8100,7 @@ SELECT UserID, X_Coord, Y_Coord, Is_Online FROM MPK_User_Tracking_Info WHERE (Us
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8671,7 +8671,7 @@ SELECT Route_Point_ID, Day_Type, H0, H1, H2, H3, H4, H5, H6, H7, H8, H9, H10, H1
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9839,7 +9839,7 @@ SELECT ID, Stop_No, Stop_ID, Direction, Line_ID, On_Demand FROM Route_Point WHER
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10173,7 +10173,7 @@ SELECT ID, Name, X_Coord, Y_Coord, Street_ID FROM Stop WHERE (ID = @ID)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10569,16 +10569,14 @@ SELECT ID, Name, X_Coord, Y_Coord, Street_ID FROM Stop WHERE (ID = @ID)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Name", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "ID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
-
+        
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitConnection()
-        {
+        private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
-
-
+        
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
@@ -10942,7 +10940,7 @@ SELECT ID, Type, Date_Added, Confirmations, User_ID, X_Coord, Y_Coord, Stop_ID, 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11433,7 +11431,7 @@ SELECT ID, Type, Date_Added, Confirmations, User_ID, X_Coord, Y_Coord, Stop_ID, 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = ConfigurationManager.AppSettings["connString"];
+            this._connection.ConnectionString = global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11468,6 +11466,83 @@ SELECT ID, Type, Date_Added, Confirmations, User_ID, X_Coord, Y_Coord, Stop_ID, 
             MPKDS.Exp_Route_PointDataTable dataTable = new MPKDS.Exp_Route_PointDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class QueriesTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.IDbCommand[] _commandCollection;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.IDbCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.IDbCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[0])).Connection = new global::System.Data.SqlClient.SqlConnection(global::NetMPK.Service.Properties.Settings.Default.NetMPKDBConn);
+            ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[0])).CommandText = "dbo.GetPrevAndNextStop";
+            ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[0])).CommandType = global::System.Data.CommandType.StoredProcedure;
+            ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[0])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.VarChar, 500, global::System.Data.ParameterDirection.ReturnValue, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[0])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StopName", global::System.Data.SqlDbType.VarChar, 100, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            ((global::System.Data.SqlClient.SqlCommand)(this._commandCollection[0])).Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Line_No", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual string GetPrevAndNextStop(string StopName, global::System.Nullable<int> Line_No) {
+            global::System.Data.SqlClient.SqlCommand command = ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[0]));
+            if ((StopName == null)) {
+                command.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[1].Value = ((string)(StopName));
+            }
+            if ((Line_No.HasValue == true)) {
+                command.Parameters[2].Value = ((int)(Line_No.Value));
+            }
+            else {
+                command.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            try {
+                command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((command.Parameters[0].Value == null) 
+                        || (command.Parameters[0].Value.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((string)(command.Parameters[0].Value));
+            }
         }
     }
     

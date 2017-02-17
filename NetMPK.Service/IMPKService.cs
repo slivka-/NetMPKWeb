@@ -50,6 +50,13 @@ namespace NetMPK.Service
         List<List<string>> GetTimeTable(int lineNo, string stopName, string direction);
         #endregion
 
+        #region Routes
+
+        [OperationContract]
+        List<string> GetRoute(string startName, string stopName);
+
+        #endregion
+
         // TODO: Add your service operations here
     }
 

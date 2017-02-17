@@ -19,6 +19,7 @@ namespace NetMPK.WebUI.Controllers
 
         public ViewResult StopsList(int page = 1)
         {
+            client.GetRoute("Krowodrza Górka","Lubicz");
             var fullStopsList = client.GetStopsNames();
 
             Models.StopsModel model = new Models.StopsModel

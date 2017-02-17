@@ -9,6 +9,11 @@
             <input type="text" class="form-control noClear" id="startName" />
             <span id="startClearIcon" class="glyphicon glyphicon-remove"></span>
         </div>
+        Wyszukaj po:
+        <form id="searchSelectRadioFormStart">
+            <label class="radio-inline"><input type="radio" name="startPointRadio" id="startPointStop" checked="checked"/>Przystankach</label>
+            <label class="radio-inline"><input type="radio" name="startPointRadio" id="startPointStreet" />Ulicach</label>
+        </form>
         <div class="routes-left">
             <div class="stopSelectBox">
                 @foreach (var s in Model.allStops)
@@ -26,6 +31,11 @@
             <input type="text" class="form-control noClear" id="stopName" />
             <span id="stopClearIcon" class="glyphicon glyphicon-remove"></span>
         </div>
+        Wyszukaj po:
+        <form id="searchSelectRadioFormEnd">
+            <label class="radio-inline"><input type="radio" name="startPointRadio" id="stopPointStop" checked="checked" />Przystankach</label>
+            <label class="radio-inline"><input type="radio" name="startPointRadio" id="stopPointStreet" />Ulicach</label>
+        </form>
         <div class="routes-right">
             <div class="stopSelectBox">
                 @foreach (var s in Model.allStops)
