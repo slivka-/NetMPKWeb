@@ -1,16 +1,36 @@
 ﻿$(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+    var leftClicked = false;
+    var rightClicked = false;
+
+    $("#searchButton").click(function () {
+        if (leftClicked == true && rightClicked == true) {
+            window.location = "/Routes/FindRoutes?startName=" + $("#startName").val() + "&stopName=" + $("#stopName").val();
+        } else {
+            toggleAlert();
+        }
+    });
+
+    $("#searchAlert").on("close.bs.alert", toggleAlert);
+
+    function toggleAlert()
+    {
+        $(".alert").toggleClass('in out');
+        return false;
+    }
 
     //starting Stop ============================================================================================
     //search
     $("#startName").keyup(function () {
         filterValuesStart();
+        leftClicked = false;
     });
 
     //clear
     $("#startClearIcon").click(function () {
         $("#startName").val("");
         filterValuesStart();
+        leftClicked = false;
     });
 
 
@@ -29,6 +49,7 @@
         $(this).css("background-color", "rgb(67,139,202)");
         $("#startName").val($(this).text());
         filterValuesStart();
+        leftClicked = true;
     });
 
     function filterValuesStart()
@@ -54,12 +75,14 @@
     //search
     $("#stopName").keyup(function () {
         filterValuesStop();
+        rightClicked = false;
     });
 
     //clear
     $("#stopClearIcon").click(function () {
         $("#stopName").val("");
         filterValuesStop();
+        rightClicked = false;
     });
 
 
@@ -78,6 +101,7 @@
         $(this).css("background-color", "rgb(67,139,202)");
         $("#stopName").val($(this).text());
         filterValuesStop();
+        rightClicked = true;
     });
 
     function filterValuesStop() {

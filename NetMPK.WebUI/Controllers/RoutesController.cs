@@ -17,6 +17,16 @@ namespace NetMPK.WebUI.Controllers
             client = SessionAccess.serviceClinet;
         }
 
+        public ViewResult FindRoutes(string startName, string stopName)
+        {
+            RoutesModel model = new RoutesModel
+            {
+                allStops = client.GetStopsWithStreets(),
+                routes = client.GetRoutes(startName,stopName)
+            };
+            return View("Routes", model);
+        }
+
         public ViewResult RouteSearch()
         {
             RoutesModel model = new RoutesModel
@@ -25,5 +35,7 @@ namespace NetMPK.WebUI.Controllers
             };
             return View("Routes",model);
         }
+
+
     }
 }

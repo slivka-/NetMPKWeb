@@ -53,7 +53,7 @@ namespace NetMPK.Service
         #region Routes
 
         [OperationContract]
-        List<string> GetRoute(string startName, string stopName);
+        List<List<Tuple<int, string, string, string, string, int>>> GetRoutes(string startName, string stopName);
 
         #endregion
 

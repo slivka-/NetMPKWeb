@@ -51,4 +51,39 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TupleOfintstringstringstringstring" nillable="true" type="tns:TupleOfintstringstringstringstring" />
+  <xs:complexType name="ArrayOfArrayOfTupleOfintstringstringstringstringint">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArrayOfTupleOfintstringstringstringstringint" nillable="true" type="tns:ArrayOfTupleOfintstringstringstringstringint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfArrayOfTupleOfintstringstringstringstringint" nillable="true" type="tns:ArrayOfArrayOfTupleOfintstringstringstringstringint" />
+  <xs:complexType name="ArrayOfTupleOfintstringstringstringstringint">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TupleOfintstringstringstringstringint" nillable="true" type="tns:TupleOfintstringstringstringstringint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTupleOfintstringstringstringstringint" nillable="true" type="tns:ArrayOfTupleOfintstringstringstringstringint" />
+  <xs:complexType name="TupleOfintstringstringstringstringint">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{2}{3}{4}{5}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="m_Item1" type="xs:int" />
+      <xs:element name="m_Item2" nillable="true" type="xs:string" />
+      <xs:element name="m_Item3" nillable="true" type="xs:string" />
+      <xs:element name="m_Item4" nillable="true" type="xs:string" />
+      <xs:element name="m_Item5" nillable="true" type="xs:string" />
+      <xs:element name="m_Item6" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TupleOfintstringstringstringstringint" nillable="true" type="tns:TupleOfintstringstringstringstringint" />
 </xs:schema>

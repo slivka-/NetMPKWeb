@@ -46,5 +46,30 @@
             </div>
         </div>
     </div>
-    <div class="routes-main">Trasa</div>
+    <div class="routes-main-wrapper">
+        <h3>Trasa</h3>
+        <input type="button" class="btn btn-primary" value="Wyszukaj" id="searchButton"/>
+        <div class="alert alert-danger alert-dismissable fade out routes-main-alert" id="searchAlert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Uwaga!</strong>
+            Wybierz punkty trasy klikając na nie na liście. 
+        </div>
+        <div class="routes-main">
+            @if (Model.routes != null)
+            {
+                foreach (var r in Model.routes)
+                {
+                    <h4>Połączenie</h4>
+                    foreach (var p in r)
+                    {
+                        <div>@p.Item1</div>
+                        <div>@p.Item2 -> @p.Item4</div>
+                        <div>@p.Item3 -> @p.Item5</div>
+                        <div>Oczekiwanie: @p.Item6</div>
+                    }
+                    <br />
+                }
+            }
+        </div>
+    </div>
 </div>

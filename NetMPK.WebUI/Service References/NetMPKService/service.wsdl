@@ -56,11 +56,11 @@
   <wsdl:message name="IMPKService_GetTimeTable_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTimeTableResponse" />
   </wsdl:message>
-  <wsdl:message name="IMPKService_GetRoute_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetRoute" />
+  <wsdl:message name="IMPKService_GetRoutes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoutes" />
   </wsdl:message>
-  <wsdl:message name="IMPKService_GetRoute_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetRouteResponse" />
+  <wsdl:message name="IMPKService_GetRoutes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoutesResponse" />
   </wsdl:message>
   <wsdl:portType name="IMPKService">
     <wsdl:operation name="GetStopsNames">
@@ -95,9 +95,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetTimeTable" message="tns:IMPKService_GetTimeTable_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetTimeTableResponse" message="tns:IMPKService_GetTimeTable_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetRoute">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetRoute" message="tns:IMPKService_GetRoute_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetRouteResponse" message="tns:IMPKService_GetRoute_OutputMessage" />
+    <wsdl:operation name="GetRoutes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetRoutes" message="tns:IMPKService_GetRoutes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetRoutesResponse" message="tns:IMPKService_GetRoutes_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMPKService" type="tns:IMPKService">
@@ -174,8 +174,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetRoute">
-      <soap:operation soapAction="http://tempuri.org/IMPKService/GetRoute" style="document" />
+    <wsdl:operation name="GetRoutes">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetRoutes" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

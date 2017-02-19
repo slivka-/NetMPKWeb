@@ -203,9 +203,19 @@ tr, td
     cursor: pointer; 
     cursor: hand;
 }
-
-.routes-main {
-    margin-left: 50px;
+/*===================================================*/
+.routes-main-wrapper {
+    height:750px;
+    width: 700px;
+    float: left;
+    margin-left: 15px;
+}
+.routes-main-alert{
+    float: right;
+    margin-top: -40px;
 }
 
+.routes-main {
+    
+}
 

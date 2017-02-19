@@ -26,12 +26,12 @@ namespace NetMPK.Service.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string NetMPKDBConn {
+        public string NetMPKDBConnectionString {
             get {
-                return ((string)(this["NetMPKDBConn"]));
+                return ((string)(this["NetMPKDBConnectionString"]));
             }
             set {
-                this["NetMPKDBConn"] = value;
+                this["NetMPKDBConnectionString"] = value;
             }
         }
     }

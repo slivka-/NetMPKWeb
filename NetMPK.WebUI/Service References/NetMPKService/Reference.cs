@@ -63,11 +63,11 @@ namespace NetMPK.WebUI.NetMPKService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetTimeTable", ReplyAction="http://tempuri.org/IMPKService/GetTimeTableResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<string>>> GetTimeTableAsync(int lineNo, string stopName, string direction);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetRoute", ReplyAction="http://tempuri.org/IMPKService/GetRouteResponse")]
-        System.Collections.Generic.List<string> GetRoute(string startName, string stopName);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetRoutes", ReplyAction="http://tempuri.org/IMPKService/GetRoutesResponse")]
+        System.Collections.Generic.List<System.Collections.Generic.List<System.Tuple<int, string, string, string, string, int>>> GetRoutes(string startName, string stopName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetRoute", ReplyAction="http://tempuri.org/IMPKService/GetRouteResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetRouteAsync(string startName, string stopName);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetRoutes", ReplyAction="http://tempuri.org/IMPKService/GetRoutesResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<System.Tuple<int, string, string, string, string, int>>>> GetRoutesAsync(string startName, string stopName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -161,12 +161,12 @@ namespace NetMPK.WebUI.NetMPKService {
             return base.Channel.GetTimeTableAsync(lineNo, stopName, direction);
         }
         
-        public System.Collections.Generic.List<string> GetRoute(string startName, string stopName) {
-            return base.Channel.GetRoute(startName, stopName);
+        public System.Collections.Generic.List<System.Collections.Generic.List<System.Tuple<int, string, string, string, string, int>>> GetRoutes(string startName, string stopName) {
+            return base.Channel.GetRoutes(startName, stopName);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetRouteAsync(string startName, string stopName) {
-            return base.Channel.GetRouteAsync(startName, stopName);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<System.Tuple<int, string, string, string, string, int>>>> GetRoutesAsync(string startName, string stopName) {
+            return base.Channel.GetRoutesAsync(startName, stopName);
         }
     }
 }
