@@ -19,11 +19,16 @@ namespace NetMPK.WebUI.Controllers
 
         public ViewResult FindRoutes(string startName, string stopName)
         {
+            var tempRoutes = client.GetRoutes(startName, stopName);
             RoutesModel model = new RoutesModel
             {
                 allStops = client.GetStopsWithStreets(),
-                routes = client.GetRoutes(startName,stopName)
-            };
+                noRoutesFound = false
+        };
+            if (tempRoutes != null)
+                model.routes = tempRoutes;
+            else
+                model.noRoutesFound = true;
             return View("Routes", model);
         }
 
@@ -31,8 +36,9 @@ namespace NetMPK.WebUI.Controllers
         {
             RoutesModel model = new RoutesModel
             {
-                allStops = client.GetStopsWithStreets()
-            };
+                allStops = client.GetStopsWithStreets(),
+                noRoutesFound = false
+        };
             return View("Routes",model);
         }
 

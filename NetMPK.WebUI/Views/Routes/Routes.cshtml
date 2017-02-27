@@ -55,20 +55,53 @@
             Wybierz punkty trasy klikając na nie na liście. 
         </div>
         <div class="routes-main">
-            @if (Model.routes != null)
+            @if (Model.routes != null && Model.noRoutesFound == false)
             {
-                foreach (var r in Model.routes)
-                {
-                    <h4>Połączenie</h4>
-                    foreach (var p in r)
+                <h3>Znalezione trasy:</h3>
+                <div class="panel-group" id="routesAccordion">
+                    @for (int i = 0; i < Model.routes.Count; i++)
                     {
-                        <div>@p.Item1</div>
-                        <div>@p.Item2 -> @p.Item4</div>
-                        <div>@p.Item3 -> @p.Item5</div>
-                        <div>Oczekiwanie: @p.Item6</div>
+                        
+                        string colId = "routesCollapse" + i;
+                        string colTitleId = "#" + colId;
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#routesAccordion" href="@colTitleId">
+                                        <span>@Model.routes[i].First().Item3 <span class="glyphicon glyphicon-chevron-right"></span></span>
+                                        @foreach (var part in Model.routes[i])
+                                        {
+                                            if (part.Item1 < 100)
+                                            {
+                                                <img src="~/Assets/Icons/tram.png" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Assets/Icons/bus.png" />
+                                            }
+                                            <span>@part.Item1</span>
+                                        }
+                                        <span><span class="glyphicon glyphicon-chevron-right"></span> @Model.routes[i].Last().Item5</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="@colId" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    @foreach (var part in Model.routes[i])
+                                    {
+                                        <span>@part.Item1</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
                     }
-                    <br />
-                }
+                </div>
+            }
+            @if (Model.noRoutesFound == true)
+            {
+                <h3>Nie znaleziono połączenia</h3>
             }
         </div>
     </div>
