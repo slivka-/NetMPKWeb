@@ -23,15 +23,14 @@ namespace NetMPK.Service.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-CSB19SO\\NETMPKDBSERVER;Initial Catalog=NetMPKDB;Persist Secur" +
+            "ity Info=True;User ID=NetMPKroot;Password=!NetMPKroot.2017")]
         public string NetMPKDBConnectionString {
             get {
                 return ((string)(this["NetMPKDBConnectionString"]));
-            }
-            set {
-                this["NetMPKDBConnectionString"] = value;
             }
         }
     }

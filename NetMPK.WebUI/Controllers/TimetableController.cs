@@ -17,7 +17,7 @@ namespace NetMPK.WebUI.Controllers
         }
         public ViewResult Timetable(int lineNo,string stopName,string direction=null)
         {
-            var dirs = client.GetDirectionsForLine(lineNo);
+            var dirs = client.GetDirectionsForLine(lineNo,stopName);
             string currentDirection = (direction != null) ? direction : dirs.First();
             TimetableModel model = new TimetableModel
             {

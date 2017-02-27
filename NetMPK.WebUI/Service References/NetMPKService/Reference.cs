@@ -46,10 +46,10 @@ namespace NetMPK.WebUI.NetMPKService {
         System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>> GetLineRoutesAsync(int lineNo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDirectionsForLine", ReplyAction="http://tempuri.org/IMPKService/GetDirectionsForLineResponse")]
-        System.Collections.Generic.List<string> GetDirectionsForLine(int lineNo);
+        System.Collections.Generic.List<string> GetDirectionsForLine(int lineNo, string stopName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetDirectionsForLine", ReplyAction="http://tempuri.org/IMPKService/GetDirectionsForLineResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetDirectionsForLineAsync(int lineNo);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetDirectionsForLineAsync(int lineNo, string stopName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStreetNameByStop", ReplyAction="http://tempuri.org/IMPKService/GetStreetNameByStopResponse")]
         string GetStreetNameByStop(string stopName);
@@ -137,12 +137,12 @@ namespace NetMPK.WebUI.NetMPKService {
             return base.Channel.GetLineRoutesAsync(lineNo);
         }
         
-        public System.Collections.Generic.List<string> GetDirectionsForLine(int lineNo) {
-            return base.Channel.GetDirectionsForLine(lineNo);
+        public System.Collections.Generic.List<string> GetDirectionsForLine(int lineNo, string stopName) {
+            return base.Channel.GetDirectionsForLine(lineNo, stopName);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetDirectionsForLineAsync(int lineNo) {
-            return base.Channel.GetDirectionsForLineAsync(lineNo);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetDirectionsForLineAsync(int lineNo, string stopName) {
+            return base.Channel.GetDirectionsForLineAsync(lineNo, stopName);
         }
         
         public string GetStreetNameByStop(string stopName) {

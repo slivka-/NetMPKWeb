@@ -26,9 +26,9 @@ namespace NetMPK.Service
         Dictionary<string, string> GetStopsWithStreets();
 
         [OperationContract]
-        Tuple<int, string, string, double, double, IEnumerable<int>> GetStopByName(string stopName);
+        Tuple<int, string, string, double, double, List<int>> GetStopByName(string stopName);
         #endregion
-
+   
         #region Lines
         [OperationContract]
         List<Tuple<int, string, string, string, string>> GetAllLines();
@@ -37,14 +37,14 @@ namespace NetMPK.Service
         Dictionary<string, List<string>> GetLineRoutes(int lineNo);
 
         [OperationContract]
-        List<string> GetDirectionsForLine(int lineNo);
+        List<string> GetDirectionsForLine(int lineNo, string stopName);
         #endregion
 
         #region Streets
         [OperationContract]
         string GetStreetNameByStop(string stopName);
         #endregion
-
+        
         #region Timetables
         [OperationContract]
         List<List<string>> GetTimeTable(int lineNo, string stopName, string direction);
@@ -56,7 +56,6 @@ namespace NetMPK.Service
         List<List<Tuple<int, string, string, string, string, int>>> GetRoutes(string startName, string stopName);
 
         #endregion
-
         // TODO: Add your service operations here
     }
 

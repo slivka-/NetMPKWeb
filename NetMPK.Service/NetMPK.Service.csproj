@@ -48,10 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMPKService.cs" />
-    <Compile Include="MPKDS.Designer.cs">
+    <Compile Include="MPKDB.cs">
+      <DependentUpon>MPKDB.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="MPKDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MPKDS.xsd</DependentUpon>
+      <DependentUpon>MPKDB.xsd</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MPKService.cs" />
@@ -64,17 +67,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="credentials.config" />
-    <None Include="MPKDS.xsc">
-      <DependentUpon>MPKDS.xsd</DependentUpon>
-    </None>
-    <None Include="MPKDS.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>MPKDS.Designer.cs</LastGenOutput>
+    <None Include="credentials.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="MPKDS.xss">
-      <DependentUpon>MPKDS.xsd</DependentUpon>
+    <None Include="MPKDB.xsc">
+      <DependentUpon>MPKDB.xsd</DependentUpon>
+    </None>
+    <None Include="MPKDB.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MPKDB.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="MPKDB.xss">
+      <DependentUpon>MPKDB.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

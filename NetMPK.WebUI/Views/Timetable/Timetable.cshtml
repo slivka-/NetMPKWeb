@@ -16,7 +16,7 @@
 <h3>
 @{var arr = Model.directions.ToArray();}
 Kierunki:
-@for (int d = 0; d < 2; d++)
+@for (int d = 0; d < arr.Length; d++)
 {
     if (arr[d].Equals(Model.currentDirection))
     {
@@ -28,7 +28,7 @@ Kierunki:
         @Html.ActionLink(arr[d], "Timetable", "Timetable", new { lineNo = Model.lineNo, stopName = Model.stopName, direction = arr[d] }, null)
     </span>
     }
-    if (d == 0)
+    if (d == 0 && arr.Length>1)
     {
         <span>-</span>
     }

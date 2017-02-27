@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
+using NetMPK.Service.MPKDBTableAdapters;
+using System.Diagnostics;
 
 namespace NetMPK.Service
 {
@@ -13,16 +10,8 @@ namespace NetMPK.Service
     {
         public MPKService()
         {
-            Properties.Settings.Default.NetMPKDBConnectionString = ConfigurationManager.AppSettings["connString"];
+            
         }
-
-        private MPKDSTableAdapters.StreetTableAdapter streetAdapter = new MPKDSTableAdapters.StreetTableAdapter();
-        private MPKDSTableAdapters.StopTableAdapter stopAdapter = new MPKDSTableAdapters.StopTableAdapter();
-        private MPKDSTableAdapters.LineTableAdapter lineAdapter = new MPKDSTableAdapters.LineTableAdapter();
-        private MPKDSTableAdapters.Route_PointTableAdapter rpAdapter = new MPKDSTableAdapters.Route_PointTableAdapter();
-        private MPKDSTableAdapters.Exp_Route_PointTableAdapter erpAdapter = new MPKDSTableAdapters.Exp_Route_PointTableAdapter();
-        private MPKDSTableAdapters.Point_ScheduleTableAdapter psAdapter = new MPKDSTableAdapters.Point_ScheduleTableAdapter();
-        private MPKDSTableAdapters.QueriesTableAdapter qAdapter = new MPKDSTableAdapters.QueriesTableAdapter();
 
         #region Default
         /*
@@ -49,466 +38,467 @@ namespace NetMPK.Service
         #region Stops
         public List<string> GetStopsNames()
         {
-            return stopAdapter.GetData().OrderBy(s => s.Name).Select(s => s.Name).ToList();
+            using (var adapter = new StopsTableAdapter())
+            {
+                return adapter.GetDataOrderedByName().Select(s => s.Stop_Name).ToList();
+            }
         }
 
         public Dictionary<string, string> GetStopsWithStreets()
         {
-            Dictionary<string, string> output = new Dictionary<string, string>();
-            var stops = stopAdapter.GetData().ToList();
-            var streets = streetAdapter.GetData().ToList();
-            foreach (var s in stops)
+            using (var adapter = new Stops_StreetsTableAdapter())
             {
-                output.Add(
-                            s.Name,
-                            streets.Where(x => x.ID.Equals(s.Street_ID))
-                                   .Select(x => x.Name)
-                                   .Single()
-                          );
+                return adapter.GetDataOrdered().ToDictionary(k => k.Stop_Name, v => v.Street_Name);
             }
-
-            return output.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
         }
 
-        public Tuple<int, string, string, double, double, IEnumerable<int>> GetStopByName(string stopName)
+        public Tuple<int, string, string, double, double, List<int>> GetStopByName(string stopName)
         {
-            var stopInfo = stopAdapter.GetData().Where(x => x.Name.Equals(stopName)).Single();
-            var streetName = streetAdapter.GetData().Where(x => x.ID.Equals(stopInfo.Street_ID)).Single();
-            var lineIDs = rpAdapter.GetData().Where(x => x.Stop_ID.Equals(stopInfo.ID)).Select(x => x.Line_ID);
-            var lines = lineAdapter.GetData().Where(x => lineIDs.Contains(x.ID)).Select(x => x.Line_No);
-
-            return Tuple.Create(stopInfo.ID, stopInfo.Name, streetName.Name, stopInfo.X_Coord, stopInfo.Y_Coord, lines);
+            Stops_StreetsTableAdapter stAdapter = new Stops_StreetsTableAdapter();
+            Desc_Route_PointsTableAdapter drpAdapter = new Desc_Route_PointsTableAdapter();
+            try
+            {
+                var stop = stAdapter.GetStopByName(stopName).Single();
+                var lines = drpAdapter.GetDataByStop(stopName).Select(s => s.Line_No).Distinct().ToList();
+                return Tuple.Create(stop.ID, stop.Stop_Name, stop.Street_Name, stop.X_Coord, stop.Y_Coord, lines);
+            }
+            finally
+            {
+                if (stAdapter != null)
+                    stAdapter.Dispose();
+                if (drpAdapter != null)
+                    drpAdapter.Dispose();
+            }
         }
         #endregion
 
         #region Lines
         public List<Tuple<int, string, string, string, string>> GetAllLines()
         {
-            return lineAdapter.GetData().ToList().Select(x => Tuple.Create(x.Line_No, x.Vehicle, x.Area, x.Daytime, x.Type)).ToList();
+            using (var adapter = new LinesTableAdapter())
+            {
+                return adapter.GetData().Select(s => Tuple.Create(s.Line_No, s.Vehicle, s.Area, s.Daytime, s.Type)).ToList();
+            }
         }
-
+        
         public Dictionary<string, List<string>> GetLineRoutes(int lineNo)
         {
-            Dictionary<string, List<string>> output = new Dictionary<string, List<string>>();
-
-            int lineId = lineAdapter.GetData().Where(x => x.Line_No.Equals(lineNo)).Select(x => x.ID).Single();
-            List<string> directions = erpAdapter.GetData().Where(x => x.Line_No.Equals(lineNo)).Select(x => x.Direction).Distinct().ToList();
-            foreach (string d in directions)
+            using (var adapter = new Desc_Route_PointsTableAdapter())
             {
-                var routeStops = erpAdapter.GetData()
-                                           .Where(x => x.Line_No.Equals(lineNo) && x.Direction.Equals(d))
-                                           .OrderBy(x => x.Stop_No)
-                                           .Select(x => x.Name)
-                                           .ToList();
-
-                output.Add(d, routeStops);
-            }
-            if (output.Count == 2)
+                Dictionary<string, List<string>> output = new Dictionary<string, List<string>>();
+                var lineInfo = adapter.GetDataByLine(lineNo).ToList();
+                var directions = lineInfo.Select(s => s.Direction).Distinct().ToList();
+                foreach (string dir in directions)
+                {
+                    output.Add(dir, lineInfo.Where(w => w.Direction.Equals(dir))
+                                           .OrderBy(o => o.Stop_No)
+                                           .Select(s => s.Stop_Name)
+                                           .ToList());
+                }
                 return output;
-            else
-                throw new Exception();
+            }
+        }
+        
+        public List<string> GetDirectionsForLine(int lineNo, string stopName)
+        {
+            using (var adapter = new Desc_Route_PointsTableAdapter())
+            {
+                return adapter.GetDataByLine(lineNo).Where(w => w.Stop_Name.Equals(stopName)).Select(s => s.Direction).Distinct().ToList();
+            }
         }
 
-        public List<string> GetDirectionsForLine(int lineNo)
-        {
-            return erpAdapter.GetData()
-                             .Where(x => x.Line_No.Equals(lineNo))
-                             .Select(x => x.Direction)
-                             .Distinct()
-                             .ToList();
-        }
         #endregion
 
         #region Streets
         public string GetStreetNameByStop(string stopName)
         {
-            int streetID = stopAdapter.GetData()
-                           .Where(x => x.Name.Equals(stopName))
-                           .Select(x => x.Street_ID).Single();
-
-            return streetAdapter.GetData()
-                                .Where(x => x.ID.Equals(streetID))
-                                .Select(x => x.Name)
-                                .Single();
+            using (var adapter = new Stops_StreetsTableAdapter())
+            {
+                return adapter.GetStopByName(stopName).Single().Street_Name;
+            }
         }
         #endregion
 
         #region Timetables
         public List<List<string>> GetTimeTable(int lineNo, string stopName, string direction)
         {
-            string[] weekdays = { "WEEKDAY", "SATURDAY", "HOLYDAY" };
-            List<List<string>> output = new List<List<string>>();
-
-            int routePointID = erpAdapter.GetData()
-                                         .Where(x => x.Line_No.Equals(lineNo) && x.Name.Equals(stopName) && x.Direction.Equals(direction))
-                                         .Select(x => x.ID)
-                                         .Single();
-
-            List<MPKDS.Point_ScheduleRow> data = psAdapter.GetData().Where(x => x.Route_Point_ID.Equals(routePointID)).ToList();
-            var weekRow = data.Where(x => x.Day_Type.Equals("WEEKDAY")).Single();
-            var satRow = data.Where(x => x.Day_Type.Equals("SATURDAY")).Single();
-            var holyRow = data.Where(x => x.Day_Type.Equals("HOLYDAY")).Single();
-            for (int i = 0; i < 24; i++)
+            List<string> weekdays = new List<string>() { "WEEKDAY", "SATURDAY", "HOLYDAY" };
+            Desc_Route_PointsTableAdapter drpAdapter = new Desc_Route_PointsTableAdapter();
+            Stops_With_DistanceTableAdapter swdAdapter = new Stops_With_DistanceTableAdapter();
+            Desc_Line_DeparturesTableAdapter dldAdapter = new Desc_Line_DeparturesTableAdapter();
+            try
             {
-                List<string> temp = new List<string>();
-                temp.Add((weekRow["H" + i] != null) ? weekRow["H" + i].ToString() : "EMPTY");
-                temp.Add((satRow["H" + i] != null) ? satRow["H" + i].ToString() : "EMPTY");
-                temp.Add((holyRow["H" + i] != null) ? holyRow["H" + i].ToString() : "EMPTY");
-                output.Add(new List<string>(temp));
+                List<List<string>> output = new List<List<string>>();
+                Dictionary<string, List<int>> carryOver = new Dictionary<string, List<int>>() { { "WEEKDAY", new List<int>() }, { "SATURDAY", new List<int>() }, { "HOLYDAY", new List<int>() } };
+                int? tempStopNo = drpAdapter.GetStopNo(lineNo, direction, stopName);
+                int stopNo;
+                if (tempStopNo != null)
+                { 
+                    stopNo = (int)tempStopNo;
+                }
+                else
+                {
+                    direction = drpAdapter.GetOppositeDirection(lineNo,direction);
+                    stopNo = (int)drpAdapter.GetStopNo(lineNo, direction, stopName);
+                }
+                int minutesFromStart = (int)swdAdapter.GetMinsFromStart(lineNo, direction, stopNo);
+                var baseTimetables = dldAdapter.GetDataByLineAndDir(lineNo, direction).ToDictionary(k => k.Day_Type, v => v);
+                for (int i = 0; i < 24; i++)
+                {
+                    List<string> ttRow = new List<string>();
+                    foreach (var wd in weekdays)
+                    {
+                        List<int> cell = new List<int>();
+                        List<int> stopMins = new List<int>();
+                        if (baseTimetables[wd]["H" + i].ToString() != "")
+                            stopMins = baseTimetables[wd]["H" + i].ToString().Split(',').Select(s => (int.Parse(s) + minutesFromStart)).ToList();
+                        
+                        stopMins.AddRange(new List<int>(carryOver[wd]));
+                        carryOver[wd] = new List<int>();
+                        foreach (int min in stopMins)
+                        {
+                            if (min < 60)
+                                cell.Add(min);
+                            else
+                                carryOver[wd].Add(min - 60);
+                        }
+                        if (cell.Any())
+                            ttRow.Add(string.Join(",", cell.OrderBy(o => o)));
+                        else
+                            ttRow.Add("EMPTY");
+                       
+                    }
+                    output.Add(ttRow);
+                }
+                return output;
             }
-            return output;
+            finally
+            {
+                if (drpAdapter != null)
+                    drpAdapter.Dispose();
+                if (swdAdapter != null)
+                    swdAdapter.Dispose();
+                if (dldAdapter != null)
+                    dldAdapter.Dispose();
+            }
+            
         }
         #endregion
 
         #region RoutesSearch
-
         public List<List<Tuple<int, string, string, string, string, int>>> GetRoutes(string startName, string stopName)
         {
-            List<List<Tuple<int, string, string, string, string, int>>> functOutput = new List<List<Tuple<int, string, string, string, string, int>>>();
-
-            List<int> nighttimeLines = lineAdapter.GetData().Where(x => x.Daytime.Equals("NIGHT"))
-                                                            .Select(x => x.Line_No)
-                                                            .ToList();
-
-            List<_FullRoute> allPossibleRoutes = GetPossibleRoutes(startName, stopName).Where(x => x.allStops.First().Equals(stopName) && x.allStops.Last().Equals(startName))
-                                                                                       .ToList();
-            int averageStops = (int)Math.Floor(allPossibleRoutes.Select(x => x.numOfStops).Average());
-
-            List<_FullRoute> routesToFilter = allPossibleRoutes.OrderBy(x => x.numOfLines)
-                                                  .ThenBy(x => x.numOfStops)
-                                                  .TakeWhile(x => x.numOfStops < averageStops)
-                                                  .ToList();
-            if (DateTime.Now.Hour > 4 && DateTime.Now.Hour < 23)
+            //output:List(all routes)->List(single route)->tuple(part of route)[lineNo,firstStop,departureTime,lastStop,arrivalTime,delay]
+            List<List<Tuple<int, string, string, string, string, int>>> output = new List<List<Tuple<int, string, string, string, string, int>>>();
+            var routeLinesList = FindRouteLines(startName, stopName);
+            foreach (var routeLines in routeLinesList)
             {
-                routesToFilter = routesToFilter.Where(x => !x.routeLines.Intersect(nighttimeLines).Any()).ToList();
-            }
-            List<List<_FullRoute>> pathGroups = new List<List<_FullRoute>>();
-            pathGroups.Add(new List<_FullRoute>());
-            pathGroups[0].Add(routesToFilter[0]);
-            List<string> lastPath = routesToFilter[0].allStops;
-            int currentGroup = 0;
-            for (int i = 1; i < routesToFilter.Count; i++)
-            {
-                if (!CheckPathsEqual(lastPath, routesToFilter[i].allStops))
+                List<Tuple<int, string, string, string, string, int>> singleRoute = new List<Tuple<int, string, string, string, string, int>>();
+                var routeStops = GetIntersectStops(routeLines, startName, stopName);
+                bool isValid = true;
+                if (routeLines.Count == routeStops.Count)
                 {
-                    currentGroup++;
-                    lastPath = routesToFilter[i].allStops;
-                    pathGroups.Add(new List<_FullRoute>());
-                }
-                pathGroups[currentGroup].Add(routesToFilter[i]);
-            }
-            foreach (var group in pathGroups)
-            {
-                                            //LineNo, start,startTime,stop,stopTime,minFromPrev
-                var outputRoute = new List<Tuple<int, string, string, string, string, int>>();
-                _FullRoute routeToCheck;
-                bool routeBeggining = true;
-                if (group.Count == 1)
-                    routeToCheck = group.First();
-                else
-                    routeToCheck = GetMostTramRoute(group);
-
-                foreach(var part in routeToCheck.routeParts)
-                {
-                    string partStart = "";
-                    string partStop = "";
-                    int curHour = 0;
-                    int curMin = 0;
-                    foreach (var stop in part.routeStops)
+                    for (int i = 0; i < routeStops.Count; i++)
                     {
-                        int stopId = erpAdapter.GetData()
-                                               .Where(x => x.Line_No.Equals(part.lineNo) && x.Name.Equals(stop) && x.Direction.Equals(part.direction))
-                                               .Select(x => x.ID)
-                                               .Single();
-                        var timeTable = psAdapter.GetData()
-                                                 .Where(x => x.Route_Point_ID.Equals(stopId) && x.Day_Type.Equals(GetCurrentDayType()))
-                                                 .Single();
-                        if(stop.Equals(part.routeStops.First()))
-                        {
-                            #region getBegginingTime
-                            int hourToCheck;
-                            int minToCheck;
-
-                            if (routeBeggining)
-                            {
-                                hourToCheck = DateTime.Now.Hour;
-                                minToCheck = DateTime.Now.Minute;
-                                routeBeggining = false;
-                            }
-                            else
-                            {
-                                hourToCheck = int.Parse(outputRoute.Last().Item5.Split(':')[0]);
-                                minToCheck = int.Parse(outputRoute.Last().Item5.Split(':')[1]);
-                            }
-                            var mins = timeTable["H" + hourToCheck].ToString().Split(',').ToList();
-                            while (mins[0] == "")
-                            {
-                                mins = timeTable["H" + ++hourToCheck].ToString().Split(',').ToList();
-                            }
-                            var startMins = mins.Where(x => int.Parse(x) >= minToCheck).ToList();
-                            if (startMins.Count == 0)
-                                startMins = timeTable["H" + (hourToCheck + 1)].ToString().Split(',').ToList();
-
-                            curHour = hourToCheck;
-                            curMin = int.Parse(startMins.First());
-                            partStart = hourToCheck + ":" + startMins.First();
-                            #endregion
+                        Tuple<string, string, int> partTimes;
+                        if (singleRoute.Count==0)
+                            partTimes = GetTimeForPart(routeLines[i], routeStops[i]);
+                        else
+                            partTimes = GetTimeForPart(routeLines[i], routeStops[i],singleRoute.Last().Item5);
+                        if (partTimes != null)
+                        { 
+                            singleRoute.Add(Tuple.Create(routeLines[i], routeStops[i].Item1, partTimes.Item1, routeStops[i].Item2, partTimes.Item2, partTimes.Item3));
                         }
                         else
                         {
-                            #region calculateTimeDiff
-                            var mins = timeTable["H" + curHour.ToString()].ToString().Split(',').ToList();
-                            if (mins[0]!="" && mins.Where(x => int.Parse(x) >= curMin).ToList().Any())
-                            { 
-                                curMin = int.Parse(mins.Where(x => int.Parse(x) >= curMin).First());
-                            }
-                            else
-                            {
-                                curHour++;
-                                mins = timeTable["H" + curHour.ToString()].ToString().Split(',').ToList();
-                                curMin = int.Parse(mins.First());
-                            }
-                            #endregion
-                            #region getEndTime
-                            if (stop.Equals(part.routeStops.Last()))
-                            {
-                                partStop = curHour + ":" + curMin;
-                            }
-                            #endregion
+                            isValid = false; 
+                            break;
                         }
                     }
-                    outputRoute.Add(Tuple.Create(part.lineNo,part.routeStops.First(), partStart, part.routeStops.Last(), partStop, 0));
                 }
-                functOutput.Add(outputRoute);
-            }
-            return functOutput;
-        }
-
-        private string GetCurrentDayType()
-        {
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
-            {
-                return "HOLYDAY";
-            }
-            else if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
-            {
-                return "SATURDAY";
-            }
-            else
-            {
-                return "WEEKDAY";
-            }
-        }
-
-        private _FullRoute GetMostTramRoute(List<_FullRoute> routes)
-        {
-            _FullRoute output = routes.First();
-            int highestTrams = output.routeLines.Where(x => x < 100).Count();
-            foreach (var r in routes)
-            {
-                if (r.routeLines.Where(x => x < 100).Count() > highestTrams)
-                {
-                    highestTrams = r.routeLines.Where(x => x < 100).Count();
-                    output = r;
-                }
+                if(isValid)
+                    output.Add(singleRoute);
             }
             return output;
         }
 
-        private bool CheckPathsEqual(List<string> p1, List<string> p2)
+        #region FindTimes
+        private Tuple<string,string,int> GetTimeForPart(int lineNo, Tuple<string,string,string> routePart, string prevTime = null)
         {
-            if (p1.Count != p2.Count)
+            Stops_With_DistanceTableAdapter swdAdapter = new Stops_With_DistanceTableAdapter();
+            Desc_Line_DeparturesTableAdapter dldAdapter = new Desc_Line_DeparturesTableAdapter();
+            Desc_Route_PointsTableAdapter drpAdapter = new Desc_Route_PointsTableAdapter();
+            try
             {
-                return false;
+                _PartTime outputDepartureTime;
+                _PartTime outputArrivalTime;
+                int delay = 0;
+
+                var departures = dldAdapter.GetDataByLineAndDir(lineNo, routePart.Item3)
+                                           .Where(w => w.Day_Type.Equals(CurrentDayType()))
+                                           .Single();
+
+                _PartTime timeToCheck = (prevTime == null) ? new _PartTime() : new _PartTime(prevTime);
+
+                int firstStopNo = (int)drpAdapter.GetStopNo(lineNo, routePart.Item3, routePart.Item1);
+                int lastStopNo = (int)drpAdapter.GetStopNo(lineNo, routePart.Item3, routePart.Item2);
+
+                int timeToFirst = (int)swdAdapter.GetMinsFromStart(lineNo, routePart.Item3, firstStopNo);
+                int timeToLast = (int)swdAdapter.GetMinsFromStart(lineNo, routePart.Item3, lastStopNo);
+
+                timeToCheck.SubtractMinutes(timeToFirst);
+                string depMinutesFull = departures["H" + timeToCheck.hour].ToString();
+                while (depMinutesFull == "")
+                {
+                    timeToCheck.HourUp();
+                    depMinutesFull = departures["H" + timeToCheck.hour].ToString();
+                }
+                var depMinutes = depMinutesFull.Split(',').Select(s => int.Parse(s)).Where(w => w > timeToCheck.minute).ToList();
+                if (!depMinutes.Any())
+                {
+                    timeToCheck.HourUp();
+                    outputDepartureTime = new _PartTime(timeToCheck.hour + ":" + ((string)departures["H" + timeToCheck.hour]).Split(',').First());
+                }
+                else
+                {
+                    outputDepartureTime = new _PartTime(timeToCheck.hour + ":" + depMinutes.First());
+                }
+                outputArrivalTime = outputDepartureTime.Copy();
+                outputDepartureTime.AddMinutes(timeToFirst);
+                outputArrivalTime.AddMinutes(timeToLast);
+                if (prevTime != null)
+                {
+                    delay = outputDepartureTime.GetDifferenceInMinutes(new _PartTime(prevTime));
+                }
+                return Tuple.Create(outputDepartureTime.ToString(), outputArrivalTime.ToString(), delay);
             }
-            else
+            catch(InvalidOperationException)
             {
-                for (int i = 0; i < p1.Count; i++)
-                    if (p1[i] != p2[i])
-                        return false;
+                return null;
             }
-            return true;
+            finally
+            {
+                if (swdAdapter != null)
+                    swdAdapter.Dispose();
+                if (dldAdapter != null)
+                    dldAdapter.Dispose();
+                if (drpAdapter != null)
+                    drpAdapter.Dispose();
+            }
         }
 
-        private List<_FullRoute> GetPossibleRoutes(string startName, string stopName)
+        private string CurrentDayType()
         {
-            List<_FullRoute> allPossibleRoutes = new List<_FullRoute>();
-            List<_LineInfo> intersectLines;
-            List<_LineInfo> lastStopLines = new List<_LineInfo>();
-            List<_LineInfo> currentLines = new List<_LineInfo>();
-
-            //Get lines arriving at last stop
-            erpAdapter.GetData()
-                      .Where(x => x.Name.Equals(stopName))
-                      .Select(x => x.Line_No)
-                      .Distinct()
-                      .ToList()
-                      .ForEach(x => lastStopLines.Add(new _LineInfo { lineNo = x, parentLine = null }));
-
-            
-
-            //Get lines arriving as first stop
-            erpAdapter.GetData()
-                      .Where(x => x.Name.Equals(startName))
-                      .Select(x => x.Line_No)
-                      .Distinct()
-                      .ToList()
-                      .ForEach(x => currentLines.Add(new _LineInfo { lineNo = x, parentLine = null }));
-            //Check if there is a direct connection
-            intersectLines = lastStopLines.Intersect(currentLines, new _LineInfoEqualityComparer()).ToList();
-
-
-            while (!intersectLines.Any())
+            switch (DateTime.Now.DayOfWeek)
             {
-                List<_LineInfo> linesToAdd = new List<_LineInfo>();
-                foreach (var line in currentLines)
+                case DayOfWeek.Sunday:
+                    return "HOLYDAY";
+                case DayOfWeek.Saturday:
+                    return "SATURDAY";
+                default:
+                    return "WEEKDAY";
+            }
+        }
+
+        private class _PartTime
+        {
+            public int hour { get; private set; }
+            public int minute { get; private set; }
+            public _PartTime()
+            {
+                hour = DateTime.Now.Hour;
+                minute = DateTime.Now.Minute;
+            }
+            public _PartTime(string time)
+            {
+                var parts = time.Split(':');
+                if (parts.Length == 2)
                 {
-                    //Get all stops for line
-                    var lineStops = erpAdapter.GetData()
-                                              .Where(x => x.Line_No.Equals(line.lineNo))
-                                              .Select(x => x.Name)
-                                              .Distinct()
-                                              .ToList();
-                    //Get all lines that arrive on stops
-                    var lineCrosses = erpAdapter.GetData()
-                                                .Where(x => lineStops.Contains(x.Name))
-                                                .Select(x => x.Line_No)
-                                                .Distinct()
-                                                .ToList();
-                    foreach (int crossedLineNo in lineCrosses)
+                    int tempMin = -1;
+                    int tempHour = -1;
+                    if (int.TryParse(parts[0], out tempHour) && tempHour < 24)
+                        hour = tempHour;
+                    else
+                        throw new ArgumentException();
+                    if (int.TryParse(parts[1], out tempMin) && tempMin < 60)
+                        minute = tempMin;
+                    else
+                        throw new ArgumentException();
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
+            public void AddMinutes(int minutes)
+            {
+                int minsToAdd = minutes % 60;
+                int hoursToAdd = minutes / 60;
+
+                minute += minsToAdd;
+                if (minute >= 60)
+                {
+                    minute -= 60;
+                    hoursToAdd += 1;
+                }
+                hour += hoursToAdd;
+                if (hour >= 24)
+                    hour -= 24;
+
+            }
+            public void SubtractMinutes(int minutes)
+            {
+                int minsToSub = minutes % 60;
+                int hoursToSub = minutes / 60;
+
+                minute -= minsToSub;
+                if (minute < 0)
+                {
+                    minute += 60;
+                    hoursToSub += 1;
+                }
+                hour -= hoursToSub;
+                if (hour < 0)
+                    hour += 24;
+            }
+            public void HourUp()
+            {
+                hour += 1;
+                if (hour >= 24)
+                    hour -= 24;
+            }
+            public _PartTime Copy()
+            {
+                return new _PartTime() { hour = hour, minute = minute };
+            }
+            public new string ToString()
+            {
+                return hour + ":" + minute;
+            }
+            public int GetDifferenceInMinutes(_PartTime other)
+            {
+                return ((hour*60)+minute)- ((other.hour * 60) + other.minute);
+            }
+        }
+
+        #endregion
+
+        #region FindStops
+        private List<Tuple<string, string, string>> GetIntersectStops(List<int> lines, string startName, string stopName)
+        {
+            using (var adapter = new GetIntersectStopsTableAdapter())
+            {
+                //start,stop,direction
+                List<Tuple<string, string, string>> output = new List<Tuple<string, string, string>>();
+                if (lines.Count == 1)
+                {
+                    output.Add(Tuple.Create(startName, stopName, GetDirection(lines.First(), startName, stopName)));
+                }
+                else
+                {
+                    string partStart = startName;
+                    string partEnd = "";
+                    for (int i = 1; i <= lines.Count - 1; i++)
                     {
-                        var tempLineInfo = new _LineInfo { lineNo = crossedLineNo, parentLine = line };
-                        //if line is not in list of lines to check, add it
-                        if (!currentLines.Select(x => x.lineNo).Contains(tempLineInfo.lineNo) && !linesToAdd.Select(x => x.lineNo).Contains(tempLineInfo.lineNo))
+                        partEnd = adapter.GetData(lines[i - 1], lines[i]).Select(s => s.Stop_Name).First();
+                        output.Add(Tuple.Create(partStart, partEnd, GetDirection(lines[i - 1], partStart, partEnd)));
+                        partStart = partEnd;
+                    }
+                    output.Add(Tuple.Create(partStart, stopName, GetDirection(lines.Last(), partStart, stopName)));
+                }
+                return output;
+            }
+        }
+
+        private string GetDirection(int lineNo, string startName, string stopName)
+        {
+            using (var adapter = new Desc_Route_PointsTableAdapter())
+            {
+                var dataForDir = adapter.GetDataForDirection(lineNo, startName, stopName).ToList();
+                if (dataForDir[0].Stop_Name.Equals(startName))
+                    return dataForDir[0].Direction;
+                else
+                    return dataForDir[2].Direction;
+            }
+        }
+
+        #endregion
+
+        #region FindLines
+        private List<List<int>> FindRouteLines(string startName, string stopName)
+        {
+            Desc_Route_PointsTableAdapter drpAdapter = new Desc_Route_PointsTableAdapter();
+            GetIntersectLinesTableAdapter gilAdapter = new GetIntersectLinesTableAdapter();
+            try
+            {
+                List<List<int>> output = new List<List<int>>();
+                _LineInfoEqualityComparer lComparer = new _LineInfoEqualityComparer();
+                List<_LineInfo> destinationLines = new List<_LineInfo>();
+                drpAdapter.GetDataByStop(stopName)
+                          .Select(s => s.Line_No)
+                          .Distinct()
+                          .ToList()
+                          .ForEach(f => destinationLines.Add(new _LineInfo() {
+                                                             lineNo = f,
+                                                             parentLine = null }
+                          ));
+                List<_LineInfo> currentLines = new List<_LineInfo>();
+                drpAdapter.GetDataByStop(startName)
+                          .Select(s => s.Line_No)
+                          .Distinct()
+                          .ToList()
+                          .ForEach(f => currentLines.Add(new _LineInfo()
+                          {
+                              lineNo = f,
+                              parentLine = null
+                          }
+                          ));
+                List<_LineInfo> intersectLines = destinationLines.Intersect(currentLines, lComparer).ToList();
+
+                while (!intersectLines.Any())
+                {
+                    List<_LineInfo> linesToAdd = new List<_LineInfo>();
+                    foreach (var singleLine in currentLines)
+                    {
+                        var singleLineIntersects = gilAdapter.GetData(singleLine.lineNo).Select(s => s.Line_No).ToList();
+                        foreach (int lineNo in singleLineIntersects)
                         {
-                            linesToAdd.Add(tempLineInfo);
+                            _LineInfo newLineInfo = new _LineInfo() { lineNo = lineNo, parentLine = (_LineInfo)singleLine.Clone() };
+                            if (!linesToAdd.Contains(newLineInfo))
+                                linesToAdd.Add((_LineInfo)newLineInfo.Clone());
                         }
                     }
+                    foreach (var line in linesToAdd)
+                    {
+                        if (!currentLines.Contains(line, lComparer))
+                            currentLines.Add((_LineInfo)line.Clone());
+                    }
+                    foreach (var cLine in currentLines)
+                    {
+                        if (destinationLines.Contains(cLine, lComparer))
+                            intersectLines.Add((_LineInfo)cLine.Clone());
+                    }
                 }
-                linesToAdd.ForEach(x => currentLines.Add((_LineInfo)x.Clone()));
 
-                foreach (var lta in currentLines)
+                foreach (var iLine in intersectLines)
                 {
-                    //if line connects, add it to list
-                    if (lastStopLines.Select(x => x.lineNo).Contains(lta.lineNo))
-                        intersectLines.Add((_LineInfo)lta.Clone());
+                    List<int> lineOutput = new List<int>();
+                    _LineInfo currentInfo = iLine;
+                    while (currentInfo != null)
+                    {
+                        lineOutput.Add(currentInfo.lineNo);
+                        currentInfo = currentInfo.parentLine;
+                    }
+                    output.Add(lineOutput.Reverse<int>().ToList());
                 }
+                return output;
             }
-
-            //Make a list of all possible routes
-            foreach (var singleRouteLines in intersectLines)
+            finally
             {
-                string partStart = stopName;//starting from the end
-                string partStop = "";
-                _FullRoute route = new _FullRoute();
-                _LineInfo currentLine = singleRouteLines;
-                while (currentLine != null)
-                {
-                    _RoutePart routePart = new _RoutePart();
-                    routePart.lineNo = currentLine.lineNo;
-                    if (currentLine.parentLine == null)//get last stop of current part
-                    { 
-                        partStop = startName;
-                    }
-                    else
-                    {
-                        partStop = (string)qAdapter.GetIntersectingStop(currentLine.lineNo, currentLine.parentLine.lineNo);
-                    }
-                    var tempPointTab = erpAdapter.GetData()
-                                                 .Where(x => x.Line_No.Equals(currentLine.lineNo) && new List<string>(){partStart, partStop}.Contains(x.Name))
-                                                 .OrderBy(x => x.Direction)
-                                                 .ThenBy(x => x.Stop_No)
-                                                 .ToList();
-                    if (tempPointTab.Count == 4)//find witch direction should be taken
-                    {
-                        if (tempPointTab[0].Name.Equals(partStart) && tempPointTab[1].Name.Equals(partStop))
-                            routePart.direction = tempPointTab[0].Direction;
-                        else
-                            routePart.direction = tempPointTab[2].Direction;
-                    }
-                    if (routePart.direction != null)
-                    {
-                        routePart.routeStops.AddRange(erpAdapter.GetData()
-                                                                .Where(x => x.Line_No.Equals(routePart.lineNo) && x.Direction.Equals(routePart.direction))
-                                                                .OrderBy(x => x.Stop_No)
-                                                                .SkipWhile(x => !x.Name.Equals(partStart))
-                                                                .TakeWhile(x => !x.Name.Equals(partStop))
-                                                                .Select(x => x.Name)
-                                                                .ToList());
-                        routePart.routeStops.Add(partStop);
-                        routePart.routeStops.Reverse();
-                        routePart.direction = erpAdapter.GetData()
-                                                        .Where(x => x.Line_No.Equals(routePart.lineNo) && !x.Direction.Equals(routePart.direction))
-                                                        .Select(x => x.Direction)
-                                                        .Distinct()
-                                                        .Single();
-                        
-                    }
-                    route.AddRoutePart(routePart);
-                    partStart = partStop;
-                    currentLine = currentLine.parentLine;
-                }
-                route.routeLines.Reverse();
-                route.routeParts.Reverse();
-                allPossibleRoutes.Add(route);   
-            }
-            return allPossibleRoutes;
-        }
-
-        private List<string> GetNeighbouringStops(string stopName)
-        {
-            List<string> neighbouringStops = new List<string>();
-            List <int> stopLines = erpAdapter.GetData()
-                                            .Where(x => x.Name.Equals(stopName))
-                                            .OrderBy(x => x.Line_No)
-                                            .Select(x => x.Line_No)
-                                            .Distinct()
-                                            .ToList();
-            foreach (int line in stopLines)
-            {
-                neighbouringStops.AddRange(qAdapter.GetPrevAndNextStop(stopName,line).Split('|'));
-            }
-
-            return neighbouringStops.Where(x => x!="").Distinct().ToList();
-        }
-
-        private class _FullRoute
-        {
-            public int numOfLines { get; private set; }
-            public int numOfStops { get; private set; }
-            public List<int> routeLines { get; private set; }
-            public List<_RoutePart> routeParts { get; private set; }
-            public List<string> allStops { get; private set; }
-
-            public _FullRoute()
-            {
-                numOfLines = 0;
-                numOfStops = 0;
-                routeLines = new List<int>();
-                routeParts = new List<_RoutePart>();
-                allStops = new List<string>();
-            }
-
-            public void AddRoutePart(_RoutePart part)
-            {
-                numOfLines++;
-                routeLines.Add(part.lineNo);
-                numOfStops += part.routeStops.Count;
-                routeParts.Add((_RoutePart)part.Clone());
-                allStops.AddRange(part.routeStops.Reverse<string>());
-            }
-
-        }
-
-        private class _RoutePart : ICloneable
-        {
-            public int lineNo { get; set; }
-            public string direction { get; set; }
-            public List<string> routeStops { get; set; } = new List<string>();
-
-            public object Clone()
-            {
-                return new _RoutePart { lineNo = this.lineNo, direction = this.direction, routeStops = new List<string>(this.routeStops) };
+                if (drpAdapter != null)
+                    drpAdapter.Dispose();
+                if (gilAdapter != null)
+                    gilAdapter.Dispose();
             }
         }
 
@@ -519,9 +509,12 @@ namespace NetMPK.Service
 
             public object Clone()
             {
-                return new _LineInfo { lineNo = this.lineNo, parentLine = (this.parentLine!=null)?(_LineInfo)this.parentLine.Clone():null };
+                return new _LineInfo { lineNo = this.lineNo, parentLine = (this.parentLine != null) ? (_LineInfo)this.parentLine.Clone() : null };
             }
-
+            public int CompareTo(int other)
+            {
+                return lineNo.CompareTo(other);
+            }
             public int CompareTo(_LineInfo other)
             {
                 return lineNo.CompareTo(other.lineNo);
@@ -530,11 +523,14 @@ namespace NetMPK.Service
 
         private class _LineInfoEqualityComparer : IEqualityComparer<_LineInfo>
         {
+            public bool Equals(_LineInfo x, int y)
+            {
+                return x.lineNo == y;
+            }
             public bool Equals(_LineInfo x, _LineInfo y)
             {
                 return x.lineNo == y.lineNo;
             }
-
             public int GetHashCode(_LineInfo obj)
             {
                 unchecked
@@ -545,7 +541,9 @@ namespace NetMPK.Service
                 }
             }
         }
+        #endregion
 
         #endregion
+
     }
 }
