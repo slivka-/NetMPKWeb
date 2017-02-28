@@ -54,49 +54,80 @@
             <strong>Uwaga!</strong>
             Wybierz punkty trasy klikając na nie na liście. 
         </div>
-        <div class="routes-main">
+        <div class="routes-main accordion-wrapper">
             @if (Model.routes != null && Model.noRoutesFound == false)
             {
-                <h3>Znalezione trasy:</h3>
-                <div class="panel-group" id="routesAccordion">
-                    @for (int i = 0; i < Model.routes.Count; i++)
-                    {
-                        
-                        string colId = "routesCollapse" + i;
-                        string colTitleId = "#" + colId;
-                        
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#routesAccordion" href="@colTitleId">
-                                        <span>@Model.routes[i].First().Item3 <span class="glyphicon glyphicon-chevron-right"></span></span>
+                <div class="">
+                    <h3>Znalezione trasy:</h3>
+                    <div class="panel-group" id="routesAccordion">
+                        @for (int i = 0; i < Model.routes.Count; i++)
+                        {
+
+                            string colId = "routesCollapse" + i;
+                            string colTitleId = "#" + colId;
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="route-link" data-toggle="collapse" data-parent="#routesAccordion" href="@colTitleId">
+                                            <div>
+                                                <span>@Model.routes[i].First().Item3 <span class="glyphicon glyphicon-chevron-right"></span></span>
+                                                @foreach (var part in Model.routes[i])
+                                                {
+                                                    <span class="transport-icon">
+                                                        @if (part.Item1 < 100)
+                                                        {
+                                                            <img src="~/Assets/Icons/tram.png" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/Assets/Icons/bus.png" />
+                                                        }
+                                                        <span>@part.Item1</span>
+                                                    </span>
+                                                    if (part != Model.routes[i].Last())
+                                                    {
+                                                        <span>&nbsp;<img src="~/Assets/Icons/arrow.png" width="12" height="12" /></span>
+                                                    }
+                                                }
+                                                <span><span class="glyphicon glyphicon-chevron-right"></span> @Model.routes[i].Last().Item5</span>
+                                            </div>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="@colId" class="panel-collapse collapse">
+                                    <div class="panel-body">
                                         @foreach (var part in Model.routes[i])
                                         {
-                                            if (part.Item1 < 100)
-                                            {
-                                                <img src="~/Assets/Icons/tram.png" />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/Assets/Icons/bus.png" />
-                                            }
-                                            <span>@part.Item1</span>
+                                            <div class="panel panel-body route-part-wrapper">
+                                                @if (part.Item1 < 100)
+                                                {
+                                                    <img src="~/Assets/Icons/tram.png" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Assets/Icons/bus.png" />
+                                                }
+                                                <span>Linia: @part.Item1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Czas oczekiwania: @part.Item6 min.</span><br />
+                                                <div class="route-part">
+                                                    <h5><strong>@part.Item2</strong></h5>
+                                                    <h5>Odjazd: @part.Item3</h5>
+                                                </div>
+                                                <div class="route-part-divider">&nbsp;</div>
+                                                <div class="route-part">
+                                                    <h5><strong>@part.Item4</strong></h5>
+                                                    <h5>Przyjazd: @part.Item5</h5>
+                                                </div>
+
+
+                                            </div>
                                         }
-                                        <span><span class="glyphicon glyphicon-chevron-right"></span> @Model.routes[i].Last().Item5</span>
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="@colId" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    @foreach (var part in Model.routes[i])
-                                    {
-                                        <span>@part.Item1</span>
-                                    }
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    }
+                        }
+                    </div>
                 </div>
             }
             @if (Model.noRoutesFound == true)

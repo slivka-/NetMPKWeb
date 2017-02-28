@@ -209,6 +209,7 @@ tr, td
     width: 700px;
     float: left;
     margin-left: 15px;
+    overflow:auto;
 }
 .routes-main-alert{
     float: right;
@@ -219,3 +220,32 @@ tr, td
     
 }
 
+.transport-icon{
+    background-color: gainsboro;
+}
+
+.route-part-wrapper{
+    width:100%;
+    overflow:hidden;
+}
+
+.route-part{
+    float: left;
+}
+
+.route-part-divider{
+    float: left;
+    width: 150px;
+}
+
+.accordion-wrapper {
+    overflow:auto;
+}
+.route-link{
+    outline:0 !important;
+    text-decoration:none !important;
+}
+.route-link:hover:active:focus{
+    outline:0 !important;
+    text-decoration:none !important;
+}

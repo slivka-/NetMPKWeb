@@ -155,6 +155,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\arrow.png" />
     <Content Include="Assets\Icons\bus.png" />
     <Content Include="Assets\Icons\tram.png" />
     <Content Include="Content\bootstrap.css" />

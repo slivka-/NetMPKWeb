@@ -202,12 +202,12 @@ namespace NetMPK.Service
                     {
                         Tuple<string, string, int> partTimes;
                         if (singleRoute.Count==0)
-                            partTimes = GetTimeForPart(routeLines[i], routeStops[i]);
+                            partTimes = GetTimeForPart(routeLines[i], routeStops[i],DateTime.Now.Hour+":"+DateTime.Now.Minute);
                         else
                             partTimes = GetTimeForPart(routeLines[i], routeStops[i],singleRoute.Last().Item5);
                         if (partTimes != null)
                         { 
-                            singleRoute.Add(Tuple.Create(routeLines[i], routeStops[i].Item1, partTimes.Item1, routeStops[i].Item2, partTimes.Item2, partTimes.Item3));
+                            singleRoute.Add(Tuple.Create(routeLines[i], routeStops[i].Item1, FormatHour(partTimes.Item1), routeStops[i].Item2, FormatHour(partTimes.Item2), partTimes.Item3));
                         }
                         else
                         {
@@ -220,6 +220,16 @@ namespace NetMPK.Service
                     output.Add(singleRoute);
             }
             return output;
+        }
+
+        private string FormatHour(string hour)
+        {
+            var temp = hour.Split(':').ToList();
+            if (temp.Count != 2)
+                throw new ArgumentException();
+            string outputHour = (int.Parse(temp[0]) < 10) ? "0" + temp[0] : temp[0];
+            string outputMinute = (int.Parse(temp[1]) < 10) ? "0" + temp[1] : temp[1];
+            return outputHour + ":" + outputMinute;
         }
 
         #region FindTimes
@@ -429,9 +439,11 @@ namespace NetMPK.Service
         {
             Desc_Route_PointsTableAdapter drpAdapter = new Desc_Route_PointsTableAdapter();
             GetIntersectLinesTableAdapter gilAdapter = new GetIntersectLinesTableAdapter();
+            LinesTableAdapter lAdapter = new LinesTableAdapter();
             try
             {
                 List<List<int>> output = new List<List<int>>();
+                List<int> nightLines = lAdapter.GetNightLines().Select(s => s.Line_No).ToList();
                 _LineInfoEqualityComparer lComparer = new _LineInfoEqualityComparer();
                 List<_LineInfo> destinationLines = new List<_LineInfo>();
                 drpAdapter.GetDataByStop(stopName)
@@ -490,6 +502,17 @@ namespace NetMPK.Service
                         currentInfo = currentInfo.parentLine;
                     }
                     output.Add(lineOutput.Reverse<int>().ToList());
+                }
+                if(DateTime.Now.Hour > 4 && DateTime.Now.Hour < 24)
+                {
+                    List<int> idxToRemove = new List<int>();
+                    for(int i=0;i<output.Count;i++)
+                    {
+                        if (output[i].Intersect(nightLines).Any())
+                            idxToRemove.Add(i);
+                    }
+                    foreach (int rm in idxToRemove)
+                        output.RemoveAt(rm);
                 }
                 return output;
             }
