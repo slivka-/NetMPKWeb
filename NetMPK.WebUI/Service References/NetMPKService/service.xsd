@@ -40,6 +40,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetStopWithCords">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStopWithCordsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="GetStopWithCordsResult" nillable="true" type="q4:ArrayOfTupleOfstringdoubledouble" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetAllLines">
     <xs:complexType>
       <xs:sequence />
@@ -48,7 +60,7 @@
   <xs:element name="GetAllLinesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="GetAllLinesResult" nillable="true" type="q4:ArrayOfTupleOfintstringstringstringstring" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="GetAllLinesResult" nillable="true" type="q5:ArrayOfTupleOfintstringstringstringstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -62,7 +74,7 @@
   <xs:element name="GetLineRoutesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetLineRoutesResult" nillable="true" type="q5:ArrayOfKeyValueOfstringArrayOfstringty7Ep6D1" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetLineRoutesResult" nillable="true" type="q6:ArrayOfKeyValueOfstringArrayOfstringty7Ep6D1" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -77,7 +89,7 @@
   <xs:element name="GetDirectionsForLineResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetDirectionsForLineResult" nillable="true" type="q6:ArrayOfstring" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetDirectionsForLineResult" nillable="true" type="q7:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -107,7 +119,7 @@
   <xs:element name="GetTimeTableResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetTimeTableResult" nillable="true" type="q7:ArrayOfArrayOfstring" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetTimeTableResult" nillable="true" type="q8:ArrayOfArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -122,7 +134,19 @@
   <xs:element name="GetRoutesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="GetRoutesResult" nillable="true" type="q8:ArrayOfArrayOfTupleOfintstringstringstringstringint" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="GetRoutesResult" nillable="true" type="q9:ArrayOfArrayOfTupleOfintstringstringstringstringint" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMapPoints">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMapPointsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="GetMapPointsResult" nillable="true" type="q10:ArrayOfTupleOfstringintint" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

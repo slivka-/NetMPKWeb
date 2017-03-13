@@ -1,5 +1,16 @@
-﻿@{
-    ViewBag.Title = "MAPA";
+﻿@using System.Web.Optimization;
+@model NetMPK.WebUI.Models.MapModel
+@{
+    ViewBag.Title = "Mapa";
 }
+@Scripts.Render("~/bundles/_maps")
+<div class="mainMap">
+    @foreach (var cord in Model.coords)
+    {
+        string styleString = string.Format("margin-left:{0}px;margin-top:{1}px;", cord.Item2, cord.Item3);
+        <div class="mapPoint" style="@styleString" id="@cord.Item1" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="@cord.Item1"> </div>
+    }
+</div>
 
-<h2>MAPA głowna</h2>
+
+

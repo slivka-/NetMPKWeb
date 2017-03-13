@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using NetMPK.Service.MPKDBTableAdapters;
 using System.Diagnostics;
+using System.Web.Services.Protocols;
+using System.Windows;
 
 namespace NetMPK.Service
 {
@@ -36,8 +38,9 @@ namespace NetMPK.Service
         #endregion
 
         #region Stops
+            [SoapHeader("Authentication")]
         public List<string> GetStopsNames()
-        {
+        { 
             using (var adapter = new StopsTableAdapter())
             {
                 return adapter.GetDataOrderedByName().Select(s => s.Stop_Name).ToList();
@@ -68,6 +71,14 @@ namespace NetMPK.Service
                     stAdapter.Dispose();
                 if (drpAdapter != null)
                     drpAdapter.Dispose();
+            }
+        }
+
+        public List<Tuple<string, double, double>> GetStopWithCords()
+        {
+            using (var adapter = new StopsTableAdapter())
+            {
+                return adapter.GetData().Select(s => Tuple.Create(s.Stop_Name, s.X_Coord, s.Y_Coord)).ToList();
             }
         }
         #endregion
@@ -565,6 +576,265 @@ namespace NetMPK.Service
             }
         }
         #endregion
+
+        #endregion
+
+        #region MapDrawing
+        public List<Tuple<string,int,int>> GetMapPoints()
+        {
+            StopsTableAdapter sAdapter = new StopsTableAdapter();
+            Viable_LinesTableAdapter vlAdapter = new Viable_LinesTableAdapter();
+            Desc_Route_PointsTableAdapter drpAdapter = new Desc_Route_PointsTableAdapter();
+            Desc_Geo_Route_PointsTableAdapter dgrpAdapter = new Desc_Geo_Route_PointsTableAdapter();
+            try
+            {
+                int dispWidth = 1080;
+                int dispHeight = 620;
+                MapPointEqualityComparer mpec = new MapPointEqualityComparer();
+                List<int> linesToSet = vlAdapter.GetDataByVehicle("TRAM").OrderBy(o => o.Line_No).Select(s => s.Line_No).ToList();
+                var viableStops = sAdapter.GetViableStopsByType("TRAM");
+                double maxX = viableStops.Select(s => s.X_Coord).Max();
+                double maxY = viableStops.Select(s => s.Y_Coord).Max();
+                double minX = viableStops.Select(s => s.X_Coord).Min();
+                double minY = viableStops.Select(s => s.Y_Coord).Min();
+                MapPointCalculator calc = new MapPointCalculator(maxX, maxY, minX, minY, dispWidth, dispHeight);
+                List<MapPoint> innetOutput = new List<MapPoint>();
+
+                foreach (int line in linesToSet)
+                {
+                    var lineStops = dgrpAdapter.GetRouteForLine(line).Select(s => new MapPoint() { name = s.Stop_Name, X = s.X_Coord, Y = s.Y_Coord , isValid = (s.X_Coord!=-1)?true:false}).ToList();
+                    if (lineStops.Sum(s => s.isValid.GetHashCode()) != lineStops.Count)
+                    {
+                        var parts = GetLineParts(lineStops);
+                        if (lineStops.Count != parts.Count + 1)
+                            FillMissingLineParts(ref parts, ref calc);
+                        foreach (var p in parts)
+                        {
+                            foreach (var pt in p)
+                            {
+                                if (!innetOutput.Contains(pt,mpec))
+                                    innetOutput.Add(pt.Clone());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var p in lineStops)
+                            if (!innetOutput.Contains(p, mpec))
+                                innetOutput.Add(p);
+                    }
+                }
+                List<Tuple<string, int, int>> output = new List<Tuple<string, int, int>>();
+                foreach (var o in innetOutput)
+                {
+                    var temp = calc.CalcPoint(o.X, o.Y);
+                    output.Add(Tuple.Create(o.name,temp.Item1,temp.Item2));
+                }
+                return output;
+            }
+            finally
+            {
+                if (sAdapter != null)
+                    sAdapter.Dispose();
+                if (vlAdapter != null)
+                    vlAdapter.Dispose();
+                if (drpAdapter != null)
+                    drpAdapter.Dispose();
+                if (dgrpAdapter != null)
+                    dgrpAdapter.Dispose();
+            }
+        }
+
+        private void FillMissingLineParts(ref List<List<MapPoint>> parts, ref MapPointCalculator calc)
+        {
+            Desc_Points_DistanceTableAdapter dpdAdapter = new Desc_Points_DistanceTableAdapter();
+            StopsTableAdapter sAdapter = new StopsTableAdapter();
+            try
+            {
+                for (int i = 0; i < parts.Count; i++)
+                {
+                    List<MapPoint> part = parts[i];
+                    if (part.Count > 2)
+                    {
+                        MapPoint lastPoint = part.First();
+                        for (int j = 1; j < part.Count - 1; j++)
+                        {
+                            int partDistance = 0;
+                            for (int g = 1; g < part.Count; g++)
+                                partDistance += (int)dpdAdapter.GetDistance(part[g - 1].name, part[g].name);
+
+                            double ratio = (double)dpdAdapter.GetDistance(part[j - 1].name, part[j].name) / (double)partDistance;
+                            MapVector pointVector = new MapVector(part.Last().X - lastPoint.X , part.Last().Y - lastPoint.Y);
+                            var newPos = MapVector.AddVector(new MapVector(lastPoint.X, lastPoint.Y), MapVector.ShortenVector(pointVector, ratio));
+                            part[j].X = newPos.X;
+                            part[j].Y = newPos.Y;
+                            part[j].isValid = true;
+                            //var newCords = calc.GenerateCoordsForPoint(part[j]);
+                            var stopRow = sAdapter.GetDataByStopName(part[j].name).First();
+                            stopRow.X_Coord = part[j].X;
+                            stopRow.Y_Coord = part[j].Y;
+                            sAdapter.Update(stopRow);
+                            lastPoint = part[j];
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (dpdAdapter != null)
+                    dpdAdapter.Dispose();
+                if (sAdapter != null)
+                    sAdapter.Dispose();
+            }
+        }
+
+        private List<List<MapPoint>> GetLineParts(List<MapPoint> line)
+        {
+            List<List<MapPoint>> output = new List<List<MapPoint>>();
+            List<MapPoint> temp = null;
+            foreach (var point in line)
+            {
+                if (point.isValid)
+                {
+                    if (temp != null)
+                    {
+                        temp.Add(point);
+                        output.Add(temp);
+                    }
+                    temp = new List<MapPoint>();
+                }
+                temp.Add(point.Clone());
+            }
+            return output;
+        }
+
+        private class MapPoint
+        {
+            public string name { get; set; }
+            public double X { get; set; }
+            public double Y { get; set; }
+            public bool isValid { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                if (obj == null)
+                    return false;
+                MapPoint p = obj as MapPoint;
+                if (p == null)
+                    return false;
+                return name.Equals(p.name);
+            }
+
+            public bool Equals(MapPoint p)
+            {
+                return name.Equals(p.name);
+            }
+
+            public override int GetHashCode()
+            {
+                return (int)(name.GetHashCode() ^ X.GetHashCode() ^ Y.GetHashCode());
+            }
+
+            public MapPoint Clone()
+            {
+                return new MapPoint() { name = name, X = X, Y = Y, isValid = isValid };
+            }
+        }
+
+        private class MapPointEqualityComparer : IEqualityComparer<MapPoint>
+        {
+            public bool Equals(MapPoint x, MapPoint y)
+            {
+                return x.name.Equals(y.name);
+            }
+
+            public int GetHashCode(MapPoint obj)
+            {
+                return obj.name.GetHashCode();
+            }
+        }
+
+        private class MapPointCalculator
+        {
+            private double xSpan;
+            private double ySpan;
+            private double minXCoord;
+            private double minYCoord;
+
+            private int dispWidth;
+            private int dispHeight;
+
+            public MapPointCalculator(double maxX, double maxY, double minX, double minY, int dWidth, int dHeight)
+            {
+                xSpan = maxX - minX;
+                ySpan = maxY - minY;
+                minXCoord = minX;
+                minYCoord = minY;
+
+                dispWidth = dWidth;
+                dispHeight = dHeight;
+            }
+
+            public Tuple<int, int> CalcPoint(double _X, double _Y)
+            {
+                if (_X != -1 && _Y != -1)
+                {
+                    int prcX = (int)Math.Floor(((_X - minXCoord) / xSpan) * dispWidth);
+                    int prcY = (int)Math.Floor(((((_Y - minYCoord) / ySpan)-1)*-1) * dispHeight);
+                    return Tuple.Create(prcX, prcY);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            /*
+            public Tuple<double, double> GenerateCoordsForPoint(MapPoint point)
+            {
+                double crdX = (((double)point.X / dispWidth) * xSpan) + minXCoord;
+                double crdY = (((double)point.Y / dispHeight) * ySpan) + minYCoord;
+
+                return Tuple.Create(crdX, crdY);
+            }
+            */
+
+        }
+
+        private class MapVector
+        {
+            public double X { get; set; }
+            public double Y { get; set; }
+
+            public MapVector(double x, double y)
+            {
+                X = x;
+                Y = y;
+            }
+
+            public static MapVector AddVector(MapVector v1, MapVector v2)
+            {
+                return new MapVector(v1.X + v2.X, v1.Y + v2.Y);
+            }
+
+            public static MapVector ShortenVector(MapVector v, double s)
+            {
+                if (v.X != 0 || v.Y != 0)
+                {
+                    double vLength = Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
+                    double sinA = v.Y / vLength;
+                    double newY = sinA * (vLength * s);
+                    double newX = Math.Sqrt(Math.Pow((vLength * s), 2) - Math.Pow(newY, 2));
+
+                    bool x = Math.Sqrt(Math.Pow(newX, 2) + Math.Pow(newY, 2)) == (vLength * s);
+
+                    return new MapVector(newX, newY);
+                }
+                else
+                {
+                    return v;
+                }
+            }
+        }
 
         #endregion
 

@@ -24,6 +24,29 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TupleOfintstringstringdoubledoubleArrayOfintuEIuwDx6" nillable="true" type="tns:TupleOfintstringstringdoubledoubleArrayOfintuEIuwDx6" />
+  <xs:complexType name="ArrayOfTupleOfstringdoubledouble">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TupleOfstringdoubledouble" nillable="true" type="tns:TupleOfstringdoubledouble" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTupleOfstringdoubledouble" nillable="true" type="tns:ArrayOfTupleOfstringdoubledouble" />
+  <xs:complexType name="TupleOfstringdoubledouble">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{2}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="double" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="double" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="m_Item1" nillable="true" type="xs:string" />
+      <xs:element name="m_Item2" type="xs:double" />
+      <xs:element name="m_Item3" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TupleOfstringdoubledouble" nillable="true" type="tns:TupleOfstringdoubledouble" />
   <xs:complexType name="ArrayOfTupleOfintstringstringstringstring">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="TupleOfintstringstringstringstring" nillable="true" type="tns:TupleOfintstringstringstringstring" />
@@ -86,4 +109,27 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TupleOfintstringstringstringstringint" nillable="true" type="tns:TupleOfintstringstringstringstringint" />
+  <xs:complexType name="ArrayOfTupleOfstringintint">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TupleOfstringintint" nillable="true" type="tns:TupleOfstringintint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTupleOfstringintint" nillable="true" type="tns:ArrayOfTupleOfstringintint" />
+  <xs:complexType name="TupleOfstringintint">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TupleOf{0}{1}{2}{#}" Namespace="http://schemas.datacontract.org/2004/07/System" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
+          <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="m_Item1" nillable="true" type="xs:string" />
+      <xs:element name="m_Item2" type="xs:int" />
+      <xs:element name="m_Item3" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TupleOfstringintint" nillable="true" type="tns:TupleOfstringintint" />
 </xs:schema>

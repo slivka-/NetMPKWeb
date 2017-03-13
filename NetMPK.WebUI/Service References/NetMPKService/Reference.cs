@@ -33,6 +33,12 @@ namespace NetMPK.WebUI.NetMPKService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopByName", ReplyAction="http://tempuri.org/IMPKService/GetStopByNameResponse")]
         System.Threading.Tasks.Task<System.Tuple<int, string, string, double, double, System.Collections.Generic.List<int>>> GetStopByNameAsync(string stopName);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopWithCords", ReplyAction="http://tempuri.org/IMPKService/GetStopWithCordsResponse")]
+        System.Collections.Generic.List<System.Tuple<string, double, double>> GetStopWithCords();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetStopWithCords", ReplyAction="http://tempuri.org/IMPKService/GetStopWithCordsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<string, double, double>>> GetStopWithCordsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetAllLines", ReplyAction="http://tempuri.org/IMPKService/GetAllLinesResponse")]
         System.Collections.Generic.List<System.Tuple<int, string, string, string, string>> GetAllLines();
         
@@ -68,6 +74,12 @@ namespace NetMPK.WebUI.NetMPKService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetRoutes", ReplyAction="http://tempuri.org/IMPKService/GetRoutesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<System.Tuple<int, string, string, string, string, int>>>> GetRoutesAsync(string startName, string stopName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetMapPoints", ReplyAction="http://tempuri.org/IMPKService/GetMapPointsResponse")]
+        System.Collections.Generic.List<System.Tuple<string, int, int>> GetMapPoints();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetMapPoints", ReplyAction="http://tempuri.org/IMPKService/GetMapPointsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<string, int, int>>> GetMapPointsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -121,6 +133,14 @@ namespace NetMPK.WebUI.NetMPKService {
             return base.Channel.GetStopByNameAsync(stopName);
         }
         
+        public System.Collections.Generic.List<System.Tuple<string, double, double>> GetStopWithCords() {
+            return base.Channel.GetStopWithCords();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<string, double, double>>> GetStopWithCordsAsync() {
+            return base.Channel.GetStopWithCordsAsync();
+        }
+        
         public System.Collections.Generic.List<System.Tuple<int, string, string, string, string>> GetAllLines() {
             return base.Channel.GetAllLines();
         }
@@ -167,6 +187,14 @@ namespace NetMPK.WebUI.NetMPKService {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<System.Tuple<int, string, string, string, string, int>>>> GetRoutesAsync(string startName, string stopName) {
             return base.Channel.GetRoutesAsync(startName, stopName);
+        }
+        
+        public System.Collections.Generic.List<System.Tuple<string, int, int>> GetMapPoints() {
+            return base.Channel.GetMapPoints();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<string, int, int>>> GetMapPointsAsync() {
+            return base.Channel.GetMapPointsAsync();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.Web.Services.Protocols;
 
 namespace NetMPK.Service
 {
@@ -19,6 +20,7 @@ namespace NetMPK.Service
         #endregion
 
         #region Stops
+        [SoapHeader("Authentication")]   
         [OperationContract]
         List<string> GetStopsNames();
 
@@ -27,6 +29,9 @@ namespace NetMPK.Service
 
         [OperationContract]
         Tuple<int, string, string, double, double, List<int>> GetStopByName(string stopName);
+
+        [OperationContract]
+        List<Tuple<string, double, double>> GetStopWithCords();
         #endregion
    
         #region Lines
@@ -56,7 +61,13 @@ namespace NetMPK.Service
         List<List<Tuple<int, string, string, string, string, int>>> GetRoutes(string startName, string stopName);
 
         #endregion
-        // TODO: Add your service operations here
+
+        #region MapDrawing
+
+        [OperationContract]
+        List<Tuple<string, int, int>> GetMapPoints();
+
+        #endregion
     }
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
