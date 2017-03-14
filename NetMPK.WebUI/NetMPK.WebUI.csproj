@@ -170,6 +170,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Properties\DataSources\NetMPK.Domain.MPKService.CompositeType.datasource" />
     <Content Include="coordBound.config" />
+    <Content Include="Properties\DataSources\System.Windows.Vector.datasource" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dracula.dev.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -258,12 +259,16 @@
     <None Include="Service References\NetMPKService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\NetMPKService\System.Windows.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\NetMPKService\System.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Lines\LineDetails.cshtml" />
     <Content Include="Views\Timetable\Timetable.cshtml" />
     <Content Include="Views\Routes\Routes.cshtml" />
+    <Content Include="Views\Map\MapPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -580,19 +580,34 @@ namespace NetMPK.Service
         #endregion
 
         #region MapDrawing
-        public List<Tuple<string,int,int>> GetMapPoints()
+
+        #region GetRoutes
+
+        public List<string> GetPointNeighbours(string stopName)
+        {
+            using (var adapter = new Desc_Viable_Next_StopsTableAdapter())
+            {
+                return adapter.GetDataByStop(stopName).Select(s => s.Next_Stop).ToList();
+            }
+        }
+
+        #endregion
+
+        #region GetPoints
+        public Tuple<Dictionary<string, Vector>,Dictionary<string,List<string>>,List<Tuple<Vector,Vector>>> GetMapPoints()
         {
             StopsTableAdapter sAdapter = new StopsTableAdapter();
             Viable_LinesTableAdapter vlAdapter = new Viable_LinesTableAdapter();
             Desc_Route_PointsTableAdapter drpAdapter = new Desc_Route_PointsTableAdapter();
             Desc_Geo_Route_PointsTableAdapter dgrpAdapter = new Desc_Geo_Route_PointsTableAdapter();
+            Desc_Viable_Next_StopsTableAdapter dvnsAdapter = new Desc_Viable_Next_StopsTableAdapter();
             try
             {
                 int dispWidth = 1080;
                 int dispHeight = 620;
                 MapPointEqualityComparer mpec = new MapPointEqualityComparer();
-                List<int> linesToSet = vlAdapter.GetDataByVehicle("TRAM").OrderBy(o => o.Line_No).Select(s => s.Line_No).ToList();
-                var viableStops = sAdapter.GetViableStopsByType("TRAM");
+                List<int> linesToSet = vlAdapter.GetCityLines().OrderBy(o => o.Line_No).Select(s => s.Line_No).ToList();
+                var viableStops = sAdapter.GetViableStopsByArea("CITY");
                 double maxX = viableStops.Select(s => s.X_Coord).Max();
                 double maxY = viableStops.Select(s => s.Y_Coord).Max();
                 double minX = viableStops.Select(s => s.X_Coord).Min();
@@ -624,13 +639,75 @@ namespace NetMPK.Service
                                 innetOutput.Add(p);
                     }
                 }
-                List<Tuple<string, int, int>> output = new List<Tuple<string, int, int>>();
-                foreach (var o in innetOutput)
+                var pointOutput = innetOutput.ToDictionary(k => k.name, v => calc.CalcPoint(v.X, v.Y));
+                Dictionary<string, List<string>> closeNeighboursOutput = new Dictionary<string, List<string>>();
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                var keysToCheck = pointOutput.Keys.ToList();
+                int range = 15;
+                while (keysToCheck.Any())
                 {
-                    var temp = calc.CalcPoint(o.X, o.Y);
-                    output.Add(Tuple.Create(o.name,temp.Item1,temp.Item2));
+                    var cp = pointOutput[keysToCheck.First()];
+                    var pointsToHide = pointOutput.Where(w => w.Value.X > cp.X - range && w.Value.X < cp.X + range && w.Value.Y > cp.Y - range && w.Value.Y < cp.Y + range)
+                                                  .Select(s => s.Key)
+                                                  .Where(w2 => !closeNeighboursOutput.Keys.Contains(w2) && w2!= keysToCheck.First())
+                                                  .ToList();
+                    closeNeighboursOutput.Add(keysToCheck.First(), new List<string>(pointsToHide));
+                    pointsToHide.ForEach(fe => keysToCheck.Remove(fe));
+                    pointsToHide.ForEach(fe => pointOutput.Remove(fe));
+                    if(keysToCheck.Count > 0)
+                        keysToCheck.RemoveAt(0);
                 }
-                return output;
+                stopwatch.Stop();
+                Console.WriteLine(stopwatch.Elapsed);
+                //===================================Routes=====================================================
+                var rpec = new _routePartEqualityComparer();
+                var nghRoutes = new List<_routePart>();
+                foreach (var pt in pointOutput)
+                {
+                    var ngh = dvnsAdapter.GetDataByStop(pt.Key);
+                    foreach (var n in ngh)
+                    {
+                        if (pointOutput.ContainsKey(n.Next_Stop))
+                        {
+                            var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[n.Next_Stop]);
+                            if (!nghRoutes.Contains(temp, rpec))
+                                nghRoutes.Add(temp.Clone());
+                        }
+                    }
+                    if (closeNeighboursOutput.ContainsKey(pt.Key))
+                    {
+                        foreach (var clumpedStop in closeNeighboursOutput[pt.Key])
+                        {
+                            ngh = dvnsAdapter.GetDataByStop(clumpedStop);
+                            foreach (var n in ngh)
+                            {
+                                if (pointOutput.ContainsKey(n.Next_Stop))
+                                {
+                                    var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[n.Next_Stop]);
+                                    if (!nghRoutes.Contains(temp, rpec))
+                                        nghRoutes.Add(temp.Clone());
+                                }
+                                else
+                                {
+                                    foreach (var pair in closeNeighboursOutput)
+                                    {
+                                        if (pair.Value.Contains(n.Next_Stop))
+                                        {
+                                            var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[pair.Key]);
+                                            if (!nghRoutes.Contains(temp, rpec))
+                                                nghRoutes.Add(temp.Clone());
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var rtOutput = nghRoutes.Select(s => Tuple.Create(s.v1, s.v2)).ToList();
+                return Tuple.Create(new Dictionary<string, Vector>(pointOutput),new Dictionary<string, List<string>>(closeNeighboursOutput), new List<Tuple<Vector, Vector>>(rtOutput));
             }
             finally
             {
@@ -642,6 +719,8 @@ namespace NetMPK.Service
                     drpAdapter.Dispose();
                 if (dgrpAdapter != null)
                     dgrpAdapter.Dispose();
+                if (dvnsAdapter != null)
+                    dvnsAdapter.Dispose();
             }
         }
 
@@ -775,28 +854,19 @@ namespace NetMPK.Service
                 dispHeight = dHeight;
             }
 
-            public Tuple<int, int> CalcPoint(double _X, double _Y)
+            public Vector CalcPoint(double _X, double _Y)
             {
                 if (_X != -1 && _Y != -1)
                 {
                     int prcX = (int)Math.Floor(((_X - minXCoord) / xSpan) * dispWidth);
                     int prcY = (int)Math.Floor(((((_Y - minYCoord) / ySpan)-1)*-1) * dispHeight);
-                    return Tuple.Create(prcX, prcY);
+                    return new Vector(prcX, prcY);
                 }
                 else
                 {
-                    return null;
+                    return new Vector(-99, -99);
                 }
             }
-            /*
-            public Tuple<double, double> GenerateCoordsForPoint(MapPoint point)
-            {
-                double crdX = (((double)point.X / dispWidth) * xSpan) + minXCoord;
-                double crdY = (((double)point.Y / dispHeight) * ySpan) + minYCoord;
-
-                return Tuple.Create(crdX, crdY);
-            }
-            */
 
         }
 
@@ -820,12 +890,17 @@ namespace NetMPK.Service
             {
                 if (v.X != 0 || v.Y != 0)
                 {
+                    bool xNeg = (v.X > 0) ? false : true;
+                    bool yNeg = (v.Y > 0) ? false : true;
                     double vLength = Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
-                    double sinA = v.Y / vLength;
+                    double sinA = Math.Abs(v.Y) / vLength;
                     double newY = sinA * (vLength * s);
                     double newX = Math.Sqrt(Math.Pow((vLength * s), 2) - Math.Pow(newY, 2));
 
-                    bool x = Math.Sqrt(Math.Pow(newX, 2) + Math.Pow(newY, 2)) == (vLength * s);
+                    if (xNeg)
+                        newX *= -1;
+                    if (yNeg)
+                        newY *= -1;
 
                     return new MapVector(newX, newY);
                 }
@@ -835,6 +910,41 @@ namespace NetMPK.Service
                 }
             }
         }
+
+        private class _routePart
+        {
+            public Vector v1 { get; set; }
+            public Vector v2 { get; set; }
+            public _routePart(Vector _v1, Vector _v2)
+            {
+                v1 = new Vector(_v1.X, _v1.Y);
+                v2 = new Vector(_v2.X, _v2.Y);
+            }
+            public _routePart Clone()
+            {
+                return new _routePart(v1, v2);
+            }
+
+        }
+        private class _routePartEqualityComparer : IEqualityComparer<_routePart>
+        {
+            public bool Equals(_routePart x, _routePart y)
+            {
+                if ((x.v1.X == y.v1.X && x.v1.Y == y.v1.Y) && (x.v2.X == y.v2.X && x.v2.Y == y.v2.Y))
+                    return true;
+                else if ((x.v1.X == y.v2.X && x.v1.Y == y.v2.Y) && (x.v2.X == y.v1.X && x.v2.Y == y.v1.Y))
+                    return true;
+                else
+                    return false;
+            }
+
+            public int GetHashCode(_routePart obj)
+            {
+                return obj.v1.GetHashCode() ^ obj.v2.GetHashCode();
+            }
+        }
+
+        #endregion
 
         #endregion
 

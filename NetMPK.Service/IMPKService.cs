@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Web.Services.Protocols;
+using System.Windows;
 
 namespace NetMPK.Service
 {
@@ -65,7 +66,10 @@ namespace NetMPK.Service
         #region MapDrawing
 
         [OperationContract]
-        List<Tuple<string, int, int>> GetMapPoints();
+        Tuple<Dictionary<string, Vector>, Dictionary<string, List<string>>, List<Tuple<Vector, Vector>>> GetMapPoints();
+
+        [OperationContract]
+        List<string> GetPointNeighbours(string stopName);
 
         #endregion
     }

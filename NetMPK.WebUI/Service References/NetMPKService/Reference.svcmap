@@ -29,6 +29,7 @@
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="7ed26f79-7a4c-46be-a7e3-95e8ed5e5a0b" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
     <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="9361184e-fb23-4c57-a863-0998a7323093" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
     <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="2967794c-c047-46fd-91a8-8d3901c68a86" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
+    <MetadataFile FileName="System.Windows.xsd" MetadataType="Schema" ID="6d7e8ae9-9443-4044-9e01-8705685fe170" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

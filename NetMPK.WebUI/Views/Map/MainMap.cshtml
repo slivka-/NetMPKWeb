@@ -4,13 +4,32 @@
     ViewBag.Title = "Mapa";
 }
 @Scripts.Render("~/bundles/_maps")
-<div class="mainMap">
-    @foreach (var cord in Model.coords)
-    {
-        string styleString = string.Format("margin-left:{0}px;margin-top:{1}px;", cord.Item2, cord.Item3);
-        <div class="mapPoint" style="@styleString" id="@cord.Item1" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="@cord.Item1"> </div>
-    }
+<div class="mapWrapper">
+    <svg class="svg">
+        @foreach (var part in Model.routesParts)
+        {
+            <line x1="@part.Item1.X" y1="@part.Item1.Y" x2="@part.Item2.X" y2="@part.Item2.Y" style="stroke:red;stroke-width:1" />
+        }
+    </svg>
+    <div class="mainMap">
+        @foreach (var cord in Model.coords)
+                {
+                    string styleString = string.Format("margin-left:{0}px;margin-top:{1}px;", cord.Value.X, cord.Value.Y);
+                    string dataContent;
+                    dataContent = "<>";
+                    if (Model.clumpedStops.ContainsKey(dataContent))
+                    {
+                        dataContent += ", "+string.Join(", ", Model.clumpedStops[dataContent]);
+                    }
+            <div class="mapPoint" style="@styleString" id="@cord.Key" data-placement="right" data-content="@dataContent"> </div>
+        }
+    </div>
+
 </div>
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Windows" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMPKService_GetStopsNames_InputMessage">
@@ -74,6 +75,12 @@
   <wsdl:message name="IMPKService_GetMapPoints_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMapPointsResponse" />
   </wsdl:message>
+  <wsdl:message name="IMPKService_GetPointNeighbours_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPointNeighbours" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetPointNeighbours_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPointNeighboursResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMPKService">
     <wsdl:operation name="GetStopsNames">
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetStopsNames" message="tns:IMPKService_GetStopsNames_InputMessage" />
@@ -118,6 +125,10 @@
     <wsdl:operation name="GetMapPoints">
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetMapPoints" message="tns:IMPKService_GetMapPoints_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetMapPointsResponse" message="tns:IMPKService_GetMapPoints_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPointNeighbours">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetPointNeighbours" message="tns:IMPKService_GetPointNeighbours_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetPointNeighboursResponse" message="tns:IMPKService_GetPointNeighbours_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMPKService" type="tns:IMPKService">
@@ -214,6 +225,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetMapPoints">
       <soap:operation soapAction="http://tempuri.org/IMPKService/GetMapPoints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPointNeighbours">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetPointNeighbours" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -76,10 +76,16 @@ namespace NetMPK.WebUI.NetMPKService {
         System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<System.Tuple<int, string, string, string, string, int>>>> GetRoutesAsync(string startName, string stopName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetMapPoints", ReplyAction="http://tempuri.org/IMPKService/GetMapPointsResponse")]
-        System.Collections.Generic.List<System.Tuple<string, int, int>> GetMapPoints();
+        System.Tuple<System.Collections.Generic.Dictionary<string, System.Windows.Vector>, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>, System.Collections.Generic.List<System.Tuple<System.Windows.Vector, System.Windows.Vector>>> GetMapPoints();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetMapPoints", ReplyAction="http://tempuri.org/IMPKService/GetMapPointsResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<string, int, int>>> GetMapPointsAsync();
+        System.Threading.Tasks.Task<System.Tuple<System.Collections.Generic.Dictionary<string, System.Windows.Vector>, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>, System.Collections.Generic.List<System.Tuple<System.Windows.Vector, System.Windows.Vector>>>> GetMapPointsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetPointNeighbours", ReplyAction="http://tempuri.org/IMPKService/GetPointNeighboursResponse")]
+        System.Collections.Generic.List<string> GetPointNeighbours(string stopName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetPointNeighbours", ReplyAction="http://tempuri.org/IMPKService/GetPointNeighboursResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetPointNeighboursAsync(string stopName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -189,12 +195,20 @@ namespace NetMPK.WebUI.NetMPKService {
             return base.Channel.GetRoutesAsync(startName, stopName);
         }
         
-        public System.Collections.Generic.List<System.Tuple<string, int, int>> GetMapPoints() {
+        public System.Tuple<System.Collections.Generic.Dictionary<string, System.Windows.Vector>, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>, System.Collections.Generic.List<System.Tuple<System.Windows.Vector, System.Windows.Vector>>> GetMapPoints() {
             return base.Channel.GetMapPoints();
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<string, int, int>>> GetMapPointsAsync() {
+        public System.Threading.Tasks.Task<System.Tuple<System.Collections.Generic.Dictionary<string, System.Windows.Vector>, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>, System.Collections.Generic.List<System.Tuple<System.Windows.Vector, System.Windows.Vector>>>> GetMapPointsAsync() {
             return base.Channel.GetMapPointsAsync();
+        }
+        
+        public System.Collections.Generic.List<string> GetPointNeighbours(string stopName) {
+            return base.Channel.GetPointNeighbours(stopName);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetPointNeighboursAsync(string stopName) {
+            return base.Channel.GetPointNeighboursAsync(stopName);
         }
     }
 }

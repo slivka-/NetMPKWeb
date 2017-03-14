@@ -7,9 +7,12 @@
     }
 }
 
-namespace NetMPK.Service.MPKDBTableAdapters {
-    
-    
+namespace NetMPK.Service.MPKDBTableAdapters
+{
+    partial class Desc_Next_StopsTableAdapter
+    {
+    }
+
     public partial class Desc_Route_PointsTableAdapter {
     }
 }
