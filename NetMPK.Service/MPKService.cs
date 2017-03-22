@@ -5,6 +5,8 @@ using NetMPK.Service.MPKDBTableAdapters;
 using System.Diagnostics;
 using System.Web.Services.Protocols;
 using System.Windows;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace NetMPK.Service
 {
@@ -617,7 +619,7 @@ namespace NetMPK.Service
 
                 foreach (int line in linesToSet)
                 {
-                    var lineStops = dgrpAdapter.GetRouteForLine(line).Select(s => new MapPoint() { name = s.Stop_Name, X = s.X_Coord, Y = s.Y_Coord , isValid = (s.X_Coord!=-1)?true:false}).ToList();
+                    var lineStops = dgrpAdapter.GetRouteForLine(line).Select(s => new MapPoint() { name = s.Stop_Name, X = s.X_Coord, Y = s.Y_Coord, isValid = (s.X_Coord != -1) ? true : false }).ToList();
                     if (lineStops.Sum(s => s.isValid.GetHashCode()) != lineStops.Count)
                     {
                         var parts = GetLineParts(lineStops);
@@ -627,7 +629,7 @@ namespace NetMPK.Service
                         {
                             foreach (var pt in p)
                             {
-                                if (!innetOutput.Contains(pt,mpec))
+                                if (!innetOutput.Contains(pt, mpec))
                                     innetOutput.Add(pt.Clone());
                             }
                         }
@@ -641,8 +643,6 @@ namespace NetMPK.Service
                 }
                 var pointOutput = innetOutput.ToDictionary(k => k.name, v => calc.CalcPoint(v.X, v.Y));
                 Dictionary<string, List<string>> closeNeighboursOutput = new Dictionary<string, List<string>>();
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
                 var keysToCheck = pointOutput.Keys.ToList();
                 int range = 15;
                 while (keysToCheck.Any())
@@ -650,64 +650,88 @@ namespace NetMPK.Service
                     var cp = pointOutput[keysToCheck.First()];
                     var pointsToHide = pointOutput.Where(w => w.Value.X > cp.X - range && w.Value.X < cp.X + range && w.Value.Y > cp.Y - range && w.Value.Y < cp.Y + range)
                                                   .Select(s => s.Key)
-                                                  .Where(w2 => !closeNeighboursOutput.Keys.Contains(w2) && w2!= keysToCheck.First())
+                                                  .Where(w2 => !closeNeighboursOutput.Keys.Contains(w2) && w2 != keysToCheck.First())
                                                   .ToList();
                     closeNeighboursOutput.Add(keysToCheck.First(), new List<string>(pointsToHide));
                     pointsToHide.ForEach(fe => keysToCheck.Remove(fe));
                     pointsToHide.ForEach(fe => pointOutput.Remove(fe));
-                    if(keysToCheck.Count > 0)
+                    if (keysToCheck.Count > 0)
                         keysToCheck.RemoveAt(0);
                 }
-                stopwatch.Stop();
-                Console.WriteLine(stopwatch.Elapsed);
                 //===================================Routes=====================================================
-                var rpec = new _routePartEqualityComparer();
-                var nghRoutes = new List<_routePart>();
-                foreach (var pt in pointOutput)
+                List<Tuple<Vector, Vector>> rtOutput;
+                string path = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + @"\localRoutes.bin";
+                if (File.Exists(path) && File.GetLastAccessTime(path).AddHours(1) > DateTime.Now)
                 {
-                    var ngh = dvnsAdapter.GetDataByStop(pt.Key);
-                    foreach (var n in ngh)
+                    using (Stream str = File.Open(path, FileMode.Open))
                     {
-                        if (pointOutput.ContainsKey(n.Next_Stop))
-                        {
-                            var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[n.Next_Stop]);
-                            if (!nghRoutes.Contains(temp, rpec))
-                                nghRoutes.Add(temp.Clone());
-                        }
-                    }
-                    if (closeNeighboursOutput.ContainsKey(pt.Key))
+                        BinaryFormatter bin = new BinaryFormatter();
+                        rtOutput = (List<Tuple<Vector, Vector>>)bin.Deserialize(str);
+                    }       
+                }
+                else
+                {
+                    var rpec = new _routePartEqualityComparer();
+                    var nghRoutes = new List<_routePart>();
+                    foreach (var pt in pointOutput)
                     {
-                        foreach (var clumpedStop in closeNeighboursOutput[pt.Key])
+                        var ngh = dvnsAdapter.GetDataByStop(pt.Key);
+                        foreach (var n in ngh)
                         {
-                            ngh = dvnsAdapter.GetDataByStop(clumpedStop);
-                            foreach (var n in ngh)
+                            if (pointOutput.ContainsKey(n.Next_Stop))
                             {
-                                if (pointOutput.ContainsKey(n.Next_Stop))
+                                var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[n.Next_Stop]);
+                                if (!nghRoutes.Contains(temp, rpec))
+                                    nghRoutes.Add(temp.Clone());
+                            }
+                        }
+
+                        if (closeNeighboursOutput.ContainsKey(pt.Key))
+                        {
+                            foreach (var clumpedStop in closeNeighboursOutput[pt.Key])
+                            {
+                                ngh = dvnsAdapter.GetDataByStop(clumpedStop);
+                                foreach (var n in ngh)
                                 {
-                                    var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[n.Next_Stop]);
-                                    if (!nghRoutes.Contains(temp, rpec))
-                                        nghRoutes.Add(temp.Clone());
-                                }
-                                else
-                                {
-                                    foreach (var pair in closeNeighboursOutput)
+                                    if (pointOutput.ContainsKey(n.Next_Stop))
                                     {
-                                        if (pair.Value.Contains(n.Next_Stop))
+                                        var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[n.Next_Stop]);
+                                        if (!nghRoutes.Contains(temp, rpec))
+                                            nghRoutes.Add(temp.Clone());
+                                    }
+                                    else
+                                    {
+                                        foreach (var pair in closeNeighboursOutput)
                                         {
-                                            var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[pair.Key]);
-                                            if (!nghRoutes.Contains(temp, rpec))
-                                                nghRoutes.Add(temp.Clone());
-                                            break;
+                                            if (pair.Value.Contains(n.Next_Stop))
+                                            {
+                                                var temp = new _routePart(new Vector(pt.Value.X, pt.Value.Y), pointOutput[pair.Key]);
+                                                if (!nghRoutes.Contains(temp, rpec))
+                                                    nghRoutes.Add(temp.Clone());
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                    rtOutput = nghRoutes.Select(s => Tuple.Create(s.v1, s.v2)).ToList();
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                    using (Stream str = File.Open(path, FileMode.Create))
+                    {
+                        BinaryFormatter bin = new BinaryFormatter();
+                        bin.Serialize(str, rtOutput);
+                    }
                 }
-
-                var rtOutput = nghRoutes.Select(s => Tuple.Create(s.v1, s.v2)).ToList();
-                return Tuple.Create(new Dictionary<string, Vector>(pointOutput),new Dictionary<string, List<string>>(closeNeighboursOutput), new List<Tuple<Vector, Vector>>(rtOutput));
+                return Tuple.Create(new Dictionary<string, Vector>(pointOutput), new Dictionary<string, List<string>>(closeNeighboursOutput), new List<Tuple<Vector, Vector>>(rtOutput));
+            }
+            catch(IOException)
+            {
+                return null;
             }
             finally
             {

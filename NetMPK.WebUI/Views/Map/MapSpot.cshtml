@@ -1,0 +1,7 @@
+﻿@model List<string>
+<div style="width: 200px;">
+    @foreach (var s in Model)
+    {
+        <span>@Html.ActionLink(s, "StopDetails", "Stops", new { stopName = s }, null)</span>  <span style="color:#838383;" class="glyphicon glyphicon-flag"></span><br />
+    }
+</div>

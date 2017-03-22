@@ -169,7 +169,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Properties\DataSources\NetMPK.Domain.MPKService.CompositeType.datasource" />
-    <Content Include="coordBound.config" />
     <Content Include="Properties\DataSources\System.Windows.Vector.datasource" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dracula.dev.js" />
@@ -205,6 +204,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LinesController.cs" />
     <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\MapSpotController.cs" />
     <Compile Include="Controllers\RoutesController.cs" />
     <Compile Include="Controllers\StopsController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
@@ -268,7 +268,7 @@
     <Content Include="Views\Lines\LineDetails.cshtml" />
     <Content Include="Views\Timetable\Timetable.cshtml" />
     <Content Include="Views\Routes\Routes.cshtml" />
-    <Content Include="Views\Map\MapPartial.cshtml" />
+    <Content Include="Views\Map\MapSpot.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -278,6 +278,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MapSpot\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

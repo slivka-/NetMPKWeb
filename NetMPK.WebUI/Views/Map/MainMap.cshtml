@@ -8,20 +8,19 @@
     <svg class="svg">
         @foreach (var part in Model.routesParts)
         {
-            <line x1="@part.Item1.X" y1="@part.Item1.Y" x2="@part.Item2.X" y2="@part.Item2.Y" style="stroke:red;stroke-width:1" />
+            <line x1="@part.Item1.X" y1="@part.Item1.Y" x2="@part.Item2.X" y2="@part.Item2.Y" style="stroke:#838383;stroke-width:1" />
         }
     </svg>
     <div class="mainMap">
         @foreach (var cord in Model.coords)
-                {
-                    string styleString = string.Format("margin-left:{0}px;margin-top:{1}px;", cord.Value.X, cord.Value.Y);
-                    string dataContent;
-                    dataContent = "<>";
-                    if (Model.clumpedStops.ContainsKey(dataContent))
-                    {
-                        dataContent += ", "+string.Join(", ", Model.clumpedStops[dataContent]);
-                    }
-            <div class="mapPoint" style="@styleString" id="@cord.Key" data-placement="right" data-content="@dataContent"> </div>
+        {
+            string styleString = string.Format("margin-left:{0}px;margin-top:{1}px;", cord.Value.X, cord.Value.Y);
+            List<string> data = new List<string> { cord.Key };
+            if (Model.clumpedStops.ContainsKey(cord.Key))
+            {
+                data.AddRange(Model.clumpedStops[cord.Key]);
+            }
+            <div class="mapPoint" style="@styleString" id="@cord.Key" data-placement="right" data-toggle="popover" data-content="@HttpUtility.HtmlEncode(Html.Partial("MapSpot",data))"> </div>
         }
     </div>
 

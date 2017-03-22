@@ -254,3 +254,4 @@ paket-files/
 credentials.config
 Settings.settings
 Settings.Designer.cs
+localRoutes.bin
