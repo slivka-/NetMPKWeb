@@ -1,0 +1,19 @@
+﻿@using System.Web.Optimization
+@model NetMPK.WebUI.Models.MainViewModel
+@Scripts.Render("~/bundles/_savedTracks")
+@if (Model.isLoggedIn)
+{
+
+    <div class="savedTracksWrapper">
+        <div id="collapseButton" class="savedTracksCollapse well well-sm">
+            <span id="arrow" class="collapseArrow glyphicon glyphicon-chevron-left"></span>
+        </div>
+        <div id="collapseContent" class="savedTracksContent well">
+            <h5>Zapisane trasy</h5>
+            @foreach (var r in Model.userSavedRoutes)
+            {
+                <div class="singleRt well"><a href="@Url.Action("FindRoutes","Routes",new {startName = r.Item1, stopName = r.Item2})">@r.Item1 <span class="glyphicon glyphicon-flag"></span><br /> <span class="glyphicon glyphicon-chevron-down"></span><br /> @r.Item2 <span class="glyphicon glyphicon-flag"></span></a></div>
+            }
+        </div>
+    </div>
+}

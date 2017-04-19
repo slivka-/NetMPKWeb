@@ -38,10 +38,15 @@ namespace NetMPK.WebUI.Controllers
             {
                 allStops = client.GetStopsWithStreets(),
                 noRoutesFound = false
-        };
+            };
             return View("Routes",model);
         }
 
+        public ActionResult SaveRoute(string routeFrom, string routeTo)
+        {
+            client.SaveRouteForUser(SessionAccess.userId, routeFrom, routeTo);
+            return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
+        }
 
     }
 }

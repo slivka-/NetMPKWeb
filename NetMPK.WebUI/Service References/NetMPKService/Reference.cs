@@ -75,6 +75,18 @@ namespace NetMPK.WebUI.NetMPKService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetRoutes", ReplyAction="http://tempuri.org/IMPKService/GetRoutesResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<System.Collections.Generic.List<System.Tuple<int, string, string, string, string, int>>>> GetRoutesAsync(string startName, string stopName);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/SaveRouteForUser", ReplyAction="http://tempuri.org/IMPKService/SaveRouteForUserResponse")]
+        bool SaveRouteForUser(string userId, string firstStop, string lastStop);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/SaveRouteForUser", ReplyAction="http://tempuri.org/IMPKService/SaveRouteForUserResponse")]
+        System.Threading.Tasks.Task<bool> SaveRouteForUserAsync(string userId, string firstStop, string lastStop);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetSavedRoutesForUser", ReplyAction="http://tempuri.org/IMPKService/GetSavedRoutesForUserResponse")]
+        System.Collections.Generic.List<System.Tuple<string, string>> GetSavedRoutesForUser(int userId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetSavedRoutesForUser", ReplyAction="http://tempuri.org/IMPKService/GetSavedRoutesForUserResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<string, string>>> GetSavedRoutesForUserAsync(int userId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetMapPoints", ReplyAction="http://tempuri.org/IMPKService/GetMapPointsResponse")]
         System.Tuple<System.Collections.Generic.Dictionary<string, System.Windows.Vector>, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>, System.Collections.Generic.List<System.Tuple<System.Windows.Vector, System.Windows.Vector>>> GetMapPoints();
         
@@ -86,6 +98,71 @@ namespace NetMPK.WebUI.NetMPKService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/GetPointNeighbours", ReplyAction="http://tempuri.org/IMPKService/GetPointNeighboursResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetPointNeighboursAsync(string stopName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/LoginFree", ReplyAction="http://tempuri.org/IMPKService/LoginFreeResponse")]
+        bool LoginFree(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/LoginFree", ReplyAction="http://tempuri.org/IMPKService/LoginFreeResponse")]
+        System.Threading.Tasks.Task<bool> LoginFreeAsync(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/EmailFree", ReplyAction="http://tempuri.org/IMPKService/EmailFreeResponse")]
+        bool EmailFree(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/EmailFree", ReplyAction="http://tempuri.org/IMPKService/EmailFreeResponse")]
+        System.Threading.Tasks.Task<bool> EmailFreeAsync(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/RegisterUser", ReplyAction="http://tempuri.org/IMPKService/RegisterUserResponse")]
+        bool RegisterUser(string login, string password, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/RegisterUser", ReplyAction="http://tempuri.org/IMPKService/RegisterUserResponse")]
+        System.Threading.Tasks.Task<bool> RegisterUserAsync(string login, string password, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/LoginUser", ReplyAction="http://tempuri.org/IMPKService/LoginUserResponse")]
+        NetMPK.WebUI.NetMPKService.LoginUserResponse LoginUser(NetMPK.WebUI.NetMPKService.LoginUserRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/LoginUser", ReplyAction="http://tempuri.org/IMPKService/LoginUserResponse")]
+        System.Threading.Tasks.Task<NetMPK.WebUI.NetMPKService.LoginUserResponse> LoginUserAsync(NetMPK.WebUI.NetMPKService.LoginUserRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LoginUser", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class LoginUserRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string login;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public string password;
+        
+        public LoginUserRequest() {
+        }
+        
+        public LoginUserRequest(string login, string password) {
+            this.login = login;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LoginUserResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class LoginUserResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public bool LoginUserResult;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public string userID;
+        
+        public LoginUserResponse() {
+        }
+        
+        public LoginUserResponse(bool LoginUserResult, string userID) {
+            this.LoginUserResult = LoginUserResult;
+            this.userID = userID;
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -195,6 +272,22 @@ namespace NetMPK.WebUI.NetMPKService {
             return base.Channel.GetRoutesAsync(startName, stopName);
         }
         
+        public bool SaveRouteForUser(string userId, string firstStop, string lastStop) {
+            return base.Channel.SaveRouteForUser(userId, firstStop, lastStop);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SaveRouteForUserAsync(string userId, string firstStop, string lastStop) {
+            return base.Channel.SaveRouteForUserAsync(userId, firstStop, lastStop);
+        }
+        
+        public System.Collections.Generic.List<System.Tuple<string, string>> GetSavedRoutesForUser(int userId) {
+            return base.Channel.GetSavedRoutesForUser(userId);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<System.Tuple<string, string>>> GetSavedRoutesForUserAsync(int userId) {
+            return base.Channel.GetSavedRoutesForUserAsync(userId);
+        }
+        
         public System.Tuple<System.Collections.Generic.Dictionary<string, System.Windows.Vector>, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>, System.Collections.Generic.List<System.Tuple<System.Windows.Vector, System.Windows.Vector>>> GetMapPoints() {
             return base.Channel.GetMapPoints();
         }
@@ -209,6 +302,48 @@ namespace NetMPK.WebUI.NetMPKService {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<string>> GetPointNeighboursAsync(string stopName) {
             return base.Channel.GetPointNeighboursAsync(stopName);
+        }
+        
+        public bool LoginFree(string login) {
+            return base.Channel.LoginFree(login);
+        }
+        
+        public System.Threading.Tasks.Task<bool> LoginFreeAsync(string login) {
+            return base.Channel.LoginFreeAsync(login);
+        }
+        
+        public bool EmailFree(string email) {
+            return base.Channel.EmailFree(email);
+        }
+        
+        public System.Threading.Tasks.Task<bool> EmailFreeAsync(string email) {
+            return base.Channel.EmailFreeAsync(email);
+        }
+        
+        public bool RegisterUser(string login, string password, string email) {
+            return base.Channel.RegisterUser(login, password, email);
+        }
+        
+        public System.Threading.Tasks.Task<bool> RegisterUserAsync(string login, string password, string email) {
+            return base.Channel.RegisterUserAsync(login, password, email);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        NetMPK.WebUI.NetMPKService.LoginUserResponse NetMPK.WebUI.NetMPKService.IMPKService.LoginUser(NetMPK.WebUI.NetMPKService.LoginUserRequest request) {
+            return base.Channel.LoginUser(request);
+        }
+        
+        public bool LoginUser(string login, string password, out string userID) {
+            NetMPK.WebUI.NetMPKService.LoginUserRequest inValue = new NetMPK.WebUI.NetMPKService.LoginUserRequest();
+            inValue.login = login;
+            inValue.password = password;
+            NetMPK.WebUI.NetMPKService.LoginUserResponse retVal = ((NetMPK.WebUI.NetMPKService.IMPKService)(this)).LoginUser(inValue);
+            userID = retVal.userID;
+            return retVal.LoginUserResult;
+        }
+        
+        public System.Threading.Tasks.Task<NetMPK.WebUI.NetMPKService.LoginUserResponse> LoginUserAsync(NetMPK.WebUI.NetMPKService.LoginUserRequest request) {
+            return base.Channel.LoginUserAsync(request);
         }
     }
 }

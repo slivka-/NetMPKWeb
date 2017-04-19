@@ -27,9 +27,24 @@ textarea {
 
 .list-main {
     position: relative;
-    width: 100%;
     height: 750px;
-    overflow:hidden;
+    width:100%;
+    display:flex;
+    flex-flow:column wrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding-bottom:15px;
+}
+
+.stopListItem{
+    margin-right:10px;
+}
+
+.singleLetter{
+    width:30px;
+    height:30px;
+    padding:3px;
+    margin-bottom:15px;
 }
 
 .pagePicker {
@@ -287,4 +302,56 @@ tr, td
     margin-top: 20px;
     width: 1100px;
     height: 700px;
+}
+
+.loginBold{
+    font-weight:700;
+}
+
+.savedTracksWrapper {
+    position:absolute;
+    right:0px;
+    top: 25%;
+    padding: 0px;
+    white-space:nowrap;
+}
+
+.savedTracksContent {
+    padding:5px !important;
+    float: right;
+    width:0px;
+    height:400px;
+    background-color:rgba(235,235,235,1);
+    text-align:center;
+    margin-right:-10px;
+    overflow:auto;
+}
+
+.savedTracksCollapse {
+    float: left;
+    width: 30px;
+    height: 200px;
+    margin-top:100px;
+    background-color:rgba(235,235,235,1);
+    padding:5px;
+    display:table;
+
+}
+
+.collapseArrow {
+    font-size:30px;
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.singleRt{
+    padding:5px;
+    text-align:center;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+.saveTrackBtn{
+    float:right;
+    margin-top:0px;
 }

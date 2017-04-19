@@ -1,33 +1,32 @@
-﻿@model NetMPK.WebUI.Models.StopsModel
-
+﻿@using System.Web.Optimization
+@model NetMPK.WebUI.Models.StopsModel
+@Scripts.Render("~/bundles/_StopsListSearch")
 @{
     ViewBag.Title = "Przystanki";
 }
-@{char lastChar = ' ';}
+@{
+    char lastChar = ' ';
+    char[] alphabet = Model.stopNames.Select(s => s.First()).Distinct().ToArray();
+}
 <div class="wrapper">
-    <div class="list-main">
-        @for (int i = 0; i < 4; i++)
+    <div class="letterSelector">
+        @foreach (char c in alphabet)
         {
-            <div class="col-xs-3 list-col">
-                @foreach (var s in Model.stopNames.Skip(i * 30).Take(30))
-                {
-                    if(!s.First().ToString().Equals(lastChar.ToString(),StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        lastChar = s.First();
-                        <div>
-                            <h3>
-                                @char.ToUpper(lastChar).ToString().First();
-                            </h3>
-                        </div>
-                    }
-                    <div>
-                        @Html.ActionLink(s, "StopDetails", "Stops", new { stopName = s.ToString() }, null)
-                    </div>
-                }
-            </div>
+            <a class="btn btn-primary singleLetter" id="@c.ToString().ToUpper()">@c.ToString().ToUpper()</a>
         }
+        <a class="btn btn-primary singleLetter" style="width: 70px;" id="ALL">Wszystkie</a>
     </div>
-    <div class="pagePicker">
-        @Html.PageLinks(Model.pagingInfo, x => Url.Action("StopsList", new { page = x }))
+    <div class="list-main">
+       @foreach (var s in Model.stopNames)
+       {
+
+           if (s.First() != lastChar)
+           {
+               lastChar = s.First();
+               <h4 id="@lastChar">@lastChar</h4>
+           }
+           string ID = "STOP" + s;
+        <div class="stopListItem" id="@ID">@Html.ActionLink(s, "StopDetails", "Stops", new { stopName = s.ToString() }, null)</div>
+       }
     </div>
 </div>

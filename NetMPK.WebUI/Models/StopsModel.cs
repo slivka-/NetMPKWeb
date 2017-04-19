@@ -9,6 +9,5 @@ namespace NetMPK.WebUI.Models
 
         }
         public IEnumerable<string> stopNames { get; set; }
-        public PagingInfo pagingInfo { get; set; }
     }
 }

@@ -3,15 +3,14 @@
 @if (Model.isLoggedIn)
 {
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                ZALOGOWANO    
-            </li>
+            <li>@Html.ActionLink(Model.userLogin, "DisplayInfo", "Account",null,new {@class = "loginBold" })</li>
+            <li>@Html.ActionLink("Wyloguj się", "Logout", "Account")</li>   
         </ul>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Zarejestruj się", "Register", "Account")</li>
+        <li>@Html.ActionLink("Zarejestruj się", "DisplayRegister", "Account")</li>
         <li><a href="#" class="btn" data-toggle="popover" data-placement="bottom" data-content="@HttpUtility.HtmlEncode(Html.Partial("_LoginPopover"))">Zaloguj się</a> </li>
     </ul>
 }

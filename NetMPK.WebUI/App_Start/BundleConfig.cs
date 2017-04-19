@@ -28,11 +28,13 @@ namespace NetMPK.WebUI
 
             bundles.Add(new ScriptBundle("~/bundles/_mainScripts").Include("~/Scripts/_mainScript.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/_stopSearch").Include("~/Scripts/StopSearch.js"));
+            bundles.Add(new ScriptBundle("~/bundles/_stopSearch").Include("~/Scripts/_StopSearch.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/_maps").Include("~/Scripts/_mapDrawer.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/_savedTracks").Include("~/Scripts/_SavedTracks.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/_StopsListSearch").Include("~/Scripts/_StopsListSearch.js"));
         }
     }
 }

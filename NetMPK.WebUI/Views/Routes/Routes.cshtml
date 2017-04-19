@@ -57,6 +57,10 @@
         <div class="routes-main accordion-wrapper">
             @if (Model.routes != null && Model.noRoutesFound == false)
             {
+                if (Model.isLoggedIn)
+                {
+                    <a href="@Url.Action("SaveRoute",new {routeFrom = Model.routes.First().First().Item2, routeTo = Model.routes.First().Last().Item4})" class="btn btn-primary saveTrackBtn">Dodaj do ulubionych</a>
+                }
                 <div class="">
                     <h3>Znalezione trasy:</h3>
                     <div class="panel-group" id="routesAccordion">

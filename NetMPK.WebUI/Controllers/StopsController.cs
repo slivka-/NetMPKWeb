@@ -23,13 +23,7 @@ namespace NetMPK.WebUI.Controllers
 
             Models.StopsModel model = new Models.StopsModel
             {
-                stopNames = fullStopsList.Skip((page - 1) * pageSize).Take(pageSize),
-                pagingInfo = new Models.PagingInfo
-                {
-                    currentPage = page,
-                    itemsPerPage = pageSize,
-                    totalItems = fullStopsList.Count()
-                }
+                stopNames = fullStopsList
             };
             return View(model);
         }

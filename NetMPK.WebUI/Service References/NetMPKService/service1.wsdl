@@ -69,6 +69,18 @@
   <wsdl:message name="IMPKService_GetRoutes_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetRoutesResponse" />
   </wsdl:message>
+  <wsdl:message name="IMPKService_SaveRouteForUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveRouteForUser" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_SaveRouteForUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveRouteForUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetSavedRoutesForUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSavedRoutesForUser" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_GetSavedRoutesForUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSavedRoutesForUserResponse" />
+  </wsdl:message>
   <wsdl:message name="IMPKService_GetMapPoints_InputMessage">
     <wsdl:part name="parameters" element="tns:GetMapPoints" />
   </wsdl:message>
@@ -80,6 +92,30 @@
   </wsdl:message>
   <wsdl:message name="IMPKService_GetPointNeighbours_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPointNeighboursResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_LoginFree_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginFree" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_LoginFree_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginFreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_EmailFree_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmailFree" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_EmailFree_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EmailFreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_LoginUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginUser" />
+  </wsdl:message>
+  <wsdl:message name="IMPKService_LoginUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginUserResponse" />
   </wsdl:message>
   <wsdl:portType name="IMPKService">
     <wsdl:operation name="GetStopsNames">
@@ -122,6 +158,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetRoutes" message="tns:IMPKService_GetRoutes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetRoutesResponse" message="tns:IMPKService_GetRoutes_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SaveRouteForUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/SaveRouteForUser" message="tns:IMPKService_SaveRouteForUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/SaveRouteForUserResponse" message="tns:IMPKService_SaveRouteForUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSavedRoutesForUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetSavedRoutesForUser" message="tns:IMPKService_GetSavedRoutesForUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetSavedRoutesForUserResponse" message="tns:IMPKService_GetSavedRoutesForUser_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetMapPoints">
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetMapPoints" message="tns:IMPKService_GetMapPoints_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetMapPointsResponse" message="tns:IMPKService_GetMapPoints_OutputMessage" />
@@ -129,6 +173,22 @@
     <wsdl:operation name="GetPointNeighbours">
       <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/GetPointNeighbours" message="tns:IMPKService_GetPointNeighbours_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/GetPointNeighboursResponse" message="tns:IMPKService_GetPointNeighbours_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginFree">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/LoginFree" message="tns:IMPKService_LoginFree_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/LoginFreeResponse" message="tns:IMPKService_LoginFree_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmailFree">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/EmailFree" message="tns:IMPKService_EmailFree_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/EmailFreeResponse" message="tns:IMPKService_EmailFree_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/RegisterUser" message="tns:IMPKService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/RegisterUserResponse" message="tns:IMPKService_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMPKService/LoginUser" message="tns:IMPKService_LoginUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMPKService/LoginUserResponse" message="tns:IMPKService_LoginUser_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMPKService" type="tns:IMPKService">
@@ -223,6 +283,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SaveRouteForUser">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/SaveRouteForUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSavedRoutesForUser">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/GetSavedRoutesForUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetMapPoints">
       <soap:operation soapAction="http://tempuri.org/IMPKService/GetMapPoints" style="document" />
       <wsdl:input>
@@ -241,10 +319,46 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="LoginFree">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/LoginFree" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmailFree">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/EmailFree" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginUser">
+      <soap:operation soapAction="http://tempuri.org/IMPKService/LoginUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="MPKService">
     <wsdl:port name="BasicHttpBinding_IMPKService" binding="tns:BasicHttpBinding_IMPKService">
-      <soap:address location="http://localhost:8733/Design_Time_Addresses/NetMPK.Service/Service1/" />
+      <soap:address location="http://desktop-csb19so:15782/NetMPK.Service.MPKService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

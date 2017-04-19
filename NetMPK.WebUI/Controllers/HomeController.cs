@@ -7,7 +7,7 @@ namespace NetMPK.WebUI.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View("Index", new Models.MainViewModel());
+            return View("Index", new Models.IndexModel());
         }
         
     }

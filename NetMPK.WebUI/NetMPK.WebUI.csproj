@@ -183,10 +183,18 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Scripts\StopSearch.js" />
+    <Content Include="Scripts\_StopSearch.js" />
+    <Content Include="Scripts\_StopsListSearch.js" />
     <Content Include="Scripts\_mainScript.js" />
+    <None Include="Service References\NetMPKService\Arrays1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\NetMPKService\configuration91.svcinfo" />
     <None Include="Service References\NetMPKService\configuration.svcinfo" />
+    <Content Include="Scripts\_SavedTracks.js" />
+    <Content Include="Service References\NetMPKService\NetMPK.WebUI.NetMPKService.LoginUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\NetMPKService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -212,13 +220,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\DbInfoDecoder.cs" />
-    <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Models\LineModel.cs" />
     <Compile Include="Models\MainViewModel.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Infrastructure\SessionAccess.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\RoutesModel.cs" />
     <Compile Include="Models\StopDetailModel.cs" />
     <Compile Include="Models\StopsModel.cs" />
@@ -231,7 +240,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -249,26 +260,26 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPopover.cshtml" />
     <Content Include="Views\Stops\StopDetail.cshtml" />
-    <None Include="Service References\NetMPKService\Arrays.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NetMPKService\service.wsdl" />
-    <None Include="Service References\NetMPKService\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NetMPKService\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NetMPKService\System.Windows.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NetMPKService\System.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Lines\LineDetails.cshtml" />
     <Content Include="Views\Timetable\Timetable.cshtml" />
     <Content Include="Views\Routes\Routes.cshtml" />
     <Content Include="Views\Map\MapSpot.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Shared\_SavedTracks.cshtml" />
+    <None Include="Service References\NetMPKService\service1.wsdl" />
+    <None Include="Service References\NetMPKService\service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NetMPKService\service21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NetMPKService\System.Windows1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NetMPKService\System1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -278,7 +289,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\MapSpot\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
