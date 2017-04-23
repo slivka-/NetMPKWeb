@@ -52,9 +52,9 @@ namespace NetMPK.WebUI.Controllers
 
         public ActionResult Login(string login, string password)
         {
-            string userID = null;
-            if (client.LoginUser(login, password.Trim(), out userID))
-                SetUserInfo(userID, login);
+            var loginResult = client.LoginUser(login, password.Trim());
+            if(loginResult.Item1 && loginResult.Item2!=null)
+                SetUserInfo(loginResult.Item2, login);
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
 

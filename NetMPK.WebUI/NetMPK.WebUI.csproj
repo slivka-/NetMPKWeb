@@ -186,15 +186,12 @@
     <Content Include="Scripts\_StopSearch.js" />
     <Content Include="Scripts\_StopsListSearch.js" />
     <Content Include="Scripts\_mainScript.js" />
-    <None Include="Service References\NetMPKService\Arrays1.xsd">
+    <None Include="Service References\NetMPKService\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\NetMPKService\configuration91.svcinfo" />
     <None Include="Service References\NetMPKService\configuration.svcinfo" />
     <Content Include="Scripts\_SavedTracks.js" />
-    <Content Include="Service References\NetMPKService\NetMPK.WebUI.NetMPKService.LoginUserResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <None Include="Service References\NetMPKService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -267,17 +264,17 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Shared\_SavedTracks.cshtml" />
-    <None Include="Service References\NetMPKService\service1.wsdl" />
-    <None Include="Service References\NetMPKService\service2.xsd">
+    <None Include="Service References\NetMPKService\service.wsdl" />
+    <None Include="Service References\NetMPKService\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\NetMPKService\service21.xsd">
+    <None Include="Service References\NetMPKService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\NetMPKService\System.Windows1.xsd">
+    <None Include="Service References\NetMPKService\System.Windows.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\NetMPKService\System1.xsd">
+    <None Include="Service References\NetMPKService\System.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Web.Debug.config">

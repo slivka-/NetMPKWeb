@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="jmDWf0W6nFY6Jv1MP3wL1EbRuCo=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="PAV5FpX/UCzom9aWkxw5UBiALNs=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IMPKService">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IMPKService" contract="NetMPKService.IMPKService" bindingType="basicHttpBinding" address="http://desktop-csb19so:15782/NetMPK.Service.MPKService.svc" bindingConfiguration="BasicHttpBinding_IMPKService">
+    <endpoint name="BasicHttpBinding_IMPKService" contract="NetMPKService.IMPKService" bindingType="basicHttpBinding" address="http://192.168.1.10:15782/NetMPKService" bindingConfiguration="BasicHttpBinding_IMPKService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://desktop-csb19so:15782/NetMPK.Service.MPKService.svc</serializedValue>
+          <serializedValue>http://192.168.1.10:15782/NetMPKService</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

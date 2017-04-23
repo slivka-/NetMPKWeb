@@ -118,51 +118,10 @@ namespace NetMPK.WebUI.NetMPKService {
         System.Threading.Tasks.Task<bool> RegisterUserAsync(string login, string password, string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/LoginUser", ReplyAction="http://tempuri.org/IMPKService/LoginUserResponse")]
-        NetMPK.WebUI.NetMPKService.LoginUserResponse LoginUser(NetMPK.WebUI.NetMPKService.LoginUserRequest request);
+        System.Tuple<bool, string> LoginUser(string login, string password);
         
-        // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMPKService/LoginUser", ReplyAction="http://tempuri.org/IMPKService/LoginUserResponse")]
-        System.Threading.Tasks.Task<NetMPK.WebUI.NetMPKService.LoginUserResponse> LoginUserAsync(NetMPK.WebUI.NetMPKService.LoginUserRequest request);
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="LoginUser", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class LoginUserRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public string password;
-        
-        public LoginUserRequest() {
-        }
-        
-        public LoginUserRequest(string login, string password) {
-            this.login = login;
-            this.password = password;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="LoginUserResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class LoginUserResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public bool LoginUserResult;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
-        public string userID;
-        
-        public LoginUserResponse() {
-        }
-        
-        public LoginUserResponse(bool LoginUserResult, string userID) {
-            this.LoginUserResult = LoginUserResult;
-            this.userID = userID;
-        }
+        System.Threading.Tasks.Task<System.Tuple<bool, string>> LoginUserAsync(string login, string password);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -328,22 +287,12 @@ namespace NetMPK.WebUI.NetMPKService {
             return base.Channel.RegisterUserAsync(login, password, email);
         }
         
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        NetMPK.WebUI.NetMPKService.LoginUserResponse NetMPK.WebUI.NetMPKService.IMPKService.LoginUser(NetMPK.WebUI.NetMPKService.LoginUserRequest request) {
-            return base.Channel.LoginUser(request);
+        public System.Tuple<bool, string> LoginUser(string login, string password) {
+            return base.Channel.LoginUser(login, password);
         }
         
-        public bool LoginUser(string login, string password, out string userID) {
-            NetMPK.WebUI.NetMPKService.LoginUserRequest inValue = new NetMPK.WebUI.NetMPKService.LoginUserRequest();
-            inValue.login = login;
-            inValue.password = password;
-            NetMPK.WebUI.NetMPKService.LoginUserResponse retVal = ((NetMPK.WebUI.NetMPKService.IMPKService)(this)).LoginUser(inValue);
-            userID = retVal.userID;
-            return retVal.LoginUserResult;
-        }
-        
-        public System.Threading.Tasks.Task<NetMPK.WebUI.NetMPKService.LoginUserResponse> LoginUserAsync(NetMPK.WebUI.NetMPKService.LoginUserRequest request) {
-            return base.Channel.LoginUserAsync(request);
+        public System.Threading.Tasks.Task<System.Tuple<bool, string>> LoginUserAsync(string login, string password) {
+            return base.Channel.LoginUserAsync(login, password);
         }
     }
 }
